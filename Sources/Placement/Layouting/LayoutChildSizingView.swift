@@ -23,10 +23,6 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
         in proposedSize: SwiftUI._ProposedSize,
         uiView: ZeroSizeView
     ) {
-        guard proposedSize.cgSize != .zero else {
-            return
-        }
-        
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero)
             
