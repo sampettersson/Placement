@@ -13,7 +13,7 @@ struct LayoutPriorityValueKey: PlacementLayoutValueKey {
 
 @available(iOS 16, OSX 13, *)
 struct LayoutValueKeyMapper<K: PlacementLayoutValueKey> {
-    struct Key: PlacementLayoutValueKey {
+    struct Key: LayoutValueKey {
         static var defaultValue: K.Value {
             K.defaultValue
         }
@@ -23,7 +23,7 @@ struct LayoutValueKeyMapper<K: PlacementLayoutValueKey> {
 }
 
 extension View {
-    public func layoutValue<K>(
+    public func placementLayoutValue<K>(
         key: K.Type,
         value: K.Value
     ) -> some View where K : PlacementLayoutValueKey {
