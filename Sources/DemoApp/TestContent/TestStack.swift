@@ -21,7 +21,7 @@ struct OtherStack: PlacementLayout {
                         
             let size = subview.sizeThatFits(ProposedViewSize(proposal))
                                     
-            totalHeight += size.height
+            totalHeight += min(size.height, 30)
             maxWidth = max(maxWidth, size.width)
         }
                                 
@@ -72,17 +72,17 @@ struct TestStack: PlacementLayout {
                         
         subviews.forEach { subview in
             let proposal = proposal.replacingUnspecifiedDimensions(
-                by: CGSize(width: CGFloat.infinity, height: CGFloat.infinity)
+                by: CGSize(width: 100, height: CGFloat.infinity)
             )
                         
             let size = subview.sizeThatFits(ProposedViewSize(proposal))
                                     
-            totalHeight += size.height
-            maxWidth = max(maxWidth, size.width)
+            totalHeight = size.height
+            maxWidth = maxWidth
         }
-                        
+                                
         return CGSize(
-            width: maxWidth,
+            width: proposal.width ?? .zero,
             height: totalHeight
         )
     }
@@ -95,20 +95,20 @@ struct TestStack: PlacementLayout {
         subviews: PlacementLayoutSubviews,
         cache: inout Void
     ) {
-        var nextY = bounds.minY
+        var nextX = bounds.minX
         
         for index in subviews.indices {
             let size = subviews[index].sizeThatFits(
-                proposal
+                ProposedViewSize(width: (proposal.width ?? 2) / 2, height: proposal.height)
             )
-                        
+            
             subviews[index].place(
-                at: CGPoint(x: bounds.midX, y: nextY),
-                anchor: .top,
+                at: CGPoint(x: nextX + CGFloat(20 * index), y: 0),
+                anchor: .topLeading,
                 proposal: PlacementProposedViewSize(size)
             )
                         
-            nextY += size.height
+            nextX += size.width
         }
     }
 }

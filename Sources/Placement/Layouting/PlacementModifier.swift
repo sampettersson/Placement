@@ -46,42 +46,37 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     }
     
     func body(content: Content) -> some View {
-        ZStack(alignment: Alignment(horizontal: horizontalAlignment, vertical: verticalAlignment)) {
-            Color.clear
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            LayoutChildSizingView(
-                layout: layout,
-                id: id,
-                contentSize: contentSize,
-                layoutSize: layoutSize,
-                placement: placement,
-                children: children
-            )
-            .overlay(
-                content.background(
-                    GeometryReader(content: { proxy in
-                        Color.clear.preference(
-                            key: SizePreferenceKey.self,
-                            value: proxy.size
-                        ).onPreferenceChange(SizePreferenceKey.self) { size in
-                            withTransaction(placementsCoordinator.transaction) {
-                                self.contentSize = size
-                            }
+        LayoutChildSizingView(
+            layout: layout,
+            id: id,
+            contentSize: contentSize,
+            layoutSize: layoutSize,
+            placement: placement,
+            children: children
+        )
+        .overlay(
+            content.background(
+                GeometryReader(content: { proxy in
+                    Color.clear.preference(
+                        key: SizePreferenceKey.self,
+                        value: proxy.size
+                    ).onPreferenceChange(SizePreferenceKey.self) { size in
+                        withTransaction(placementsCoordinator.transaction) {
+                            self.contentSize = size
                         }
-                    })
-                )
+                    }
+                })
             )
-            .alignmentGuide(.top) { d in
-                let positionY = placement?.position.y ?? 0
-                return d[verticalAlignment] - positionY
-            }.alignmentGuide(.leading) { d in
-                let positionX = placement?.position.x ?? 0
-                return d[horizontalAlignment] - positionX
-            }.transaction { transaction in
-                placementsCoordinator.transaction = transaction
-            }
-            .preference(key: AccumulatedSizePreferenceKey.self, value: contentSize ?? .zero)
+        )
+        .alignmentGuide(.top) { d in
+            let positionY = placement?.position.y ?? 0
+            return d[verticalAlignment] - positionY
+        }.alignmentGuide(.leading) { d in
+            let positionX = placement?.position.x ?? 0
+            return d[horizontalAlignment] - positionX
+        }.transaction { transaction in
+            placementsCoordinator.transaction = transaction
         }
+        .preference(key: AccumulatedSizePreferenceKey.self, value: contentSize ?? .zero)
     }
 }

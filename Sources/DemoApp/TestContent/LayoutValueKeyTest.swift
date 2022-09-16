@@ -8,6 +8,6 @@ struct Flexibility: PlacementLayoutValueKey {
 
 extension View {
     func layoutFlexibility(_ value: CGFloat?) -> some View {
-        layoutValue(key: Flexibility.self, value: value)
+        placementLayoutValue(key: Flexibility.self, value: value)
     }
 }

@@ -27,28 +27,11 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             TestStack {
-                ExpandingView()
-            }.background(Color.red)
-        
-            TestStack {
-                ExpandingView().background(Color.green)
-                
-                Text("Fisken").background(Color.blue)
-                
-                if hello {
-                    LazyVStack {
-                        ForEach(0..<3000) { int in
-                            Text(String(int))
-                        }
-                    }
-                }
-                
-                OtherStack {
-                    OtherStack {
-                        ExpandingView()
-                    }
-                }.background(Color.yellow)
-            }.background(Color.red)
+                Color.green
+                Color.yellow
+            }
+            .frame(height: hello ? 200 : 300)
+            .background(Color.red)
             
             VStack(spacing: 0) {
                 Button("Hello") {
