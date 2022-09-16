@@ -68,10 +68,10 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 })
             )
         )
-        .alignmentGuide(.top) { d in
+        .alignmentGuide(.placementTop) { d in
             let positionY = placement?.position.y ?? 0
             return d[verticalAlignment] - positionY
-        }.alignmentGuide(.leading) { d in
+        }.alignmentGuide(.placementLeading) { d in
             let positionX = placement?.position.x ?? 0
             return d[horizontalAlignment] - positionX
         }.transaction { transaction in

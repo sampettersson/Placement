@@ -27,8 +27,14 @@ struct ContentView: View {
     var body: some View {
         ScrollView {
             TestStack {
-                Color.green
-                Color.yellow
+                TestStack {
+                    Color.green
+                    Color.yellow
+                }.frame(height: 100)
+                TestStack {
+                    Color.green
+                    Color.yellow
+                }.frame(height: 100)
             }
             .frame(height: hello ? 200 : 300)
             .background(Color.red)

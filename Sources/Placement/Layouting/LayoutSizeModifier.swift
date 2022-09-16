@@ -1,6 +1,26 @@
 import Foundation
 import SwiftUI
 
+extension VerticalAlignment {
+    struct PlacementTop: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[.top]
+        }
+    }
+
+    static let placementTop = VerticalAlignment(PlacementTop.self)
+}
+
+extension HorizontalAlignment {
+    struct PlacementLeading: AlignmentID {
+        static func defaultValue(in d: ViewDimensions) -> CGFloat {
+            d[.leading]
+        }
+    }
+
+    static let placementLeading = HorizontalAlignment(PlacementLeading.self)
+}
+
 struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
     @EnvironmentObject var placementsCoordinator: PlacementsCoordinator
     @EnvironmentObject var sizeCoordinator: SizeCoordinator
@@ -18,7 +38,7 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         )
         .allowsHitTesting(false)
         .overlay(
-            ZStack(alignment: .topLeading) {
+            ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
                 content.onPreferenceChange(AccumulatedSizePreferenceKey.self) { size in
                     withTransaction(placementsCoordinator.transaction) {
                         self.accumulatedSize = size
