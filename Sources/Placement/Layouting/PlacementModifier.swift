@@ -66,14 +66,18 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                         }
                     }
                 })
+            ).frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
             )
         )
         .alignmentGuide(.placementTop) { d in
             let positionY = placement?.position.y ?? 0
-            return d[verticalAlignment] - positionY
+            return d[.placementTop] - positionY
         }.alignmentGuide(.placementLeading) { d in
             let positionX = placement?.position.x ?? 0
-            return d[horizontalAlignment] - positionX
+            return d[.placementLeading] - positionX
         }.transaction { transaction in
             placementsCoordinator.transaction = transaction
         }
