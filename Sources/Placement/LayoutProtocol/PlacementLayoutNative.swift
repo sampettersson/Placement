@@ -1,21 +1,21 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 16, *)
+@available(iOS 16.0, macCatalyst 16, *)
 extension ProposedViewSize {
     var placement: PlacementProposedViewSize {
         PlacementProposedViewSize(width: width, height: height)
     }
 }
 
-@available(iOS 16, *)
+@available(iOS 16.0, macCatalyst 16, *)
 extension PlacementProposedViewSize {
     var proposedViewSize: ProposedViewSize {
         ProposedViewSize(width: width, height: height)
     }
 }
 
-@available(iOS 16, *)
+@available(iOS 16.0, macCatalyst 16, *)
 struct PlacementLayoutNative<L: PlacementLayout>: Layout {
     var layoutBP: L
 

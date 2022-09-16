@@ -73,6 +73,7 @@
 		EB70B47428D46753007049FF /* Placement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Placement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplicitAlignmentModifier.swift; sourceTree = "<group>"; };
 		EB70B49928D47DD5007049FF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		EB9124B528D47FB5005C376D /* PlacementDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlacementDemo.entitlements; sourceTree = "<group>"; };
 		EBC389F328CF665C000E7318 /* PlacementDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlacementDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC389FA28CF665E000E7318 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBC389FD28CF665E000E7318 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -196,12 +197,21 @@
 			path = DemoApp;
 			sourceTree = "<group>";
 		};
+		EB9124B428D47EF4005C376D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				EB70B46E28D4671D007049FF /* DemoApp */,
+				EBC389F528CF665C000E7318 /* Placement */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		EBC389EA28CF665C000E7318 = {
 			isa = PBXGroup;
 			children = (
+				EB9124B528D47FB5005C376D /* PlacementDemo.entitlements */,
 				EB70B49928D47DD5007049FF /* README.md */,
-				EB70B46E28D4671D007049FF /* DemoApp */,
-				EBC389F528CF665C000E7318 /* Placement */,
+				EB9124B428D47EF4005C376D /* Sources */,
 				EBC389F428CF665C000E7318 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -417,6 +427,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sampettersson.Placement;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -448,6 +461,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sampettersson.Placement;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -577,9 +593,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PlacementDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"DemoApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sources/DemoApp/Preview Content\"";
 				DEVELOPMENT_TEAM = VYD75VB97Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -600,10 +617,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sampettersson.PlacementDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -614,9 +634,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = PlacementDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"DemoApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sources/DemoApp/Preview Content\"";
 				DEVELOPMENT_TEAM = VYD75VB97Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -637,9 +658,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sampettersson.PlacementDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};

@@ -11,9 +11,9 @@ struct LayoutPriorityValueKey: PlacementLayoutValueKey {
     }
 }
 
-@available(iOS 16, *)
+@available(iOS 16, OSX 13, *)
 struct LayoutValueKeyMapper<K: PlacementLayoutValueKey> {
-    struct Key: LayoutValueKey {
+    struct Key: PlacementLayoutValueKey {
         static var defaultValue: K.Value {
             K.defaultValue
         }
@@ -27,7 +27,7 @@ extension View {
         key: K.Type,
         value: K.Value
     ) -> some View where K : PlacementLayoutValueKey {
-        if #available(iOS 16, *) {
+        if #available(iOS 16.0, macCatalyst 16, *) {
             return self.layoutValue(key: LayoutValueKeyMapper<K>.Key.self, value: value)
         } else {
             return self._trait(key, value)

@@ -6,6 +6,9 @@ public protocol PlacementLayout: Animatable {
     typealias ProposedViewSize = PlacementProposedViewSize
     associatedtype Cache
     
+    /// When true Placement uses the Native iOS 16+ placement protocol when available
+    var prefersNativeImplementationWhenAvailable: Bool { get }
+    
     func sizeThatFits(
         proposal: ProposedViewSize,
         subviews: Subviews,
@@ -77,24 +80,31 @@ extension PlacementLayout {
     ) -> CGFloat? {
         return nil
     }
-}
-
-extension PlacementLayout {
+    
+    public var prefersNativeImplementationWhenAvailable: Bool {
+        true
+    }
+    
     public static var layoutProperties: PlacementLayoutProperties {
         PlacementLayoutProperties()
     }
 }
 
 extension PlacementLayout {
+    @ViewBuilder
     public func callAsFunction<V: View>(
         @ViewBuilder _ content: @escaping () -> V
     ) -> some View {
-        if #available(iOS 16, *) {
-            return PlacementLayoutNative(layoutBP: self).callAsFunction {
-                content()
+        if #available(iOS 16, macCatalyst 16, *) {
+            if prefersNativeImplementationWhenAvailable {
+                PlacementLayoutNative(layoutBP: self).callAsFunction {
+                    content()
+                }
+            } else {
+                Layouter(layout: self, content: content)
             }
+        } else {
+            Layouter(layout: self, content: content)
         }
-        
-        return Layouter(layout: self, content: content)
     }
 }
