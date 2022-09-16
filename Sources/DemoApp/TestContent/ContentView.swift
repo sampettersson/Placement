@@ -1,4 +1,5 @@
 import SwiftUI
+import Placement
 
 struct ExpandingView: View {
     @State var expanded = false
@@ -22,16 +23,16 @@ struct ExpandingView: View {
 
 struct ContentView: View {
     @State var hello = false
-    @State var hey = false
+    @State var layout = AnyPlacementLayout(TestStack())
     
     var body: some View {
         ScrollView {
-            TestStack {
-                TestStack {
+            layout {
+                layout {
                     Color.green
                     Color.yellow
                 }.frame(height: 100)
-                TestStack {
+                layout {
                     Color.green
                     Color.yellow
                 }.frame(height: 100)
@@ -43,6 +44,12 @@ struct ContentView: View {
                 Button("Hello") {
                     withAnimation(.easeOut(duration: 0.3)) {
                         hello.toggle()
+                        
+                        if hello {
+                            layout = AnyPlacementLayout(OtherStack())
+                        } else {
+                            layout = AnyPlacementLayout(TestStack())
+                        }
                     }
                 }
             }

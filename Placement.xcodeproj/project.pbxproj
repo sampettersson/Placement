@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */; };
 		EB70B47A28D46753007049FF /* Placement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; };
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EB70B48028D46773007049FF /* PlacementViewSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A1628CF667F000E7318 /* PlacementViewSpacing.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPlacementLayout.swift; sourceTree = "<group>"; };
 		EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingView.swift; sourceTree = "<group>"; };
 		EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutChildSizingView.swift; sourceTree = "<group>"; };
 		EB70B45D28D46554007049FF /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				EBC38A0C28CF667D000E7318 /* PlacementLayoutNative.swift */,
 				EBC38A1028CF667E000E7318 /* PlacementLayout.swift */,
+				EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */,
 			);
 			path = LayoutProtocol;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				EB70B48C28D46784007049FF /* LayoutChildSizingView.swift in Sources */,
 				EB70B48528D4677E007049FF /* PlacementLayoutProperties.swift in Sources */,
 				EB70B48D28D46784007049FF /* LayoutSizeModifier.swift in Sources */,
+				EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */,
 				EB70B48928D46784007049FF /* Coordinator.swift in Sources */,
 				EB70B49128D46789007049FF /* PlacementLayoutSubview.swift in Sources */,
 				EB70B48228D46778007049FF /* SizePreferences.swift in Sources */,
