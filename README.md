@@ -14,9 +14,11 @@ Mimics the LayoutValueKey
 
 ### Notable differences
 
-- Animations are currently somewhat buggy on iOS 14, but end layout is correct
-
 - Layout priority needs to be set with `placementLayoutPriority` instead of SwiftUIs inbuilt `layoutPriority`
+
+## Known bugs
+
+- Animations are currently somewhat buggy on iOS 14, but end layout is correct
 
 ## Example
 
