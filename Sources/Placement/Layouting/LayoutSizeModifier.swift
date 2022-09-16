@@ -39,6 +39,11 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         .allowsHitTesting(false)
         .overlay(
             ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
+                Color.clear.frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity
+                )
+                
                 content.onPreferenceChange(AccumulatedSizePreferenceKey.self) { size in
                     withTransaction(placementsCoordinator.transaction) {
                         self.accumulatedSize = size
