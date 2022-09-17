@@ -13,7 +13,7 @@ class SizeCoordinator: ObservableObject {
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
     var layout: L? = nil
-    public var subviews: L.Subviews? = nil
+    public var subviews: PlacementLayoutSubviews? = nil
     
     private var _cache: L.Cache?
     
@@ -26,12 +26,12 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         }
     }
         
-    func layoutContext<T>(children: _VariadicView.Children, context: (L.Subviews, inout L.Cache) -> T) -> T {
+    func layoutContext<T>(children: _VariadicView.Children, context: (PlacementLayoutSubviews, inout L.Cache) -> T) -> T {
         let subviews = makeSubviews(children: children)
         return context(subviews, &cache)
     }
     
-    func makeSubviews(children: _VariadicView.Children) -> L.Subviews {
+    func makeSubviews(children: _VariadicView.Children) -> PlacementLayoutSubviews {
         if let subviews = subviews {
             let childrenIds = children.map { child in
                 child.id

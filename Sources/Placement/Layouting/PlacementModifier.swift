@@ -37,38 +37,38 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     var children: _VariadicView.Children
     
     func body(content: Content) -> some View {
-        let placement = placementsCoordinator.placements[id]
-        
-        LayoutChildSizingView(
-            layout: layout,
-            id: id,
-            children: children
-        )
-        .overlay(
-            content
-                .transaction { transaction in
-                    placementsCoordinator.transaction = transaction
-                }
-                .background(
-                    GeometryReader(content: { proxy in
-                        Color.clear.preference(key: ChildrenIntrinsicSizesKey.self, value: [
-                            id: proxy.size
-                        ])
-                    })
-                )
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .topLeading
-                )
-        )
-        .modifier(
-            PlacementEffect(
-                positionX: placement?.position.x ?? 0,
-                positionY: placement?.position.y ?? 0,
-                anchorX: placement?.anchor.x ?? 0,
-                anchorY: placement?.anchor.y ?? 0
+        if let placement = placementsCoordinator.placements[id] {
+            LayoutChildSizingView(
+                layout: layout,
+                id: id,
+                children: children
             )
-        )
+            .overlay(
+                content
+                    .transaction { transaction in
+                        placementsCoordinator.transaction = transaction
+                    }
+                    .background(
+                        GeometryReader(content: { proxy in
+                            Color.clear.preference(key: ChildrenIntrinsicSizesKey.self, value: [
+                                id: proxy.size
+                            ])
+                        })
+                    )
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
+            )
+            .modifier(
+                PlacementEffect(
+                    positionX: placement.position.x,
+                    positionY: placement.position.y,
+                    anchorX: placement.anchor.x,
+                    anchorY: placement.anchor.y
+                )
+            )
+        }
     }
 }

@@ -2,31 +2,29 @@ import Foundation
 import SwiftUI
 
 public protocol PlacementLayout: Animatable {
-    typealias Subviews = PlacementLayoutSubviews
-    typealias ProposedViewSize = PlacementProposedViewSize
     associatedtype Cache
     
     /// When true Placement uses the Native iOS 16+ placement protocol when available
     var prefersNativeImplementationWhenAvailable: Bool { get }
     
     func sizeThatFits(
-        proposal: ProposedViewSize,
-        subviews: Subviews,
+        proposal: PlacementProposedViewSize,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     ) -> CGSize
     
     func placeSubviews(
         in bounds: CGRect,
-        proposal: ProposedViewSize,
-        subviews: Subviews,
+        proposal: PlacementProposedViewSize,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     )
     
-    func makeCache(subviews: Subviews) -> Cache
-    func updateCache(_ cache: inout Cache, subviews: Subviews)
+    func makeCache(subviews: PlacementLayoutSubviews) -> Cache
+    func updateCache(_ cache: inout Cache, subviews: PlacementLayoutSubviews)
     
     func spacing(
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     ) -> PlacementViewSpacing
     
@@ -34,7 +32,7 @@ public protocol PlacementLayout: Animatable {
         of guide: VerticalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     ) -> CGFloat?
     
@@ -42,7 +40,7 @@ public protocol PlacementLayout: Animatable {
         of guide: HorizontalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     ) -> CGFloat?
     
@@ -50,14 +48,14 @@ public protocol PlacementLayout: Animatable {
 }
 
 extension PlacementLayout where Cache == Void {
-    public func makeCache(subviews: Subviews) -> Cache {
+    public func makeCache(subviews: PlacementLayoutSubviews) -> Cache {
         return ()
     }
 }
 
 extension PlacementLayout {
-    public func updateCache(_ cache: inout Cache, subviews: Subviews) {}
-    public func spacing(subviews: Subviews, cache: inout Cache) -> PlacementViewSpacing {
+    public func updateCache(_ cache: inout Cache, subviews: PlacementLayoutSubviews) {}
+    public func spacing(subviews: PlacementLayoutSubviews, cache: inout Cache) -> PlacementViewSpacing {
         PlacementViewSpacing()
     }
     
@@ -65,7 +63,7 @@ extension PlacementLayout {
         of guide: VerticalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     ) -> CGFloat? {
         return nil
@@ -75,7 +73,7 @@ extension PlacementLayout {
         of guide: HorizontalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout Cache
     ) -> CGFloat? {
         return nil

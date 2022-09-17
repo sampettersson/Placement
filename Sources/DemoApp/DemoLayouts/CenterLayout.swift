@@ -14,7 +14,7 @@ public struct CenterLayout: PlacementLayout {
     
     public func sizeThatFits(
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout ()
     ) -> CGSize {
         return CGSize(
@@ -26,7 +26,7 @@ public struct CenterLayout: PlacementLayout {
     public func placeSubviews(
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout ()
     ) {        
         for index in subviews.indices {
@@ -36,7 +36,7 @@ public struct CenterLayout: PlacementLayout {
             subview.place(
                 at: CGPoint(x: bounds.midX, y: bounds.midY),
                 anchor: .center,
-                proposal: ProposedViewSize(width: dimension.width, height: dimension.height)
+                proposal: PlacementProposedViewSize(width: dimension.width, height: dimension.height)
             )
         }
     }

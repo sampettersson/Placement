@@ -8,7 +8,7 @@ struct OtherStack: PlacementLayout {
     /// - Tag: sizeThatFitsHorizontal
     func sizeThatFits(
         proposal: PlacementProposedViewSize,
-        subviews: Subviews,
+        subviews: PlacementLayoutSubviews,
         cache: inout Void
     ) -> CGSize {
         var totalHeight: CGFloat = 0
@@ -19,7 +19,7 @@ struct OtherStack: PlacementLayout {
                 by: CGSize(width: CGFloat.infinity, height: CGFloat.infinity)
             )
                         
-            let size = subview.sizeThatFits(ProposedViewSize(proposal))
+            let size = subview.sizeThatFits(PlacementProposedViewSize(proposal))
                                     
             totalHeight += size.height
             maxWidth = max(maxWidth, size.width)
@@ -75,7 +75,7 @@ struct TestStack: PlacementLayout {
                 by: CGSize(width: 100, height: CGFloat.infinity)
             )
                         
-            let size = subview.sizeThatFits(ProposedViewSize(proposal))
+            let size = subview.sizeThatFits(PlacementProposedViewSize(proposal))
                                     
             totalHeight = size.height
             maxWidth = maxWidth
@@ -99,7 +99,7 @@ struct TestStack: PlacementLayout {
         
         for index in subviews.indices {
             let size = subviews[index].sizeThatFits(
-                ProposedViewSize(width: (proposal.width ?? 2) / 2, height: proposal.height)
+                PlacementProposedViewSize(width: (proposal.width ?? 2) / 2, height: proposal.height)
             )
             
             subviews[index].place(

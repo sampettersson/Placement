@@ -11,7 +11,7 @@ public protocol PlacementLayoutSubview: Equatable {
     subscript<K>(key: K.Type) -> K.Value where K : PlacementLayoutValueKey { get }
 }
 
-public struct LayoutSubviewPolyfill: PlacementLayoutSubview {
+struct LayoutSubviewPolyfill: PlacementLayoutSubview {
     var id: AnyHashable
     var onPlacement: (_ placement: LayoutPlacement) -> Void
     var getSizeThatFits: (_ size: PlacementProposedViewSize) -> CGSize

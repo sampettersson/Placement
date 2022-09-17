@@ -27,6 +27,15 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
+            PlacementThatFits(in: .horizontal) {
+                HStack {
+                    Text("1")
+                    Text("ksklsddklsalksaddskladsaklsal")
+                }
+                Color.blue.frame(width: 20000, height: 300)
+                Text("test")
+            }
+            
             layout {
                 ExpandingView()
             }
