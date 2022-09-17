@@ -1,18 +1,6 @@
 import Foundation
 import SwiftUI
 
-class LayoutChildSizingUIView: UIView {
-    var previousProposal: CGSize? = nil
-    
-    override var intrinsicContentSize: CGSize {
-        .zero
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-}
-
 struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
     @Environment(\.childrenIntrinsicSizes) var childrenIntrinsicSizes
     @EnvironmentObject var coordinator: Coordinator<L>
@@ -21,21 +9,25 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
     var id: AnyHashable
     var children: _VariadicView.Children
         
-    func makeUIView(context: Context) -> LayoutChildSizingUIView {
-        return LayoutChildSizingUIView(frame: .zero)
+    func makeUIView(context: Context) -> TransactionView {
+        let view = TransactionView(frame: .zero)
+        view.transaction = context.transaction
+        return view
     }
     
-    func updateUIView(_ uiView: LayoutChildSizingUIView, context: Context) {
-       
+    func updateUIView(_ uiView: TransactionView, context: Context) {
+        uiView.transaction = context.transaction
     }
     
     func _overrideSizeThatFits(
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
-        uiView: LayoutChildSizingUIView
+        uiView: TransactionView
     ) {        
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero)
+            
+            let previousPlacements = coordinator.placementsCoordinator.placements
             
             layout.placeSubviews(
                 in: CGRect(origin: .zero, size: proposal.replacingUnspecifiedDimensions(by: .zero)),
@@ -45,8 +37,15 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
             )
                         
             let placementProposal = coordinator.placementsCoordinator.placements[id]?.proposal
-                                                
             size = placementProposal?.replacingUnspecifiedDimensions(by: .zero) ?? .zero
+            
+            if previousPlacements != coordinator.placementsCoordinator.placements {
+                DispatchQueue.main.async {
+                    withTransaction(uiView.transaction) {
+                        coordinator.placementsCoordinator.objectWillChange.send()
+                    }
+                }
+            }
         }
     }
 }

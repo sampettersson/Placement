@@ -20,7 +20,9 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
     var childrenIntrinsicSizes: [AnyHashable: CGSize]
         
     func makeUIView(context: Context) -> TransactionView {
-        return TransactionView(frame: .zero)
+        let view = TransactionView(frame: .zero)
+        view.transaction = context.transaction
+        return view
     }
     
     func updateUIView(_ uiView: TransactionView, context: Context) {
