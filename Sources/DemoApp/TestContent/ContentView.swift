@@ -6,6 +6,9 @@ struct ExpandingView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            Color.yellow
+                .frame(height: expanded ? 300 : 0)
+            
             Button {
                 withAnimation(.spring()) {
                     expanded.toggle()
@@ -13,9 +16,6 @@ struct ExpandingView: View {
             } label: {
                 Text("Button")
             }
-                        
-            Color.yellow
-                .frame(height: expanded ? 300 : 0)
         }
         .padding(EdgeInsets.init(top: 10, leading: 10, bottom: 10, trailing: 10))
     }

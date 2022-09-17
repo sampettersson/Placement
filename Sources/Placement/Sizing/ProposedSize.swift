@@ -2,20 +2,20 @@ import Foundation
 import SwiftUI
 
 extension SwiftUI._ProposedSize {
-    public var height: CGFloat {
+    public var height: CGFloat? {
         Mirror(reflecting: self).children.compactMap { label, value in
             label == "height" ? value as? CGFloat : nil
-        }.first ?? .zero
+        }.first
     }
     
-    public var width: CGFloat {
+    public var width: CGFloat? {
         Mirror(reflecting: self).children.compactMap { label, value in
             label == "width" ? value as? CGFloat : nil
-        }.first ?? .zero
+        }.first
     }
     
-    public var cgSize: CGSize {
-        CGSize(width: width, height: height)
+    var placementProposedViewSize: PlacementProposedViewSize {
+        PlacementProposedViewSize(width: width, height: height)
     }
 }
 

@@ -33,16 +33,9 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
         uiView: TransactionView
-    ) {
-        guard proposedSize.cgSize != .zero else {
-            return
-        }
-        
+    ) {        
         coordinator.layoutContext(children: children) { subviews, cache in
-            let proposal = PlacementProposedViewSize(
-                width: proposedSize.width,
-                height: proposedSize.height
-            )
+            let proposal = proposedSize.placementProposedViewSize
             
             size = layout.sizeThatFits(
                 proposal: proposal,

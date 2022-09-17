@@ -21,7 +21,6 @@
 		EB70B48828D46784007049FF /* Layouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A1128CF667E000E7318 /* Layouter.swift */; };
 		EB70B48928D46784007049FF /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70B45D28D46554007049FF /* Coordinator.swift */; };
 		EB70B48A28D46784007049FF /* PlacementModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70B45F28D465A9007049FF /* PlacementModifier.swift */; };
-		EB70B48B28D46784007049FF /* ZeroSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70B46A28D46696007049FF /* ZeroSizeView.swift */; };
 		EB70B48C28D46784007049FF /* LayoutChildSizingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */; };
 		EB70B48D28D46784007049FF /* LayoutSizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70B46328D465EF007049FF /* LayoutSizeModifier.swift */; };
 		EB70B48E28D46784007049FF /* LayoutPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A0528CF667C000E7318 /* LayoutPlacement.swift */; };
@@ -73,7 +72,6 @@
 		EB70B45F28D465A9007049FF /* PlacementModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementModifier.swift; sourceTree = "<group>"; };
 		EB70B46128D465D9007049FF /* SizePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferences.swift; sourceTree = "<group>"; };
 		EB70B46328D465EF007049FF /* LayoutSizeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizeModifier.swift; sourceTree = "<group>"; };
-		EB70B46A28D46696007049FF /* ZeroSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroSizeView.swift; sourceTree = "<group>"; };
 		EB70B47428D46753007049FF /* Placement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Placement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplicitAlignmentModifier.swift; sourceTree = "<group>"; };
 		EB70B49928D47DD5007049FF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 				EB70B45F28D465A9007049FF /* PlacementModifier.swift */,
 				EB70B46328D465EF007049FF /* LayoutSizeModifier.swift */,
 				EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */,
-				EB70B46A28D46696007049FF /* ZeroSizeView.swift */,
 				EBC38A0528CF667C000E7318 /* LayoutPlacement.swift */,
 				EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */,
 				EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */,
@@ -393,7 +390,6 @@
 				EB70B48328D46778007049FF /* PlacementViewDimensions.swift in Sources */,
 				EB70B48628D4677E007049FF /* PlacementLayoutValueKey.swift in Sources */,
 				EB70B48F28D46784007049FF /* LayoutSizingView.swift in Sources */,
-				EB70B48B28D46784007049FF /* ZeroSizeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
