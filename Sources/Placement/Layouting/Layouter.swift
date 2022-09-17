@@ -27,12 +27,8 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
         ) {
             content()
         }
-        .clipped()
         .environmentObject(coordinator)
         .environmentObject(coordinator.sizeCoordinator)
         .environmentObject(coordinator.placementsCoordinator)
-        .transaction { transaction in
-            coordinator.transaction = transaction
-        }
     }
 }

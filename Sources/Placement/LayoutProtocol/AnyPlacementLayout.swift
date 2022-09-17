@@ -101,7 +101,7 @@ public struct AnyPlacementLayout: PlacementLayout {
         cache = explicitAlignmentReturn.cache
         return explicitAlignmentReturn.alignment
     }
-    
+        
     public init<L: PlacementLayout>(
         _ layout: L
     ) {

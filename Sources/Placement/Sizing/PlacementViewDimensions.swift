@@ -1,6 +1,6 @@
 import Foundation
 
 public struct PlacementViewDimensions {
-    var height: CGFloat
-    var width: CGFloat
+    public var height: CGFloat
+    public var width: CGFloat
 }

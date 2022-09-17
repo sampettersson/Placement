@@ -21,20 +21,29 @@ extension HorizontalAlignment {
     static let placementLeading = HorizontalAlignment(PlacementLeading.self)
 }
 
+private struct ChildrenIntrinsicSizesEnvironmentKey: EnvironmentKey {
+    static let defaultValue: [AnyHashable: CGSize] = [:]
+}
+
+extension EnvironmentValues {
+  var childrenIntrinsicSizes: [AnyHashable: CGSize] {
+    get { self[ChildrenIntrinsicSizesEnvironmentKey.self] }
+    set { self[ChildrenIntrinsicSizesEnvironmentKey.self] = newValue }
+  }
+}
+
 struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
-    @EnvironmentObject var placementsCoordinator: PlacementsCoordinator
-    @EnvironmentObject var sizeCoordinator: SizeCoordinator
+    @EnvironmentObject var placementsCordinator: PlacementsCoordinator
     
     var children: _VariadicView.Children
     var layout: L
-    @State var accumulatedSize: CGSize? = nil
+    @State var childrenIntrinsicSizes: [AnyHashable: CGSize] = [:]
     
     func body(content: Content) -> some View {
         LayoutSizingView(
             layout: layout,
-            accumulatedSize: accumulatedSize,
-            placements: placementsCoordinator.placements,
-            children: children
+            children: children,
+            childrenIntrinsicSizes: childrenIntrinsicSizes
         )
         .allowsHitTesting(false)
         .overlay(
@@ -43,12 +52,13 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
                     maxWidth: .infinity,
                     maxHeight: .infinity
                 )
+                .allowsHitTesting(false)
                 
-                content.onPreferenceChange(AccumulatedSizePreferenceKey.self) { size in
-                    withTransaction(placementsCoordinator.transaction) {
-                        self.accumulatedSize = size
+                content.onPreferenceChange(ChildrenIntrinsicSizesKey.self) { sizes in
+                    withTransaction(placementsCordinator.transaction) {
+                        childrenIntrinsicSizes = sizes
                     }
-                }
+                }.environment(\.childrenIntrinsicSizes, childrenIntrinsicSizes)
             }
         )
         .modifier(ExplicitAlignmentModifier(children: children, layout: layout))

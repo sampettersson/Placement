@@ -4,9 +4,8 @@ import SwiftUI
 struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var layout: L
-    var accumulatedSize: CGSize?
-    var placements: [AnyHashable: LayoutPlacement]
     var children: _VariadicView.Children
+    var childrenIntrinsicSizes: [AnyHashable: CGSize]
         
     func makeUIView(context: Context) -> ZeroSizeView {
         return ZeroSizeView(frame: .zero)
@@ -42,7 +41,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
                 proposal: proposal,
                 subviews: subviews,
                 cache: &cache
-            )
+            )            
         }
     }
 }

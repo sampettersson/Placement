@@ -1,32 +1,39 @@
 import Foundation
 import SwiftUI
 
-struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
-    @EnvironmentObject var coordinator: Coordinator<L>
-    var layout: L
-    var id: AnyHashable
-    var contentSize: CGSize? = nil
-    var layoutSize: CGSize? = nil
-    var placement: LayoutPlacement? = nil
-    var children: _VariadicView.Children
+class LayoutChildSizingUIView: UIView {
+    var previousProposal: CGSize? = nil
     
-    @State var hostingController = UIHostingController(rootView: AnyView(EmptyView()))
-    
-    func makeUIView(context: Context) -> ZeroSizeView {
-        return ZeroSizeView(frame: .zero)
+    override var intrinsicContentSize: CGSize {
+        .zero
     }
     
-    func updateUIView(_ uiView: ZeroSizeView, context: Context) {}
+    override func layoutSubviews() {
+        super.layoutSubviews()
+    }
+}
+
+struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
+    @Environment(\.childrenIntrinsicSizes) var childrenIntrinsicSizes
+    @EnvironmentObject var coordinator: Coordinator<L>
+
+    var layout: L
+    var id: AnyHashable
+    var children: _VariadicView.Children
+        
+    func makeUIView(context: Context) -> LayoutChildSizingUIView {
+        return LayoutChildSizingUIView(frame: .zero)
+    }
+    
+    func updateUIView(_ uiView: LayoutChildSizingUIView, context: Context) {
+       
+    }
     
     func _overrideSizeThatFits(
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
-        uiView: ZeroSizeView
-    ) {
-        guard proposedSize.cgSize != .zero else {
-            return
-        }
-        
+        uiView: LayoutChildSizingUIView
+    ) {        
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero)
             
@@ -38,8 +45,8 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
             )
                         
             let placementProposal = coordinator.placementsCoordinator.placements[id]?.proposal
-                                    
-            size = placementProposal?.replacingUnspecifiedDimensions(by: .zero) ?? .zero            
+                                                
+            size = placementProposal?.replacingUnspecifiedDimensions(by: .zero) ?? .zero
         }
     }
 }

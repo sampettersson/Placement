@@ -23,36 +23,17 @@ struct ExpandingView: View {
 
 struct ContentView: View {
     @State var hello = false
-    @State var layout = AnyPlacementLayout(TestStack())
+    @State var layout = AnyPlacementLayout(OtherStack())
     
     var body: some View {
         ScrollView {
             layout {
-                layout {
-                    Color.green
-                    Color.yellow
-                }.frame(height: 100)
-                layout {
-                    Color.green
-                    Color.yellow
-                }.frame(height: 100)
+                ExpandingView()
             }
-            .frame(height: hello ? 200 : 300)
-            .background(Color.red)
             
-            VStack(spacing: 0) {
-                Button("Hello") {
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        hello.toggle()
-                        
-                        if hello {
-                            layout = AnyPlacementLayout(OtherStack())
-                        } else {
-                            layout = AnyPlacementLayout(TestStack())
-                        }
-                    }
-                }
-            }
+            CenterLayoutView()
+            
+            Text("Hello")
         }
     }
 }

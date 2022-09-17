@@ -9,6 +9,17 @@ struct SizePreferenceKey: PreferenceKey {
     }
 }
 
+struct ChildrenIntrinsicSizesKey: PreferenceKey {
+    static var defaultValue: [AnyHashable: CGSize] = [:]
+
+    static func reduce(value: inout [AnyHashable: CGSize], nextValue: () -> [AnyHashable: CGSize]) {
+        let nextValue = nextValue()
+        value = value.merging(nextValue, uniquingKeysWith: { _, rhs in
+            rhs
+        })
+    }
+}
+
 struct AccumulatedSizePreferenceKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
 

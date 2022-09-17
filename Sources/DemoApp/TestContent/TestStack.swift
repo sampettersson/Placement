@@ -21,7 +21,7 @@ struct OtherStack: PlacementLayout {
                         
             let size = subview.sizeThatFits(ProposedViewSize(proposal))
                                     
-            totalHeight += min(size.height, 30)
+            totalHeight += size.height
             maxWidth = max(maxWidth, size.width)
         }
                                 
@@ -47,8 +47,8 @@ struct OtherStack: PlacementLayout {
             )
                         
             subviews[index].place(
-                at: CGPoint(x: bounds.minX + (size.width / 2), y: bounds.minY),
-                anchor: .top,
+                at: CGPoint(x: bounds.minX, y: bounds.minY),
+                anchor: .topLeading,
                 proposal: PlacementProposedViewSize(size)
             )
                         

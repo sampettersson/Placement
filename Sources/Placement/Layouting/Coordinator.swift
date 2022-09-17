@@ -9,6 +9,7 @@ class PlacementsCoordinator: ObservableObject {
 
 class SizeCoordinator: ObservableObject {
     public var size: CGSize? = nil
+    public var transaction = Transaction()
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
@@ -25,7 +26,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             _cache = newValue
         }
     }
-    
+        
     func layoutContext<T>(children: _VariadicView.Children, context: (L.Subviews, inout L.Cache) -> T) -> T {
         let subviews = makeSubviews(children: children)
         return context(subviews, &cache)
