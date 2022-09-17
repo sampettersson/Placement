@@ -2,7 +2,6 @@ import Foundation
 import SwiftUI
 
 class PlacementsCoordinator: ObservableObject {
-    var placementsDidChange = ObjectWillChangePublisher()
     var transaction = Transaction()
     var placements: [AnyHashable: LayoutPlacement] = [:]
 }

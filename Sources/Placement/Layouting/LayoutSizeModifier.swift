@@ -48,17 +48,18 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         .allowsHitTesting(false)
         .overlay(
             ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
-                Color.clear.frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity
-                )
-                .allowsHitTesting(false)
-                
-                content.onPreferenceChange(ChildrenIntrinsicSizesKey.self) { sizes in
-                    withTransaction(placementsCordinator.transaction) {
-                        childrenIntrinsicSizes = sizes
+                content
+                    .onPreferenceChange(ChildrenIntrinsicSizesKey.self) { sizes in
+                        withTransaction(placementsCordinator.transaction) {
+                            childrenIntrinsicSizes = sizes
+                        }
                     }
-                }.environment(\.childrenIntrinsicSizes, childrenIntrinsicSizes)
+                    .environment(\.childrenIntrinsicSizes, childrenIntrinsicSizes)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
             }
         )
         .modifier(ExplicitAlignmentModifier(children: children, layout: layout))
