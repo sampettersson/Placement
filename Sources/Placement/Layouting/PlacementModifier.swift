@@ -1,6 +1,18 @@
 import Foundation
 import SwiftUI
 
+struct RandomNumberGeneratorWithSeed: RandomNumberGenerator {
+    init(seed: Int) {
+        srand48(seed)
+    }
+    
+    func next() -> UInt64 {
+        return withUnsafeBytes(of: drand48()) { bytes in
+            bytes.load(as: UInt64.self)
+        }
+    }
+}
+
 struct PlacementEffect: GeometryEffect {
     var positionX: CGFloat
     var positionY: CGFloat
@@ -37,38 +49,38 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     var children: _VariadicView.Children
     
     func body(content: Content) -> some View {
-        if let placement = placementsCoordinator.placements[id] {
-            LayoutChildSizingView(
-                layout: layout,
-                id: id,
-                children: children
-            )
-            .overlay(
-                content
-                    .transaction { transaction in
-                        placementsCoordinator.transaction = transaction
-                    }
-                    .background(
-                        GeometryReader(content: { proxy in
-                            Color.clear.preference(key: ChildrenIntrinsicSizesKey.self, value: [
-                                id: proxy.size
-                            ])
-                        })
-                    )
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .topLeading
-                    )
-            )
-            .modifier(
-                PlacementEffect(
-                    positionX: placement.position.x,
-                    positionY: placement.position.y,
-                    anchorX: placement.anchor.x,
-                    anchorY: placement.anchor.y
+        let placement = placementsCoordinator.placements[id]
+        
+        LayoutChildSizingView(
+            layout: layout,
+            id: id,
+            children: children
+        )
+        .overlay(
+            content
+                .transaction { transaction in
+                    placementsCoordinator.transaction = transaction
+                }
+                .background(
+                    GeometryReader(content: { proxy in
+                        Color.clear.preference(key: ChildrenIntrinsicSizesKey.self, value: [
+                            id: proxy.size
+                        ])
+                    })
                 )
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .topLeading
+                )
+        )
+        .modifier(
+            PlacementEffect(
+                positionX: placement?.position.x ?? 0,
+                positionY: placement?.position.y ?? 0,
+                anchorX: placement?.anchor.x ?? 0,
+                anchorY: placement?.anchor.y ?? 0
             )
-        }
+        )
     }
 }

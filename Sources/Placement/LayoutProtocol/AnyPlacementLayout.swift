@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-public struct AnyPlacementLayout: PlacementLayout {    
+public struct AnyPlacementLayout: PlacementLayout {
     var _sizeThatFits: (
         _ proposal: PlacementProposedViewSize,
         _ subviews: PlacementLayoutSubviews,
@@ -52,6 +52,9 @@ public struct AnyPlacementLayout: PlacementLayout {
         _ cache: Cache
     ) -> (alignment: CGFloat?, cache: Cache)
     
+    var _prefersLayoutProtocol: () -> Bool
+    var _disablesAnimationsWhenPlacing: () -> Bool
+    
     public func sizeThatFits(proposal: PlacementProposedViewSize, subviews: PlacementLayoutSubviews, cache: inout Any) -> CGSize {
         let sizeThatFitsReturn = _sizeThatFits(proposal, subviews, cache)
         cache = sizeThatFitsReturn.cache
@@ -76,6 +79,14 @@ public struct AnyPlacementLayout: PlacementLayout {
         let spacingReturn = _spacing(subviews, cache)
         cache = spacingReturn.cache
         return spacingReturn.spacing
+    }
+    
+    public var prefersLayoutProtocol: Bool {
+        _prefersLayoutProtocol()
+    }
+    
+    public var disablesAnimationsWhenPlacing: Bool {
+        _disablesAnimationsWhenPlacing()
     }
     
     public func explicitAlignment(
@@ -137,6 +148,12 @@ public struct AnyPlacementLayout: PlacementLayout {
             var cache = cache as! L.Cache
             let alignment = layout.explicitAlignment(of: guide, in: bounds, proposal: proposal, subviews: subviews, cache: &cache)
             return (alignment, cache)
+        }
+        self._prefersLayoutProtocol = {
+            return layout.prefersLayoutProtocol
+        }
+        self._disablesAnimationsWhenPlacing = {
+            return layout.disablesAnimationsWhenPlacing
         }
     }
 }

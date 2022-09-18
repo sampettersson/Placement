@@ -8,9 +8,9 @@ A polyfill for the new Layout protocol from iOS 16. Supports iOS 14 and above, o
 
 Mimics the Layout protocol and has the same requirements and defaults.
 
-#### prefersNativeImplementationWhenAvailable
+#### prefersLayoutProtocol
 
-Implement this property and set to false if you want to always use Placements layouter irregardles off availability of the Layout protocol on the platform.
+Implement this property and set to false if you want to always use Placements layouter irregardles of availability of the Layout protocol on the platform.
 
 ### PlacementLayoutValueKey
 

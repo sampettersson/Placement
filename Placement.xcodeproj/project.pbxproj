@@ -10,6 +10,7 @@
 		EB323AA228D5B42F004F8EED /* CenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA128D5B42F004F8EED /* CenterLayout.swift */; };
 		EB323AA828D65963004F8EED /* PlacementThatFitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */; };
 		EB323AA928D65966004F8EED /* PlacementThatFits.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA428D658E9004F8EED /* PlacementThatFits.swift */; };
+		EB323AAB28D70D68004F8EED /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = EB323AAA28D70D68004F8EED /* Documentation.docc */; };
 		EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */; };
 		EB70B47A28D46753007049FF /* Placement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; };
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -69,6 +70,7 @@
 		EB323AA128D5B42F004F8EED /* CenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterLayout.swift; sourceTree = "<group>"; };
 		EB323AA428D658E9004F8EED /* PlacementThatFits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFits.swift; sourceTree = "<group>"; };
 		EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsLayout.swift; sourceTree = "<group>"; };
+		EB323AAA28D70D68004F8EED /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPlacementLayout.swift; sourceTree = "<group>"; };
 		EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingView.swift; sourceTree = "<group>"; };
 		EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutChildSizingView.swift; sourceTree = "<group>"; };
@@ -79,7 +81,6 @@
 		EB70B47428D46753007049FF /* Placement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Placement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplicitAlignmentModifier.swift; sourceTree = "<group>"; };
 		EB70B49928D47DD5007049FF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EB9124B528D47FB5005C376D /* PlacementDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlacementDemo.entitlements; sourceTree = "<group>"; };
 		EBC389F328CF665C000E7318 /* PlacementDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlacementDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC389FA28CF665E000E7318 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBC389FD28CF665E000E7318 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -233,7 +234,6 @@
 		EBC389EA28CF665C000E7318 = {
 			isa = PBXGroup;
 			children = (
-				EB9124B528D47FB5005C376D /* PlacementDemo.entitlements */,
 				EB70B49928D47DD5007049FF /* README.md */,
 				EB9124B428D47EF4005C376D /* Sources */,
 				EBC389F428CF665C000E7318 /* Products */,
@@ -252,6 +252,7 @@
 		EBC389F528CF665C000E7318 /* Placement */ = {
 			isa = PBXGroup;
 			children = (
+				EB323AAA28D70D68004F8EED /* Documentation.docc */,
 				EB323AA328D658D2004F8EED /* PlacementThatFits */,
 				EB70B46D28D466F5007049FF /* Spacing */,
 				EB70B46C28D466E5007049FF /* Sizing */,
@@ -414,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB323AA228D5B42F004F8EED /* CenterLayout.swift in Sources */,
+				EB323AAB28D70D68004F8EED /* Documentation.docc in Sources */,
 				EBC38A1E28CF6680000E7318 /* ContentView.swift in Sources */,
 				EBC38A2A28CF6680000E7318 /* TestStack.swift in Sources */,
 				EBC38A2928CF6680000E7318 /* PlacementDemoApp.swift in Sources */,
@@ -644,6 +646,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sampettersson.PlacementDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_DOCUMENTATION_COMPILER = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -684,6 +687,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.sampettersson.PlacementDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_DOCUMENTATION_COMPILER = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;

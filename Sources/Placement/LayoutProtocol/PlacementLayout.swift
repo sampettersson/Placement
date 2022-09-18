@@ -5,7 +5,10 @@ public protocol PlacementLayout: Animatable {
     associatedtype Cache
     
     /// When true Placement uses the Native iOS 16+ placement protocol when available
-    var prefersNativeImplementationWhenAvailable: Bool { get }
+    var prefersLayoutProtocol: Bool { get }
+    
+    /// Should Placement not use the same animation as current Transaction when placing views
+    var disablesAnimationsWhenPlacing: Bool { get }
     
     func sizeThatFits(
         proposal: PlacementProposedViewSize,
@@ -79,8 +82,12 @@ extension PlacementLayout {
         return nil
     }
     
-    public var prefersNativeImplementationWhenAvailable: Bool {
+    public var prefersLayoutProtocol: Bool {
         true
+    }
+    
+    public var disablesAnimationsWhenPlacing: Bool {
+        false
     }
     
     public static var layoutProperties: PlacementLayoutProperties {
@@ -94,7 +101,7 @@ extension PlacementLayout {
         @ViewBuilder _ content: @escaping () -> V
     ) -> some View {
         if #available(iOS 16, macCatalyst 16, *) {
-            if prefersNativeImplementationWhenAvailable {
+            if prefersLayoutProtocol {
                 PlacementLayoutNative(layoutBP: self).callAsFunction {
                     content()
                 }

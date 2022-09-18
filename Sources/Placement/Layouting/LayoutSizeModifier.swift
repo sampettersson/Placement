@@ -50,7 +50,11 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
             ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
                 content
                     .onPreferenceChange(ChildrenIntrinsicSizesKey.self) { sizes in
-                        withTransaction(placementsCordinator.transaction) {
+                        withTransaction(
+                            layout.disablesAnimationsWhenPlacing ?
+                                Transaction() :
+                                placementsCordinator.transaction
+                        ) {
                             childrenIntrinsicSizes = sizes
                         }
                     }

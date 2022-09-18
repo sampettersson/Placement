@@ -22,18 +22,22 @@ struct ExpandingView: View {
 }
 
 struct ContentView: View {
-    @State var hello = false
+    @State var changePlacementThatFitsWidth = false
     @State var layout = AnyPlacementLayout(OtherStack())
     
     var body: some View {
         ScrollView {
-            PlacementThatFits(in: .horizontal) {
+            PlacementThatFits(in: [.horizontal]) {
                 HStack {
                     Text("1")
                     Text("ksklsddklsalksaddskladsaklsal")
                 }
-                Color.blue.frame(width: 20000, height: 300)
                 Text("test")
+            }
+            .frame(maxWidth: changePlacementThatFitsWidth ? 150 : .infinity)
+            
+            Button("Change placement that fits width") {
+                changePlacementThatFitsWidth.toggle()
             }
             
             layout {

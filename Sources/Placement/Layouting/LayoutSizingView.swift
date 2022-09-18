@@ -11,6 +11,18 @@ class TransactionView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
+    
+    var placementOrigin: CGPoint {
+        let window = self.window
+        let originInWindow = self.convert(self.bounds.origin, to: window)
+        let safeAreaTop = (window?.safeAreaInsets.top ?? 0)
+        let safeAreaLeft = (window?.safeAreaInsets.left ?? 0)
+                
+        return CGPoint(
+            x: originInWindow.x - safeAreaLeft,
+            y: originInWindow.y - safeAreaTop
+        )
+    }
 }
 
 struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
@@ -33,7 +45,9 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
         uiView: TransactionView
-    ) {        
+    ) {
+        coordinator.sizeCoordinator.origin = uiView.placementOrigin
+        
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = proposedSize.placementProposedViewSize
             
@@ -48,7 +62,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
             let previousPlacements = coordinator.placementsCoordinator.placements
                         
             layout.placeSubviews(
-                in: CGRect(origin: .zero, size: proposal.replacingUnspecifiedDimensions(by: .zero)),
+                in: CGRect(origin: uiView.placementOrigin, size: proposal.replacingUnspecifiedDimensions(by: .zero)),
                 proposal: proposal,
                 subviews: subviews,
                 cache: &cache
@@ -56,7 +70,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
             
             if previousPlacements != coordinator.placementsCoordinator.placements {
                 DispatchQueue.main.async {
-                    withTransaction(uiView.transaction) {
+                    withTransaction(layout.disablesAnimationsWhenPlacing ? Transaction() : uiView.transaction) {
                         coordinator.placementsCoordinator.objectWillChange.send()
                     }
                 }

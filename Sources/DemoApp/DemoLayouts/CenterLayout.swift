@@ -41,7 +41,7 @@ public struct CenterLayout: PlacementLayout {
         }
     }
     
-    public var prefersNativeImplementationWhenAvailable: Bool {
+    public var prefersLayoutProtocol: Bool {
         nativeImplementation
     }
 }

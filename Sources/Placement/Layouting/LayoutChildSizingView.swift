@@ -23,14 +23,18 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
         uiView: TransactionView
-    ) {        
+    ) {
+        coordinator.sizeCoordinator.origin = uiView.placementOrigin
+        
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero)
             
             let previousPlacements = coordinator.placementsCoordinator.placements
             
+            let sizeReplacingUnspecifiedDimensions = proposal.replacingUnspecifiedDimensions(by: .zero)
+            
             layout.placeSubviews(
-                in: CGRect(origin: .zero, size: proposal.replacingUnspecifiedDimensions(by: .zero)),
+                in: CGRect(origin: uiView.placementOrigin, size: sizeReplacingUnspecifiedDimensions),
                 proposal: proposal,
                 subviews: subviews,
                 cache: &cache
@@ -41,7 +45,7 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
             
             if previousPlacements != coordinator.placementsCoordinator.placements {
                 DispatchQueue.main.async {
-                    withTransaction(uiView.transaction) {
+                    withTransaction(layout.disablesAnimationsWhenPlacing ? Transaction() : uiView.transaction) {
                         coordinator.placementsCoordinator.objectWillChange.send()
                     }
                 }

@@ -9,6 +9,20 @@ class PlacementsCoordinator: ObservableObject {
 class SizeCoordinator: ObservableObject {
     public var size: CGSize? = nil
     public var transaction = Transaction()
+    public var origin: CGPoint = .zero
+}
+
+func randomOrigin(seedX: Int, seedY: Int) -> CGPoint {
+    var generatorX = RandomNumberGeneratorWithSeed(seed: seedX)
+    var generatorY = RandomNumberGeneratorWithSeed(seed: seedY)
+    
+    let minimumBound: CGFloat = 0
+    let maximumBound: CGFloat = 10000
+    
+    return CGPoint(
+        x: CGFloat.random(in: minimumBound..<maximumBound, using: &generatorX),
+        y: CGFloat.random(in: minimumBound..<maximumBound, using: &generatorY)
+    )
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
@@ -25,7 +39,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             _cache = newValue
         }
     }
-        
+            
     func layoutContext<T>(children: _VariadicView.Children, context: (PlacementLayoutSubviews, inout L.Cache) -> T) -> T {
         let subviews = makeSubviews(children: children)
         return context(subviews, &cache)
@@ -52,7 +66,15 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             LayoutSubviewPolyfill(
                 id: child.id,
                 onPlacement: { placement in
-                    self.placementsCoordinator.placements[child.id] = placement
+                    self.placementsCoordinator.placements[child.id] = LayoutPlacement(
+                        subview: placement.subview,
+                        position: CGPoint(
+                            x: placement.position.x - self.sizeCoordinator.origin.x,
+                            y: placement.position.y - self.sizeCoordinator.origin.y
+                        ),
+                        anchor: placement.anchor,
+                        proposal: placement.proposal
+                    )
                 },
                 getSizeThatFits: { size in
                     var hostingController: UIHostingController<AnyView> {
