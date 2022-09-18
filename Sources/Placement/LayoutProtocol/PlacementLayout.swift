@@ -1,7 +1,11 @@
 import Foundation
 import SwiftUI
 
+/// A polyfill for Layout protocol, a type that defines the geometry of a collection of views.
 public protocol PlacementLayout: Animatable {
+    /// A collection of proxies for the subviews of a layout view.
+    typealias Subviews = PlacementLayoutSubviews
+    
     associatedtype Cache
     
     /// When true Placement uses the Native iOS 16+ placement protocol when available
@@ -10,24 +14,29 @@ public protocol PlacementLayout: Animatable {
     /// Should Placement not use the same animation as current Transaction when placing views
     var disablesAnimationsWhenPlacing: Bool { get }
     
+    /// Returns the size of the composite view, given a proposed size and the view’s subviews.
     func sizeThatFits(
+        /// A size proposal for the container. The container’s parent view that calls this method might call the method more than once with different proposals to learn more about the container’s flexibility before deciding which proposal to use for placement.
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        /// A collection of proxies that represent the views that the container arranges. You can use the proxies in the collection to get information about the subviews as you determine how much space the container needs to display them.
+        subviews: Subviews,
+        /// Optional storage for calculated data that you can share among the methods of your custom layout container. See makeCache(subviews:) for details.
         cache: inout Cache
     ) -> CGSize
     
+    /// Assigns positions to each of the layout’s subviews.
     func placeSubviews(
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Cache
     )
     
-    func makeCache(subviews: PlacementLayoutSubviews) -> Cache
-    func updateCache(_ cache: inout Cache, subviews: PlacementLayoutSubviews)
+    func makeCache(subviews: Subviews) -> Cache
+    func updateCache(_ cache: inout Cache, subviews: Subviews)
     
     func spacing(
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Cache
     ) -> PlacementViewSpacing
     
@@ -35,7 +44,7 @@ public protocol PlacementLayout: Animatable {
         of guide: VerticalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Cache
     ) -> CGFloat?
     
@@ -43,7 +52,7 @@ public protocol PlacementLayout: Animatable {
         of guide: HorizontalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Cache
     ) -> CGFloat?
     
@@ -51,14 +60,14 @@ public protocol PlacementLayout: Animatable {
 }
 
 extension PlacementLayout where Cache == Void {
-    public func makeCache(subviews: PlacementLayoutSubviews) -> Cache {
+    public func makeCache(subviews: Subviews) -> Cache {
         return ()
     }
 }
 
 extension PlacementLayout {
-    public func updateCache(_ cache: inout Cache, subviews: PlacementLayoutSubviews) {}
-    public func spacing(subviews: PlacementLayoutSubviews, cache: inout Cache) -> PlacementViewSpacing {
+    public func updateCache(_ cache: inout Cache, subviews: Subviews) {}
+    public func spacing(subviews: Subviews, cache: inout Cache) -> PlacementViewSpacing {
         PlacementViewSpacing()
     }
     
@@ -66,7 +75,7 @@ extension PlacementLayout {
         of guide: VerticalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Cache
     ) -> CGFloat? {
         return nil
@@ -76,7 +85,7 @@ extension PlacementLayout {
         of guide: HorizontalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Cache
     ) -> CGFloat? {
         return nil

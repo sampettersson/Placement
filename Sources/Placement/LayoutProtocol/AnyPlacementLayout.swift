@@ -11,28 +11,28 @@ import SwiftUI
 public struct AnyPlacementLayout: PlacementLayout {
     var _sizeThatFits: (
         _ proposal: PlacementProposedViewSize,
-        _ subviews: PlacementLayoutSubviews,
+        _ subviews: Subviews,
         _ cache: Cache
     ) -> (size: CGSize, cache: Cache)
     
     var _makeCache: (
-        _ subviews: PlacementLayoutSubviews
+        _ subviews: Subviews
     ) -> Cache
     
     var _updateCache: (
         _ cache: Cache,
-        _ subviews: PlacementLayoutSubviews
+        _ subviews: Subviews
     ) -> Cache
     
     var _placeSubviews: (
         _ bounds: CGRect,
         _ proposal: PlacementProposedViewSize,
-        _ subviews: PlacementLayoutSubviews,
+        _ subviews: Subviews,
         _ cache: Cache
     ) -> Cache
     
     var _spacing: (
-        _ subviews: PlacementLayoutSubviews,
+        _ subviews: Subviews,
         _ cache: Cache
     ) -> (spacing: PlacementViewSpacing, cache: Cache)
     
@@ -40,7 +40,7 @@ public struct AnyPlacementLayout: PlacementLayout {
         _ guide: VerticalAlignment,
         _ bounds: CGRect,
         _ proposal: PlacementProposedViewSize,
-        _ subviews: PlacementLayoutSubviews,
+        _ subviews: Subviews,
         _ cache: Cache
     ) -> (alignment: CGFloat?, cache: Cache)
     
@@ -48,34 +48,34 @@ public struct AnyPlacementLayout: PlacementLayout {
         _ guide: HorizontalAlignment,
         _ bounds: CGRect,
         _ proposal: PlacementProposedViewSize,
-        _ subviews: PlacementLayoutSubviews,
+        _ subviews: Subviews,
         _ cache: Cache
     ) -> (alignment: CGFloat?, cache: Cache)
     
     var _prefersLayoutProtocol: () -> Bool
     var _disablesAnimationsWhenPlacing: () -> Bool
     
-    public func sizeThatFits(proposal: PlacementProposedViewSize, subviews: PlacementLayoutSubviews, cache: inout Any) -> CGSize {
+    public func sizeThatFits(proposal: PlacementProposedViewSize, subviews: Subviews, cache: inout Any) -> CGSize {
         let sizeThatFitsReturn = _sizeThatFits(proposal, subviews, cache)
         cache = sizeThatFitsReturn.cache
         return sizeThatFitsReturn.size
     }
     
-    public func placeSubviews(in bounds: CGRect, proposal: PlacementProposedViewSize, subviews: PlacementLayoutSubviews, cache: inout Any) {
+    public func placeSubviews(in bounds: CGRect, proposal: PlacementProposedViewSize, subviews: Subviews, cache: inout Any) {
         let placeSubviewsReturn = _placeSubviews(bounds, proposal, subviews, cache)
         cache = placeSubviewsReturn
     }
         
-    public func makeCache(subviews: PlacementLayoutSubviews) -> Any {
+    public func makeCache(subviews: Subviews) -> Any {
         _makeCache(subviews)
     }
     
-    public func updateCache(_ cache: inout Any, subviews: PlacementLayoutSubviews) {
+    public func updateCache(_ cache: inout Any, subviews: Subviews) {
         let updateCacheReturn = _updateCache(cache, subviews)
         cache = updateCacheReturn
     }
     
-    public func spacing(subviews: PlacementLayoutSubviews, cache: inout Any) -> PlacementViewSpacing {
+    public func spacing(subviews: Subviews, cache: inout Any) -> PlacementViewSpacing {
         let spacingReturn = _spacing(subviews, cache)
         cache = spacingReturn.cache
         return spacingReturn.spacing
@@ -93,7 +93,7 @@ public struct AnyPlacementLayout: PlacementLayout {
         of guide: VerticalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Any
     ) -> CGFloat? {
         let explicitAlignmentReturn = _explicitAlignmentVertical(guide, bounds, proposal, subviews, cache)
@@ -105,7 +105,7 @@ public struct AnyPlacementLayout: PlacementLayout {
         of guide: HorizontalAlignment,
         in bounds: CGRect,
         proposal: PlacementProposedViewSize,
-        subviews: PlacementLayoutSubviews,
+        subviews: Subviews,
         cache: inout Any
     ) -> CGFloat? {
         let explicitAlignmentReturn = _explicitAlignmentHorizontal(guide, bounds, proposal, subviews, cache)

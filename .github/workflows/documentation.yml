@@ -28,11 +28,9 @@ jobs:
       - name: Setup DOCC_HTML_DIR
         run: export DOCC_HTML_DIR="$(dirname $(xcrun --find docc))/../share/docc/render"
       - name: Build swift-docc
-        run: cd swift-docc
-          swift build
+        run: cd swift-docc && swift build
       - name: Run swift-docc
-        run: cd swift-docc
-          swift run docc process-archive transform-for-static-hosting ../build/Build/Products/Debug-iphonesimulator/Placement.doccarchive --output-path ../build/Docs
+        run: cd swift-docc && swift run docc process-archive transform-for-static-hosting ../build/Build/Products/Debug-iphonesimulator/Placement.doccarchive --output-path ../build/Docs
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
