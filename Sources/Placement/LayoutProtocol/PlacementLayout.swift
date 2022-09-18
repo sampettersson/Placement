@@ -15,12 +15,13 @@ public protocol PlacementLayout: Animatable {
     var disablesAnimationsWhenPlacing: Bool { get }
     
     /// Returns the size of the composite view, given a proposed size and the view’s subviews.
+    ///
+    /// - parameter proposal: A size proposal for the container. The container’s parent view that calls this method might call the method more than once with different proposals to learn more about the container’s flexibility before deciding which proposal to use for placement.
+    /// - parameter subviews: A collection of proxies that represent the views that the container arranges. You can use the proxies in the collection to get information about the subviews as you determine how much space the container needs to display them.
+    /// - parameter cache: Optional storage for calculated data that you can share among the methods of your custom layout container. See makeCache(subviews:) for details.
     func sizeThatFits(
-        /// A size proposal for the container. The container’s parent view that calls this method might call the method more than once with different proposals to learn more about the container’s flexibility before deciding which proposal to use for placement.
         proposal: PlacementProposedViewSize,
-        /// A collection of proxies that represent the views that the container arranges. You can use the proxies in the collection to get information about the subviews as you determine how much space the container needs to display them.
         subviews: Subviews,
-        /// Optional storage for calculated data that you can share among the methods of your custom layout container. See makeCache(subviews:) for details.
         cache: inout Cache
     ) -> CGSize
     

@@ -29,10 +29,11 @@ struct LayoutValueKeyMapper<K: PlacementLayoutValueKey> {
 
 extension View {
     /// Associates a value with a custom layout property for PlacementLayout
+    ///
+    /// - parameter key: The type of the key that you want to set a value for. Create the key as a type that conforms to the PlacementLayoutValueKey protocol.
+    /// - parameter value: The value to assign to the key for this view. The value must be of the type that you establish for the key’s associated value when you implement the key’s defaultValue property.
     public func placementLayoutValue<K>(
-        /// The type of the key that you want to set a value for. Create the key as a type that conforms to the PlacementLayoutValueKey protocol.
         key: K.Type,
-        /// The value to assign to the key for this view. The value must be of the type that you establish for the key’s associated value when you implement the key’s defaultValue property.
         value: K.Value
     ) -> some View where K : PlacementLayoutValueKey {
         if #available(iOS 16.0, macCatalyst 16, *) {
@@ -43,6 +44,8 @@ extension View {
     }
     
     /// Associates a layoutPriority for PlacementLayout
+    ///
+    /// - parameter value: The layoutPriority to use
     public func placementLayoutPriority(_ value: Double) -> some View {
         self._trait(LayoutPriorityValueKey.self, value).layoutPriority(value)
     }
