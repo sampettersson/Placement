@@ -23,3 +23,7 @@ jobs:
         run: |
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
           xcodebuild docbuild -scheme Placement -derivedDataPath $GITHUB_WORKSPACE/build -destination "platform=$platform,name=$device"
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/Build/Products/Debug-iphonesimulator/Placement.doccarchive
