@@ -43,7 +43,7 @@ class PlacementThatFitsCoordinator: ObservableObject {
 public struct PlacementThatFits<Content: View>: View {
     @StateObject var coordinator = PlacementThatFitsCoordinator()
     
-    /// A set of axes to constrain children to. The set may contain Axis.horizontal, Axis.vertical, or both of these. ViewThatFits chooses the first child whose size fits within the proposed size on these axes. If axes is an empty set, ViewThatFits uses the first child view. By default, ViewThatFits uses both axes.
+    /// A set of axes to constrain children to. The set may contain Axis.horizontal, Axis.vertical, or both of these. PlacementThatFits chooses the first child whose size fits within the proposed size on these axes. If axes is an empty set, PlacementThatFits uses the first child view. By default, PlacementThatFits uses both axes.
     public var axes: Axis.Set
     
     /// A view builder that provides the child views for this container, in order of preference. The builder chooses the first child view that fits within the proposed width, height, or both, as defined by axes.
