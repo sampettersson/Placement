@@ -24,7 +24,9 @@ jobs:
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
           xcodebuild docbuild -scheme Placement -derivedDataPath $GITHUB_WORKSPACE/build -destination "platform=$platform,name=$device"
       - name: Clone swift-docc
-        run: git clone https://github.com/apple/swift-docc.git & cd swift-docc
+        run: git clone https://github.com/apple/swift-docc.git
+      - name: Set current dir to swift-docc
+        run: cd swift-docc
       - name: Setup DOCC_HTML_DIR
         run: export DOCC_HTML_DIR="$(dirname $(xcrun --find docc))/../share/docc/render"
       - name: Build swift-docc

@@ -8,6 +8,7 @@ extension ViewSpacing {
     }
 }
 
+/// A collection of the geometric spacing preferences of a view.
 public struct PlacementViewSpacing {
     private var _underlyingViewSpacing: Any? = nil
     
@@ -21,6 +22,7 @@ public struct PlacementViewSpacing {
         }
     }
     
+    /// Initializes an instance with default spacing values.
     public init() {
         if #available(iOS 16.0, macCatalyst 16, *) {
             _underlyingViewSpacing = ViewSpacing()
@@ -32,8 +34,10 @@ public struct PlacementViewSpacing {
         _underlyingViewSpacing = underlyingViewSpacing.placement
     }
     
+    /// A view spacing instance that contains zero on all edges.
     public static let zero = Self.init()
     
+    /// Gets the preferred spacing distance along the specified axis to the view that returns a specified spacing preference.
     public func distance(to next: PlacementViewSpacing, along axis: Axis) -> CGFloat {
         if #available(iOS 16.0, macCatalyst 16, *) {
             return underlyingViewSpacing.distance(
@@ -45,12 +49,14 @@ public struct PlacementViewSpacing {
         }
     }
     
+    /// Merges the spacing preferences of another spacing instance with this instance for a specified set of edges.
     public mutating func formUnion(_ other: PlacementViewSpacing, edges: Edge.Set = .all) {
         if #available(iOS 16.0, macCatalyst 16, *) {
             underlyingViewSpacing.formUnion(other.underlyingViewSpacing, edges: edges)
         }
     }
     
+    /// Gets a new value that merges the spacing preferences of another spacing instance with this instance for a specified set of edges.
     public func union(_ other: PlacementViewSpacing, edges: Edge.Set = .all) -> PlacementViewSpacing {
         if #available(iOS 16.0, macCatalyst 16, *) {
             return underlyingViewSpacing.union(other.underlyingViewSpacing, edges: edges).placement
