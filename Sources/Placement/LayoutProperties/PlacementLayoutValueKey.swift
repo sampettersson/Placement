@@ -1,8 +1,10 @@
 import Foundation
 import SwiftUI
 
+public typealias ViewTraitKey = _ViewTraitKey
+
 /// A key for accessing a layout value of a layout container’s subviews.
-public protocol PlacementLayoutValueKey: _ViewTraitKey {
+public protocol PlacementLayoutValueKey: ViewTraitKey {
     /// The type of the key’s value.
     associatedtype Value
     

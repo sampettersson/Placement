@@ -3,6 +3,16 @@ import SwiftUI
 import Placement
 
 struct OtherStack: PlacementLayout {
+    var shakeNumber: CGFloat = 0
+
+    var animatableData: CGFloat {
+        get {
+            shakeNumber
+        } set {
+            shakeNumber = newValue
+        }
+    }
+    
     /// Returns a size that the layout container needs to arrange its subviews
     /// horizontally.
     /// - Tag: sizeThatFitsHorizontal
@@ -13,6 +23,8 @@ struct OtherStack: PlacementLayout {
     ) -> CGSize {
         var totalHeight: CGFloat = 0
         var maxWidth: CGFloat = 0
+        
+        print(animatableData)
                         
         subviews.forEach { subview in
             let proposal = proposal.replacingUnspecifiedDimensions(

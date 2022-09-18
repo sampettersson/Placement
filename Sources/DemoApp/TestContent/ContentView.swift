@@ -23,7 +23,7 @@ struct ExpandingView: View {
 
 struct ContentView: View {
     @State var changePlacementThatFitsWidth = false
-    @State var layout = AnyPlacementLayout(OtherStack())
+    @State var layout = OtherStack(shakeNumber: 200)
     
     var body: some View {
         ScrollView {
@@ -38,6 +38,9 @@ struct ContentView: View {
             
             Button("Change placement that fits width") {
                 changePlacementThatFitsWidth.toggle()
+                withAnimation(.spring()) {
+                    layout.shakeNumber = layout.shakeNumber + 100
+                }
             }
             
             layout {

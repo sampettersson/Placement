@@ -55,6 +55,9 @@ public struct AnyPlacementLayout: PlacementLayout {
     var _prefersLayoutProtocol: () -> Bool
     var _disablesAnimationsWhenPlacing: () -> Bool
     
+    var _getAnimatableData: (_ layout: Any) -> AnyAnimatableData
+    var _setAnimatableData: (_ layout: Any, _ newValue: AnyAnimatableData) -> Any
+    
     public func sizeThatFits(proposal: PlacementProposedViewSize, subviews: Subviews, cache: inout Any) -> CGSize {
         let sizeThatFitsReturn = _sizeThatFits(proposal, subviews, cache)
         cache = sizeThatFitsReturn.cache
@@ -65,7 +68,7 @@ public struct AnyPlacementLayout: PlacementLayout {
         let placeSubviewsReturn = _placeSubviews(bounds, proposal, subviews, cache)
         cache = placeSubviewsReturn
     }
-        
+    
     public func makeCache(subviews: Subviews) -> Any {
         _makeCache(subviews)
     }
@@ -112,10 +115,22 @@ public struct AnyPlacementLayout: PlacementLayout {
         cache = explicitAlignmentReturn.cache
         return explicitAlignmentReturn.alignment
     }
+    
+    var layout: Any
+    
+    public var animatableData: AnyAnimatableData {
+        get {
+            _getAnimatableData(layout)
+        }
+        set {
+            layout = _setAnimatableData(layout, newValue)
+        }
+    }
         
     public init<L: PlacementLayout>(
         _ layout: L
     ) {
+        self.layout = layout
         self._sizeThatFits = { proposal, subviews, cache in
             var cache = cache as! L.Cache
             let size = layout.sizeThatFits(proposal: proposal, subviews: subviews, cache: &cache)
@@ -154,6 +169,15 @@ public struct AnyPlacementLayout: PlacementLayout {
         }
         self._disablesAnimationsWhenPlacing = {
             return layout.disablesAnimationsWhenPlacing
+        }
+        self._getAnimatableData = { layout in
+            var layout = layout as! L
+            return AnyAnimatableData(layout.animatableData)
+        }
+        self._setAnimatableData = { layout, newValue in
+            var layout = layout as! L
+            layout.animatableData = newValue.vector as! L.AnimatableData
+            return layout
         }
     }
 }

@@ -11,6 +11,7 @@
 		EB323AA828D65963004F8EED /* PlacementThatFitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */; };
 		EB323AA928D65966004F8EED /* PlacementThatFits.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA428D658E9004F8EED /* PlacementThatFits.swift */; };
 		EB323AAB28D70D68004F8EED /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = EB323AAA28D70D68004F8EED /* Documentation.docc */; };
+		EB323AAF28D73D76004F8EED /* AnyAnimatableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AAD28D73D67004F8EED /* AnyAnimatableData.swift */; };
 		EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */; };
 		EB70B47A28D46753007049FF /* Placement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; };
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -71,6 +72,7 @@
 		EB323AA428D658E9004F8EED /* PlacementThatFits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFits.swift; sourceTree = "<group>"; };
 		EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsLayout.swift; sourceTree = "<group>"; };
 		EB323AAA28D70D68004F8EED /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
+		EB323AAD28D73D67004F8EED /* AnyAnimatableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyAnimatableData.swift; sourceTree = "<group>"; };
 		EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPlacementLayout.swift; sourceTree = "<group>"; };
 		EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingView.swift; sourceTree = "<group>"; };
 		EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutChildSizingView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,14 @@
 				EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */,
 			);
 			path = PlacementThatFits;
+			sourceTree = "<group>";
+		};
+		EB323AAC28D73D4B004F8EED /* Animatable */ = {
+			isa = PBXGroup;
+			children = (
+				EB323AAD28D73D67004F8EED /* AnyAnimatableData.swift */,
+			);
+			path = Animatable;
 			sourceTree = "<group>";
 		};
 		EB70B46528D46610007049FF /* TestContent */ = {
@@ -259,6 +269,7 @@
 				EB70B46928D46664007049FF /* LayoutProperties */,
 				EB70B46828D46659007049FF /* Layouting */,
 				EB70B46728D4664D007049FF /* Subview */,
+				EB323AAC28D73D4B004F8EED /* Animatable */,
 				EB70B46628D46630007049FF /* LayoutProtocol */,
 			);
 			path = Placement;
@@ -395,6 +406,7 @@
 				EB70B49128D46789007049FF /* PlacementLayoutSubview.swift in Sources */,
 				EB70B48228D46778007049FF /* SizePreferences.swift in Sources */,
 				EB70B48428D46778007049FF /* ProposedSize.swift in Sources */,
+				EB323AAF28D73D76004F8EED /* AnyAnimatableData.swift in Sources */,
 				EB70B48A28D46784007049FF /* PlacementModifier.swift in Sources */,
 				EB70B49028D46789007049FF /* PlacementLayoutSubviews.swift in Sources */,
 				EB70B49528D46DBB007049FF /* ExplicitAlignmentModifier.swift in Sources */,
