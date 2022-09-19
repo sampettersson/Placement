@@ -21,6 +21,7 @@
 		EB323ADE28D86C91004F8EED /* LayoutSizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323ADD28D86C91004F8EED /* LayoutSizeModifier.swift */; };
 		EB323AE128D8755B004F8EED /* PlacementLayoutNativeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE028D8755B004F8EED /* PlacementLayoutNativeTests.swift */; };
 		EB323AE328D87897004F8EED /* LayoutSizingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE228D87897004F8EED /* LayoutSizingTests.swift */; };
+		EB323AE528D8C534004F8EED /* PositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE428D8C534004F8EED /* PositioningTests.swift */; };
 		EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */; };
 		EB70B47A28D46753007049FF /* Placement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; };
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -105,6 +106,7 @@
 		EB323ADF28D86D89004F8EED /* PlacementTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PlacementTests.xctestplan; sourceTree = "<group>"; };
 		EB323AE028D8755B004F8EED /* PlacementLayoutNativeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementLayoutNativeTests.swift; sourceTree = "<group>"; };
 		EB323AE228D87897004F8EED /* LayoutSizingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingTests.swift; sourceTree = "<group>"; };
+		EB323AE428D8C534004F8EED /* PositioningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositioningTests.swift; sourceTree = "<group>"; };
 		EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPlacementLayout.swift; sourceTree = "<group>"; };
 		EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingView.swift; sourceTree = "<group>"; };
 		EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutChildSizingView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				EB323ACE28D86743004F8EED /* PlacementLayoutTests.swift */,
 				EB323AE028D8755B004F8EED /* PlacementLayoutNativeTests.swift */,
 				EB323AE228D87897004F8EED /* LayoutSizingTests.swift */,
+				EB323AE428D8C534004F8EED /* PositioningTests.swift */,
 			);
 			path = PlacementTests;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				EB323ADC28D86AA6004F8EED /* PlacementModifier.swift in Sources */,
 				EB323AE128D8755B004F8EED /* PlacementLayoutNativeTests.swift in Sources */,
 				EB323ACF28D86743004F8EED /* PlacementLayoutTests.swift in Sources */,
+				EB323AE528D8C534004F8EED /* PositioningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

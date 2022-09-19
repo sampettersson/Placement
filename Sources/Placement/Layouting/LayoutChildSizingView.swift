@@ -23,11 +23,11 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
         uiView: TransactionView
-    ) {
+    ) {        
         coordinator.sizeCoordinator.origin = uiView.placementOrigin
         
         coordinator.layoutContext(children: children) { subviews, cache in
-            let proposal = PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero)
+            let proposal = PlacementProposedViewSize(coordinator.sizeCoordinator.size!)
             
             let previousPlacements = coordinator.placementsCoordinator.placements
             

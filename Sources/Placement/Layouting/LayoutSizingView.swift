@@ -47,7 +47,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
         uiView: TransactionView
     ) {
         coordinator.sizeCoordinator.origin = uiView.placementOrigin
-        
+                
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = proposedSize.placementProposedViewSize
             
