@@ -12,19 +12,6 @@ class SizeCoordinator: ObservableObject {
     public var origin: CGPoint = .zero
 }
 
-func randomOrigin(seedX: Int, seedY: Int) -> CGPoint {
-    var generatorX = RandomNumberGeneratorWithSeed(seed: seedX)
-    var generatorY = RandomNumberGeneratorWithSeed(seed: seedY)
-    
-    let minimumBound: CGFloat = 0
-    let maximumBound: CGFloat = 10000
-    
-    return CGPoint(
-        x: CGFloat.random(in: minimumBound..<maximumBound, using: &generatorX),
-        y: CGFloat.random(in: minimumBound..<maximumBound, using: &generatorY)
-    )
-}
-
 class Coordinator<L: PlacementLayout>: ObservableObject {
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil

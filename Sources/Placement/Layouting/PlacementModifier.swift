@@ -1,18 +1,6 @@
 import Foundation
 import SwiftUI
 
-struct RandomNumberGeneratorWithSeed: RandomNumberGenerator {
-    init(seed: Int) {
-        srand48(seed)
-    }
-    
-    func next() -> UInt64 {
-        return withUnsafeBytes(of: drand48()) { bytes in
-            bytes.load(as: UInt64.self)
-        }
-    }
-}
-
 struct PlacementEffect: GeometryEffect {
     var positionX: CGFloat
     var positionY: CGFloat
@@ -37,8 +25,11 @@ struct PlacementEffect: GeometryEffect {
         let translationY = positionY - anchorPointY
         let anchorPointX = size.width * anchorX
         let translationX = positionX - anchorPointX
-                                                        
-        return ProjectionTransform(CGAffineTransform(translationX: translationX, y: translationY))
+                                                                
+        return ProjectionTransform(CGAffineTransform(
+            translationX: translationX,
+            y: translationY
+        ))
     }
 }
 
