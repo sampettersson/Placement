@@ -9,3 +9,4 @@ Placement provides ``PlacementLayout`` which is mostly a drop in replacement for
 ## Differences from SwiftUI.Layout
 
 - No way to get alignment guides on ``PlacementLayoutSubview`` currently.
+- Some side-effects may be triggered twice like GeometryReaders on the children in a layout, this is due to Placement using a `UIHostingController` to evaluate `sizeThatFits`.
