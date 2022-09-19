@@ -43,10 +43,6 @@ struct ContentView: View {
                 }
             }
             
-            layout {
-                ExpandingView()
-            }
-            
             CenterLayoutView()
             
             Text("Hello")

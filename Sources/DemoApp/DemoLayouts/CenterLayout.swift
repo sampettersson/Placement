@@ -55,6 +55,12 @@ struct CenterLayoutView: View {
                 Text("View 1")
                     .padding(changeLayout ? 10 : 20)
                     .border(.red)
+                
+                if changeLayout {
+                    Text("View 1")
+                        .padding(changeLayout ? 10 : 20)
+                        .border(.red)
+                }
             }
             .border(.blue)
             .padding()
@@ -64,6 +70,12 @@ struct CenterLayoutView: View {
                 Text("View 1")
                     .padding(changeLayout ? 10 : 20)
                     .border(.red)
+                
+                if changeLayout {
+                    Text("View 1")
+                        .padding(changeLayout ? 10 : 20)
+                        .border(.red)
+                }
             }
             .border(.blue)
             .padding()

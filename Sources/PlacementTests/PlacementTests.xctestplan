@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "D4C1DFCF-C8E3-4122-B8A9-3CB8BDC266F4",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testRepetitionMode" : "untilFailure",
+    "uiTestingScreenshotsLifetime" : "keepAlways"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Placement.xcodeproj",
+        "identifier" : "EB323AC328D86717004F8EED",
+        "name" : "PlacementTests"
+      }
+    }
+  ],
+  "version" : 1
+}
