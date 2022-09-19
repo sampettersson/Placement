@@ -53,7 +53,7 @@ public protocol PlacementLayout: Animatable {
     /// Returns the preferred spacing values of the composite view.
     ///
     /// - parameter subviews: A collection of proxy instances that represent the views that the container arranges. You can use the proxies in the collection to get information about the subviews as you determine how much spacing the container prefers around it.
-    ///  - parameter Optional storage for calculated data that you can share among the methods of your custom layout container. See ``makeCache(subviews:)`` for details.
+    ///  - parameter Optional storage for calculated data that you can share among the methods of your custom layout container. See ``makeCache(subviews:)-4mrb3`` for details.
     func spacing(
         subviews: Subviews,
         cache: inout Cache
@@ -65,7 +65,7 @@ public protocol PlacementLayout: Animatable {
     /// - parameter bounds: The region that the container view’s parent allocates to the container view, specified in the parent’s coordinate space.
     /// - parameter proposal: A proposed size for the container.
     /// - parameter subviews: A collection of proxy instances that represent the views arranged by the container. You can use the proxies in the collection to get information about the subviews as you determine where to place the guide.
-    /// - parameter cache: storage for calculated data that you can share among the methods of your custom layout container. See ``makeCache(subviews:)`` for details.
+    /// - parameter cache: storage for calculated data that you can share among the methods of your custom layout container. See ``makeCache(subviews:)-4mrb3`` for details.
     func explicitAlignment(
         of guide: VerticalAlignment,
         in bounds: CGRect,
@@ -80,7 +80,7 @@ public protocol PlacementLayout: Animatable {
     /// - parameter bounds: The region that the container view’s parent allocates to the container view, specified in the parent’s coordinate space.
     /// - parameter proposal: A proposed size for the container.
     /// - parameter subviews: A collection of proxy instances that represent the views arranged by the container. You can use the proxies in the collection to get information about the subviews as you determine where to place the guide.
-    /// - parameter cache: storage for calculated data that you can share among the methods of your custom layout container. See ``makeCache(subviews:)`` for details.
+    /// - parameter cache: storage for calculated data that you can share among the methods of your custom layout container. See ``makeCache(subviews:)-6gvgo`` for details.
     func explicitAlignment(
         of guide: HorizontalAlignment,
         in bounds: CGRect,
@@ -91,51 +91,6 @@ public protocol PlacementLayout: Animatable {
     
     /// Properties of a layout container.
     static var layoutProperties: PlacementLayoutProperties { get }
-}
-
-extension PlacementLayout where Cache == Void {
-    public func makeCache(subviews: Subviews) -> Cache {
-        return ()
-    }
-}
-
-extension PlacementLayout {
-    public func updateCache(_ cache: inout Cache, subviews: Subviews) {}
-    public func spacing(subviews: Subviews, cache: inout Cache) -> PlacementViewSpacing {
-        PlacementViewSpacing()
-    }
-    
-    public func explicitAlignment(
-        of guide: VerticalAlignment,
-        in bounds: CGRect,
-        proposal: PlacementProposedViewSize,
-        subviews: Subviews,
-        cache: inout Cache
-    ) -> CGFloat? {
-        return nil
-    }
-    
-    public func explicitAlignment(
-        of guide: HorizontalAlignment,
-        in bounds: CGRect,
-        proposal: PlacementProposedViewSize,
-        subviews: Subviews,
-        cache: inout Cache
-    ) -> CGFloat? {
-        return nil
-    }
-    
-    public var prefersLayoutProtocol: Bool {
-        true
-    }
-    
-    public var disablesAnimationsWhenPlacing: Bool {
-        false
-    }
-    
-    public static var layoutProperties: PlacementLayoutProperties {
-        PlacementLayoutProperties()
-    }
 }
 
 extension PlacementLayout {
