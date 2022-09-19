@@ -10,8 +10,8 @@
 		EB323AA228D5B42F004F8EED /* CenterLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA128D5B42F004F8EED /* CenterLayout.swift */; };
 		EB323AA828D65963004F8EED /* PlacementThatFitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */; };
 		EB323AA928D65966004F8EED /* PlacementThatFits.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA428D658E9004F8EED /* PlacementThatFits.swift */; };
-		EB323AAB28D70D68004F8EED /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = EB323AAA28D70D68004F8EED /* Documentation.docc */; };
 		EB323AAF28D73D76004F8EED /* AnyAnimatableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AAD28D73D67004F8EED /* AnyAnimatableData.swift */; };
+		EB323AB028D855C0004F8EED /* Placement.docc in Sources */ = {isa = PBXBuildFile; fileRef = EB323AAA28D70D68004F8EED /* Placement.docc */; };
 		EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */; };
 		EB70B47A28D46753007049FF /* Placement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; };
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -71,7 +71,7 @@
 		EB323AA128D5B42F004F8EED /* CenterLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterLayout.swift; sourceTree = "<group>"; };
 		EB323AA428D658E9004F8EED /* PlacementThatFits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFits.swift; sourceTree = "<group>"; };
 		EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsLayout.swift; sourceTree = "<group>"; };
-		EB323AAA28D70D68004F8EED /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
+		EB323AAA28D70D68004F8EED /* Placement.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Placement.docc; sourceTree = "<group>"; };
 		EB323AAD28D73D67004F8EED /* AnyAnimatableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyAnimatableData.swift; sourceTree = "<group>"; };
 		EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPlacementLayout.swift; sourceTree = "<group>"; };
 		EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingView.swift; sourceTree = "<group>"; };
@@ -262,7 +262,7 @@
 		EBC389F528CF665C000E7318 /* Placement */ = {
 			isa = PBXGroup;
 			children = (
-				EB323AAA28D70D68004F8EED /* Documentation.docc */,
+				EB323AAA28D70D68004F8EED /* Placement.docc */,
 				EB323AA328D658D2004F8EED /* PlacementThatFits */,
 				EB70B46D28D466F5007049FF /* Spacing */,
 				EB70B46C28D466E5007049FF /* Sizing */,
@@ -410,6 +410,7 @@
 				EB70B48A28D46784007049FF /* PlacementModifier.swift in Sources */,
 				EB70B49028D46789007049FF /* PlacementLayoutSubviews.swift in Sources */,
 				EB70B49528D46DBB007049FF /* ExplicitAlignmentModifier.swift in Sources */,
+				EB323AB028D855C0004F8EED /* Placement.docc in Sources */,
 				EB70B49228D4678D007049FF /* PlacementLayout.swift in Sources */,
 				EB70B48028D46773007049FF /* PlacementViewSpacing.swift in Sources */,
 				EB70B48E28D46784007049FF /* LayoutPlacement.swift in Sources */,
@@ -427,7 +428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB323AA228D5B42F004F8EED /* CenterLayout.swift in Sources */,
-				EB323AAB28D70D68004F8EED /* Documentation.docc in Sources */,
 				EBC38A1E28CF6680000E7318 /* ContentView.swift in Sources */,
 				EBC38A2A28CF6680000E7318 /* TestStack.swift in Sources */,
 				EBC38A2928CF6680000E7318 /* PlacementDemoApp.swift in Sources */,
