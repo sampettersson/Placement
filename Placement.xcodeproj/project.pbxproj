@@ -23,6 +23,9 @@
 		EB323AE328D87897004F8EED /* LayoutSizingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE228D87897004F8EED /* LayoutSizingTests.swift */; };
 		EB323AE528D8C534004F8EED /* PositioningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE428D8C534004F8EED /* PositioningTests.swift */; };
 		EB323AE828D8DDAB004F8EED /* PlacementThatFitsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE628D8DD1D004F8EED /* PlacementThatFitsDemo.swift */; };
+		EB323AEF28D8EEBF004F8EED /* PlacementThatFitsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AED28D8EEAD004F8EED /* PlacementThatFitsCoordinator.swift */; };
+		EB323AF028D8EEC3004F8EED /* PlacementThatFitsVariadicRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AEB28D8EE7F004F8EED /* PlacementThatFitsVariadicRoot.swift */; };
+		EB323AF128D8EEC5004F8EED /* PlacementThatFitsChildModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AE928D8EE65004F8EED /* PlacementThatFitsChildModifier.swift */; };
 		EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */; };
 		EB70B47A28D46753007049FF /* Placement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; };
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -106,6 +109,9 @@
 		EB323AE228D87897004F8EED /* LayoutSizingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingTests.swift; sourceTree = "<group>"; };
 		EB323AE428D8C534004F8EED /* PositioningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositioningTests.swift; sourceTree = "<group>"; };
 		EB323AE628D8DD1D004F8EED /* PlacementThatFitsDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsDemo.swift; sourceTree = "<group>"; };
+		EB323AE928D8EE65004F8EED /* PlacementThatFitsChildModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsChildModifier.swift; sourceTree = "<group>"; };
+		EB323AEB28D8EE7F004F8EED /* PlacementThatFitsVariadicRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsVariadicRoot.swift; sourceTree = "<group>"; };
+		EB323AED28D8EEAD004F8EED /* PlacementThatFitsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsCoordinator.swift; sourceTree = "<group>"; };
 		EB49F88028D503C700693F9E /* AnyPlacementLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyPlacementLayout.swift; sourceTree = "<group>"; };
 		EB70B45928D3B3A1007049FF /* LayoutSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizingView.swift; sourceTree = "<group>"; };
 		EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutChildSizingView.swift; sourceTree = "<group>"; };
@@ -167,6 +173,9 @@
 			children = (
 				EB323AA428D658E9004F8EED /* PlacementThatFits.swift */,
 				EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */,
+				EB323AE928D8EE65004F8EED /* PlacementThatFitsChildModifier.swift */,
+				EB323AEB28D8EE7F004F8EED /* PlacementThatFitsVariadicRoot.swift */,
+				EB323AED28D8EEAD004F8EED /* PlacementThatFitsCoordinator.swift */,
 			);
 			path = PlacementThatFits;
 			sourceTree = "<group>";
@@ -520,16 +529,19 @@
 				EB70B48928D46784007049FF /* Coordinator.swift in Sources */,
 				EB70B49128D46789007049FF /* PlacementLayoutSubview.swift in Sources */,
 				EB70B48228D46778007049FF /* SizePreferences.swift in Sources */,
+				EB323AF128D8EEC5004F8EED /* PlacementThatFitsChildModifier.swift in Sources */,
 				EB70B48428D46778007049FF /* ProposedSize.swift in Sources */,
 				EB323AAF28D73D76004F8EED /* AnyAnimatableData.swift in Sources */,
 				EB70B48A28D46784007049FF /* PlacementModifier.swift in Sources */,
 				EB70B49028D46789007049FF /* PlacementLayoutSubviews.swift in Sources */,
+				EB323AF028D8EEC3004F8EED /* PlacementThatFitsVariadicRoot.swift in Sources */,
 				EB70B49528D46DBB007049FF /* ExplicitAlignmentModifier.swift in Sources */,
 				EB323AB028D855C0004F8EED /* Placement.docc in Sources */,
 				EB70B49228D4678D007049FF /* PlacementLayout.swift in Sources */,
 				EB70B48028D46773007049FF /* PlacementViewSpacing.swift in Sources */,
 				EB70B48E28D46784007049FF /* LayoutPlacement.swift in Sources */,
 				EB70B48128D46778007049FF /* PlacementProposedViewSize.swift in Sources */,
+				EB323AEF28D8EEBF004F8EED /* PlacementThatFitsCoordinator.swift in Sources */,
 				EB70B49328D4678D007049FF /* PlacementLayoutNative.swift in Sources */,
 				EB70B48328D46778007049FF /* PlacementViewDimensions.swift in Sources */,
 				EB323AA828D65963004F8EED /* PlacementThatFitsLayout.swift in Sources */,

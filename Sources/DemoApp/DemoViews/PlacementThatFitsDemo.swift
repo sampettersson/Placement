@@ -15,7 +15,7 @@ struct PlacementThatFitsDemo: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                PlacementThatFits(in: [.horizontal], prefersLayoutProtocol: false) {
+                PlacementThatFits(in: [.horizontal], prefersViewThatFits: false) {
                     Text("Some longer text that wont fit initially")
                     Text("Some text")
                 }

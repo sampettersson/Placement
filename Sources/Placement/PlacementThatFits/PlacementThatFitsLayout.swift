@@ -38,6 +38,15 @@ struct PlacementThatFitsLayout: PlacementLayout {
     }
     
     func sizeThatFits(proposal: PlacementProposedViewSize, subviews: PlacementLayoutSubviews, cache: inout Void) -> CGSize {
+        if axes.isEmpty {
+            if let subview = subviews.first {
+                coordinator.indexToPlace = 0
+                return subview.sizeThatFits(proposal)
+            }
+            
+            return .zero
+        }
+        
         for index in subviews.indices {
             let subview = subviews[index]
             let size = subview.sizeThatFits(proposal)
