@@ -46,44 +46,38 @@ public struct CenterLayout: PlacementLayout {
     }
 }
 
-struct CenterLayoutView: View {
+struct CenterLayoutDemo: View {
     @State var changeLayout = false
     
     var body: some View {
-        VStack(spacing: 0) {
-            CenterLayout(nativeImplementation: true) {
-                Text("View 1")
-                    .padding(changeLayout ? 10 : 20)
-                    .border(.red)
+        ScrollView {
+            VStack(spacing: 0) {
+                Text("Layout below uses SwiftUI.Layout (on iOS 16)")
                 
-                if changeLayout {
+                CenterLayout(nativeImplementation: true) {
                     Text("View 1")
                         .padding(changeLayout ? 10 : 20)
                         .border(.red)
                 }
-            }
-            .border(.blue)
-            .padding()
-            .frame(width: 200, height: 200)
-            
-            CenterLayout(nativeImplementation: false) {
-                Text("View 1")
-                    .padding(changeLayout ? 10 : 20)
-                    .border(.red)
+                .border(.blue)
+                .padding()
+                .frame(width: 200, height: 200)
                 
-                if changeLayout {
+                Text("Layout below uses Placement")
+                
+                CenterLayout(nativeImplementation: false) {
                     Text("View 1")
                         .padding(changeLayout ? 10 : 20)
                         .border(.red)
                 }
-            }
-            .border(.blue)
-            .padding()
-            .frame(width: 200, height: changeLayout ? 300 : 200)
-            
-            Button("Change layout") {
-                withAnimation(.spring()) {
-                    changeLayout.toggle()
+                .border(.blue)
+                .padding()
+                .frame(width: 200, height: 200)
+                
+                Button("Animate layout") {
+                    withAnimation(.spring()) {
+                        changeLayout.toggle()
+                    }
                 }
             }
         }

@@ -3,7 +3,18 @@ import SwiftUI
 struct PlacementDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                Form {
+                    Section {
+                        NavigationLink("PlacementThatFitsDemo") {
+                            PlacementThatFitsDemo()
+                        }
+                        NavigationLink("CenterLayout") {
+                            CenterLayoutDemo()
+                        }
+                    }
+                }.navigationTitle("Placement")
+            }
         }
     }
 }
