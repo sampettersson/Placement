@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "Placement"
-  spec.version      = "1.0.2"
+  spec.version      = "1.0.3"
   spec.summary      = "Polyfill for iOS 16 Layout protocol supporting iOS 14 and above"
 
   spec.description  = <<-DESC
