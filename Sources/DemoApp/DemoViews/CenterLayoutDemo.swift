@@ -61,7 +61,7 @@ struct CenterLayoutDemo: View {
                 }
                 .border(.blue)
                 .padding()
-                .frame(width: 200, height: 200)
+                .frame(width: 300, height: 200)
                 
                 Text("Layout below uses Placement")
                 
@@ -72,12 +72,10 @@ struct CenterLayoutDemo: View {
                 }
                 .border(.blue)
                 .padding()
-                .frame(width: 200, height: 200)
+                .frame(width: 300, height: 200)
                 
-                Button("Animate layout") {
-                    withAnimation(.spring()) {
-                        changeLayout.toggle()
-                    }
+                Button("Change layout") {
+                    changeLayout.toggle()
                 }
             }
         }
