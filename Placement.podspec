@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "Placement"
-  spec.version      = "1.0.3"
+  spec.version      = "1.1.1"
   spec.summary      = "Polyfill for iOS 16 Layout protocol supporting iOS 14 and above"
 
   spec.description  = <<-DESC
@@ -15,6 +15,6 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/sampettersson/Placement.git", :tag => "#{spec.version}" }
 
   spec.source_files  = "Sources/Placement/**/*.{swift}"
-  spec.swift_version = '5.3'
+  spec.swift_version = '5.7'
 
 end
