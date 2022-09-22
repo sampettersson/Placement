@@ -20,7 +20,8 @@ let package = Package(
         .target(
             name: "Placement",
             dependencies: [
-            ]
+            ],
+            exclude: ["Placement.docc"]
         )
     ]
 )
