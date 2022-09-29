@@ -53,11 +53,7 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                     placementsCoordinator.transaction = transaction
                 }
                 .background(
-                    GeometryReader(content: { proxy in
-                        Color.clear.preference(key: ChildrenIntrinsicSizesKey.self, value: [
-                            id: proxy.size
-                        ])
-                    })
+                    IntrinsicSizeObserver<L>()
                 )
                 .frame(
                     maxWidth: .infinity,

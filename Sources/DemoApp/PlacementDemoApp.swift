@@ -12,6 +12,9 @@ struct PlacementDemoApp: App {
                         NavigationLink("CenterLayout") {
                             CenterLayoutDemo()
                         }
+                        NavigationLink("BottomAttached") {
+                            BottomAttachedDemo()
+                        }
                     }
                 }.navigationTitle("Placement")
             }

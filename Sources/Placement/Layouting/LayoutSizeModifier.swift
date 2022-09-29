@@ -49,16 +49,6 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         .overlay(
             ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
                 content
-                    .onPreferenceChange(ChildrenIntrinsicSizesKey.self) { sizes in
-                        withTransaction(
-                            layout.disablesAnimationsWhenPlacing ?
-                                Transaction() :
-                                placementsCordinator.transaction
-                        ) {
-                            childrenIntrinsicSizes = sizes
-                        }
-                    }
-                    .environment(\.childrenIntrinsicSizes, childrenIntrinsicSizes)
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: .infinity,

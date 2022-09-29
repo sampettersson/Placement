@@ -77,10 +77,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                     
                     hostingController.rootView = AnyView(child)
                     hostingController._disableSafeArea = true
-                    hostingController.view.frame = CGRect(
-                        origin: self.sizeCoordinator.origin,
-                        size: self.sizeCoordinator.size ?? .zero
-                    )
+                    
                                         
                     let sizeThatFits = hostingController.sizeThatFits(
                         in: size.replacingUnspecifiedDimensions(by: .zero)
