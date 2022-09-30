@@ -53,7 +53,9 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     
     func updateLayout(proxy: GeometryProxy) -> some View {
         return Color.clear.onChange(of: proxy.size) { _ in
-            coordinator.placeSubviews(children: children)
+            withTransaction(coordinator.transaction) {
+                coordinator.objectWillChange.send()
+            }
         }
     }
     
