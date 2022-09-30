@@ -10,8 +10,8 @@ struct ExplicitAlignmentModifier<L: PlacementLayout>: ViewModifier {
         coordinator.layoutContext(children: children) { subviews, cache -> CGFloat in
             if let explicitAlignment = layout.explicitAlignment(
                 of: guide,
-                in: CGRect(origin: .zero, size: coordinator.sizeCoordinator.size ?? .zero),
-                proposal: PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero),
+                in: coordinator.globalFrame ?? .zero,
+                proposal: PlacementProposedViewSize(coordinator.globalFrame?.size ?? .zero),
                 subviews: subviews,
                 cache: &cache
             ) {
@@ -26,8 +26,8 @@ struct ExplicitAlignmentModifier<L: PlacementLayout>: ViewModifier {
         coordinator.layoutContext(children: children) { subviews, cache -> CGFloat in
             if let explicitAlignment = layout.explicitAlignment(
                 of: guide,
-                in: CGRect(origin: .zero, size: coordinator.sizeCoordinator.size ?? .zero),
-                proposal: PlacementProposedViewSize(coordinator.sizeCoordinator.size ?? .zero),
+                in: coordinator.globalFrame ?? .zero,
+                proposal: PlacementProposedViewSize(coordinator.globalFrame?.size ?? .zero),
                 subviews: subviews,
                 cache: &cache
             ) {

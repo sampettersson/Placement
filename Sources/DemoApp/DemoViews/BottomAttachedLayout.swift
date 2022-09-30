@@ -25,7 +25,6 @@ struct BottomAttachedLayoutHeightKey: PlacementLayoutValueKey {
 /// A layout that attaches second view on bottom and makes top view smaller
 struct BottomAttachedLayout: PlacementLayout {
     func sizeThatFits(proposal: PlacementProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        print(proposal)
         return proposal.replacingUnspecifiedDimensions(by: .zero)
     }
     
@@ -44,9 +43,7 @@ struct BottomAttachedLayout: PlacementLayout {
             DispatchQueue.main.async {
                 //subviews.first?[BottomAttachedLayoutHeightKey.self]?.wrappedValue = bottomAttachedViewSize.height
             }
-            
-            print(bottomAttachedViewSize)
-                        
+                                    
             bottomAttachedContent.place(
                 at: CGPoint(x: 0, y: bounds.maxY - bottomAttachedViewSize.height),
                 anchor: .topLeading,

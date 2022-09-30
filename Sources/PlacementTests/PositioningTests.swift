@@ -20,7 +20,7 @@ final class PositioningTests: XCTestCase {
     func testThatPositioningIsCorrect() {
         
         struct Content: View, Inspectable {
-            var didAppear: ((Self) -> Void)?
+            var hasPlaced: ((Self) -> Void)?
             var onContainerProxy: (_ type: PlacementLayouterType, _ proxy: GeometryProxy) -> Void
             var onChildProxy: (_ type: PlacementLayouterType, _ proxy: GeometryProxy) -> Void
             
@@ -42,18 +42,15 @@ final class PositioningTests: XCTestCase {
                         nativeImplementation: false
                     ) {
                         Text("Content").fixedSize().background(GeometryReader(content: { proxy in
-                            let _ = onChildProxy(.placement, proxy)
-                            
-                            let _ = print(proxy.frame(in: .named("stackContainer")))
-                            
-                            Color.clear
+                            Color.clear.onChange(of: proxy.frame(in: .global)) { newValue in
+                                onChildProxy(.placement, proxy)
+                                hasPlaced?(self)
+                            }
                         }))
                     }.background(GeometryReader(content: { proxy in
                         let _ = onContainerProxy(.placement, proxy)
                         Color.clear
                     }))
-                }.coordinateSpace(name: "stackContainer").onAppear {
-                    didAppear?(self)
                 }
             }
         }
@@ -67,14 +64,14 @@ final class PositioningTests: XCTestCase {
             childProxies[type] = proxy
         }
         
-        let didAppearExp = sut.on(\.didAppear) { view in
+        let didAppearExp = sut.on(\.hasPlaced) { view in
             XCTAssertEqual(
                 containerProxies[.native]!.frame(in: .local),
                 containerProxies[.placement]!.frame(in: .local)
             )
             XCTAssertEqual(
-                childProxies[.native]!.frame(in: .named("stackContainer")),
-                childProxies[.placement]!.frame(in: .named("stackContainer"))
+                childProxies[.native]!.frame(in: .global),
+                childProxies[.placement]!.frame(in: .global)
             )
         }
         

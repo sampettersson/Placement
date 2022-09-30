@@ -72,10 +72,12 @@ struct CenterLayoutDemo: View {
                 }
                 .border(.blue)
                 .padding()
-                .frame(width: 300, height: 200)
+                .frame(width: 300, height: changeLayout ? 150 : 200)
                 
                 Button("Change layout") {
-                    changeLayout.toggle()
+                    withAnimation(.spring()) {
+                        changeLayout.toggle()
+                    }
                 }
             }
         }
