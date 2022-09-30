@@ -28,7 +28,6 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
             content()
         }
         .environmentObject(coordinator)
-        .environmentObject(coordinator.sizeCoordinator)
         .environmentObject(coordinator.placementsCoordinator)
     }
 }

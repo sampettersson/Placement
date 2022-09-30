@@ -33,11 +33,29 @@ struct PlacementEffect: GeometryEffect {
     }
 }
 
+struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
+    @EnvironmentObject var coordinator: Coordinator<L>
+    var id: AnyHashable
+    
+    func makeUIView(context: Context) -> UIView {
+        coordinator.makeHostingController(id: id).view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
 struct PlacementModifier<L: PlacementLayout>: ViewModifier {
+    @EnvironmentObject var coordinator: Coordinator<L>
     @EnvironmentObject var placementsCoordinator: PlacementsCoordinator
     var id: AnyHashable
     var layout: L
     var children: _VariadicView.Children
+    
+    func updateLayout(proxy: GeometryProxy) -> some View {
+        return Color.clear.onChange(of: proxy.size) { _ in
+            coordinator.placeSubviews(children: children)
+        }
+    }
     
     func body(content: Content) -> some View {
         let placement = placementsCoordinator.placements[id]
@@ -48,27 +66,24 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
             children: children
         )
         .overlay(
-            content
+                content
+                .background(GeometryReader(content: { proxy in
+                    updateLayout(proxy: proxy)
+                }))
                 .transaction { transaction in
-                    placementsCoordinator.transaction = transaction
+                    coordinator.transaction = transaction
                 }
-                .background(
-                    GeometryReader(content: { proxy in
-                        Color.clear.preference(key: ChildrenIntrinsicSizesKey.self, value: [
-                            id: proxy.size
-                        ])
-                    })
-                )
                 .frame(
                     maxWidth: .infinity,
                     maxHeight: .infinity,
                     alignment: .topLeading
                 )
         )
+        .overlay(PlaceHostingController<L>(id: id).opacity(0).allowsHitTesting(false))
         .modifier(
             PlacementEffect(
-                positionX: placement?.position.x ?? 0,
-                positionY: placement?.position.y ?? 0,
+                positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),
+                positionY: (placement?.position.y ?? 0) - (coordinator.globalFrame?.origin.y ?? 0),
                 anchorX: placement?.anchor.x ?? 0,
                 anchorY: placement?.anchor.y ?? 0
             )

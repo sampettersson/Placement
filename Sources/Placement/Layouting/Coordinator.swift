@@ -2,17 +2,16 @@ import Foundation
 import SwiftUI
 
 class PlacementsCoordinator: ObservableObject {
-    var transaction = Transaction()
     var placements: [AnyHashable: LayoutPlacement] = [:]
 }
 
-class SizeCoordinator: ObservableObject {
-    public var size: CGSize? = nil
-    public var transaction = Transaction()
-    public var origin: CGPoint = .zero
-}
-
 class Coordinator<L: PlacementLayout>: ObservableObject {
+    var globalFrame: CGRect? = nil
+    var layoutProxy: GeometryProxy? = nil {
+        didSet {
+            globalFrame = layoutProxy?.frame(in: .global)
+        }
+    }
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
     
@@ -24,6 +23,35 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         }
         set {
             _cache = newValue
+        }
+    }
+    
+    func placeSubviews(children: _VariadicView.Children) {
+        guard let globalFrame = globalFrame else {
+            return
+        }
+        
+        layoutContext(children: children) { subviews, cache in
+            let proposal = PlacementProposedViewSize(globalFrame.size)
+                                    
+            layout?.placeSubviews(
+                in: globalFrame,
+                proposal: proposal,
+                subviews: subviews,
+                cache: &cache
+            )
+                                    
+            if #available(iOS 16, *) {
+                DispatchQueue.main.async {
+                    withTransaction(self.transaction) {
+                        self.placementsCoordinator.objectWillChange.send()
+                    }
+                }
+            } else {
+                withTransaction(transaction) {
+                    placementsCoordinator.objectWillChange.send()
+                }
+            }
         }
     }
             
@@ -53,34 +81,27 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             LayoutSubviewPolyfill(
                 id: child.id,
                 onPlacement: { placement in
+                    DispatchQueue.main.async {
+                        self.hostingControllers[child.id]?.view.frame = CGRect(
+                            origin: placement.position,
+                            size: placement.proposal.replacingUnspecifiedDimensions(by: .zero)
+                        )
+                    }
+                    
                     self.placementsCoordinator.placements[child.id] = LayoutPlacement(
                         subview: placement.subview,
                         position: CGPoint(
-                            x: placement.position.x - self.sizeCoordinator.origin.x,
-                            y: placement.position.y - self.sizeCoordinator.origin.y
+                            x: placement.position.x,
+                            y: placement.position.y
                         ),
                         anchor: placement.anchor,
                         proposal: placement.proposal
                     )
                 },
                 getSizeThatFits: { size in
-                    var hostingController: UIHostingController<AnyView> {
-                        if let hostingController = self.hostingControllers[child.id] {
-                            return hostingController
-                        }
-                        
-                        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
-                        self.hostingControllers[child.id] = hostingController
-                        
-                        return hostingController
-                    }
-                    
+                    let hostingController = self.makeHostingController(id: child.id)
                     hostingController.rootView = AnyView(child)
                     hostingController._disableSafeArea = true
-                    hostingController.view.frame = CGRect(
-                        origin: self.sizeCoordinator.origin,
-                        size: self.sizeCoordinator.size ?? .zero
-                    )
                                         
                     let sizeThatFits = hostingController.sizeThatFits(
                         in: size.replacingUnspecifiedDimensions(by: .zero)
@@ -115,9 +136,19 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         
         return subviews
     }
+    
+    func makeHostingController(id: AnyHashable) -> UIHostingController<AnyView> {
+        if let hostingController = self.hostingControllers[id] {
+            return hostingController
+        }
+        
+        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        self.hostingControllers[id] = hostingController
+        
+        return hostingController
+    }
         
     public var transaction = Transaction()
-    public var sizeCoordinator = SizeCoordinator()
     public var placementsCoordinator = PlacementsCoordinator()
     public var hostingControllers: [AnyHashable: UIHostingController<AnyView>] = [:]
 }
