@@ -40,6 +40,8 @@ struct BottomAttachedLayout: PlacementLayout {
                 )
             )
             
+            print("bottom attached size", bottomAttachedViewSize)
+            
             DispatchQueue.main.async {
                 //subviews.first?[BottomAttachedLayoutHeightKey.self]?.wrappedValue = bottomAttachedViewSize.height
             }

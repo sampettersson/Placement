@@ -48,9 +48,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                     }
                 }
             } else {
-                withTransaction(transaction) {
-                    placementsCoordinator.objectWillChange.send()
-                }
+                placementsCoordinator.objectWillChange.send()
             }
         }
     }

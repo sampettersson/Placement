@@ -38,8 +38,8 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
     var layout: L
     
     func updateLayout(proxy: GeometryProxy) -> some View {
+        print("updating layoutProxy")
         coordinator.layoutProxy = proxy
-        coordinator.placeSubviews(children: children)
         return Color.clear
     }
     
