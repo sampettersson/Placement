@@ -64,34 +64,27 @@ struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
     }
 }
 
+struct PlacementIntrinsicSizesPreferenceKey: PreferenceKey {
+    typealias Value = [AnyHashable: CGSize]
+
+    static var defaultValue: Value = [:]
+
+    static func reduce(
+        value: inout Value,
+        nextValue: () -> Value
+    ) {
+        value = value.merging(nextValue()) { _, rhs in
+            rhs
+        }
+    }
+}
+
 struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     @EnvironmentObject var coordinator: Coordinator<L>
     @EnvironmentObject var placementsCoordinator: PlacementsCoordinator
     var id: AnyHashable
     var layout: L
     var children: _VariadicView.Children
-    
-    func updateLayout(proxy: GeometryProxy) -> some View {
-        return Color.clear.onChange(of: proxy.size) { _ in
-            coordinator.layoutContext(children: children) { subviews, _ in
-                if let subview = subviews.compactMap({ subview in
-                    subview as? LayoutSubviewPolyfill
-                }).first(where: { subview in
-                    subview.child.id == id
-                }) {
-                    let unspecifiedSize = subview.sizeThatFits(.unspecified)
-                                        
-                    if placementsCoordinator.unspecifiedSize[id] != unspecifiedSize {
-                        placementsCoordinator.unspecifiedSize[id] = unspecifiedSize
-                        
-                        withTransaction(coordinator.transaction) {
-                            coordinator.layoutSizingCoordinator.objectWillChange.send()
-                        }
-                    }
-                }
-            }
-        }
-    }
     
     func body(content: Content) -> some View {
         let placement = placementsCoordinator.placements[id]
@@ -111,9 +104,14 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
         )
         .overlay(
                 content
-                .background(GeometryReader(content: { proxy in
-                    updateLayout(proxy: proxy)
-                }))
+                .background(
+                    GeometryReader(content: { proxy in
+                        Color.clear.preference(
+                            key: PlacementIntrinsicSizesPreferenceKey.self,
+                            value: [id: proxy.size]
+                        )
+                    }).animation(nil)
+                )
                 .transaction { transaction in
                     coordinator.transaction = transaction
                 }

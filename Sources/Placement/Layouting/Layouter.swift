@@ -30,5 +30,8 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
         .environmentObject(coordinator)
         .environmentObject(coordinator.placementsCoordinator)
         .environmentObject(coordinator.layoutSizingCoordinator)
+        .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { anchors in
+            anchors = [:]
+        }
     }
 }

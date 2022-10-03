@@ -24,6 +24,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var layout: L
     var children: _VariadicView.Children
+    var intrinsicSizes: [AnyHashable: CGSize]
         
     func makeUIView(context: Context) -> PlacementLayoutContainer {
         let view = PlacementLayoutContainer()
