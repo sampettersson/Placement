@@ -3,9 +3,11 @@ import SwiftUI
 
 class PlacementsCoordinator: ObservableObject {
     var placements: [AnyHashable: LayoutPlacement] = [:]
+    var unspecifiedSize: [AnyHashable: CGSize] = [:]
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
+    var safeAreaInsets: UIEdgeInsets? = nil
     var globalFrame: CGRect? = nil
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
@@ -22,18 +24,26 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
     }
     
     func placeSubviews(children: _VariadicView.Children) {
-        guard let globalFrame = globalFrame else {
+        guard let globalFrame = globalFrame, let safeAreaInsets = safeAreaInsets else {
             return
         }
         
         layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(globalFrame.size)
             
-            let previousPlacements = self.placementsCoordinator.placements
             self.placementsCoordinator.placements = [:]
                                                 
             layout?.placeSubviews(
-                in: globalFrame,
+                in: CGRect(
+                    origin: CGPoint(
+                        x: globalFrame.origin.x + safeAreaInsets.left,
+                        y: globalFrame.origin.y + safeAreaInsets.top
+                    ),
+                    size: CGSize(
+                        width: globalFrame.width - safeAreaInsets.left - safeAreaInsets.right,
+                        height: globalFrame.height - safeAreaInsets.top - safeAreaInsets.bottom
+                    )
+                ),
                 proposal: proposal,
                 subviews: subviews,
                 cache: &cache
@@ -64,10 +74,8 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 }
             }
             
-            if self.placementsCoordinator.placements != previousPlacements {
-                withTransaction(self.transaction) {
-                    self.placementsCoordinator.objectWillChange.send()
-                }
+            withTransaction(self.transaction) {
+                self.placementsCoordinator.objectWillChange.send()
             }
         }
     }
@@ -98,13 +106,6 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             LayoutSubviewPolyfill(
                 id: child.id,
                 onPlacement: { placement in
-                    DispatchQueue.main.async {
-                        self.hostingControllers[child.id]?.view.frame = CGRect(
-                            origin: placement.position,
-                            size: placement.proposal.replacingUnspecifiedDimensions(by: .zero)
-                        )
-                    }
-                    
                     self.placementsCoordinator.placements[child.id] = LayoutPlacement(
                         subview: placement.subview,
                         position: CGPoint(
@@ -118,10 +119,22 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 getSizeThatFits: { size in
                     let hostingController = self.makeHostingController(id: child.id)
                     hostingController.rootView = AnyView(child)
-                    hostingController._disableSafeArea = true
+                    
+                    hostingController.view.setContentCompressionResistancePriority(
+                        .defaultHigh,
+                        for: .horizontal
+                    )
+                    
+                    hostingController.view.setContentCompressionResistancePriority(
+                        .defaultHigh,
+                        for: .vertical
+                    )
                                         
                     let sizeThatFits = hostingController.sizeThatFits(
-                        in: size.replacingUnspecifiedDimensions(by: .zero)
+                        in: CGSize(
+                            width: size.width ?? UIView.layoutFittingCompressedSize.width,
+                            height: size.height ?? UIView.layoutFittingCompressedSize.height
+                        )
                     )
                     
                     return sizeThatFits

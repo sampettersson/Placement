@@ -24,10 +24,16 @@ class FrameChangePlacerView<L: PlacementLayout>: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        coordinator.globalFrame = self.superview?.convert(
+        let safeAreaInsets = self.safeAreaInsets
+                
+        if let globalFrame = self.superview?.convert(
             self.frame,
             to: self.window?.rootViewController?.view
-        )
+        ) {
+            coordinator.safeAreaInsets = safeAreaInsets
+            coordinator.globalFrame = globalFrame
+        }
+        
         coordinator.placeSubviews(children: children)
     }
 }

@@ -61,11 +61,14 @@ struct BottomAttachedDemo: View {
     var body: some View {
         BottomAttachedLayout {
             ScrollView {
-                Text("Hello").background(GeometryReader(content: { proxy in
-                    let _ = print(proxy.frame(in: .global))
-                    
-                    Color.clear
-                }))
+                ZStack {
+                    Text("Hello").background(GeometryReader(content: { proxy in
+                        
+                        Color.clear
+                    }))
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.red)
             }
             VStackLayout {
                 VStackLayout {
@@ -74,6 +77,8 @@ struct BottomAttachedDemo: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationTitle("BottomAttachedDemo")
     }
 }

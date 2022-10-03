@@ -62,8 +62,22 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     
     func updateLayout(proxy: GeometryProxy) -> some View {
         return Color.clear.onChange(of: proxy.size) { _ in
-            withTransaction(coordinator.transaction) {
-                coordinator.objectWillChange.send()
+            coordinator.layoutContext(children: children) { subviews, _ in
+                if let subview = subviews.compactMap({ subview in
+                    subview as? LayoutSubviewPolyfill
+                }).first(where: { subview in
+                    subview.child.id == id
+                }) {
+                    let unspecifiedSize = subview.sizeThatFits(.unspecified)
+                    
+                    if placementsCoordinator.unspecifiedSize[id] != unspecifiedSize {
+                        placementsCoordinator.unspecifiedSize[id] = unspecifiedSize
+                        
+                        withTransaction(coordinator.transaction) {
+                            coordinator.objectWillChange.send()
+                        }
+                    }
+                }
             }
         }
     }
@@ -71,40 +85,40 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     func body(content: Content) -> some View {
         let placement = placementsCoordinator.placements[id]
         
-        if placement != nil {
-            LayoutChildSizingView(
-                layout: layout,
-                id: id,
-                children: children
-            )
-            .overlay(
-                    content
-                    .background(GeometryReader(content: { proxy in
-                        updateLayout(proxy: proxy)
-                    }))
-                    .transaction { transaction in
-                        coordinator.transaction = transaction
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .topLeading
-                    )
-            )
-            .overlay(
-                PlaceHostingController<L>(
-                    id: id,
-                    placement: placement
-                ).opacity(0).allowsHitTesting(false)
-            )
-            .modifier(
-                PlacementEffect(
-                    positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),
-                    positionY: (placement?.position.y ?? 0) - (coordinator.globalFrame?.origin.y ?? 0),
-                    anchorX: placement?.anchor.x ?? 0,
-                    anchorY: placement?.anchor.y ?? 0
+        LayoutChildSizingView(
+            layout: layout,
+            id: id,
+            children: children
+        )
+        .overlay(
+                content
+                .background(GeometryReader(content: { proxy in
+                    updateLayout(proxy: proxy)
+                }))
+                .transaction { transaction in
+                    coordinator.transaction = transaction
+                }
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .topLeading
                 )
+        )
+        .overlay(
+            PlaceHostingController<L>(
+                id: id,
+                placement: placement
             )
-        }
+            .opacity(0)
+            .allowsHitTesting(false)
+        )
+        .modifier(
+            PlacementEffect(
+                positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),
+                positionY: (placement?.position.y ?? 0) - (coordinator.globalFrame?.origin.y ?? 0),
+                anchorX: placement?.anchor.x ?? 0,
+                anchorY: placement?.anchor.y ?? 0
+            )
+        )
     }
 }

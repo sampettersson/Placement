@@ -29,5 +29,6 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
         }
         .environmentObject(coordinator)
         .environmentObject(coordinator.placementsCoordinator)
+        .edgesIgnoringSafeArea(.all)
     }
 }
