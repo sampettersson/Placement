@@ -6,6 +6,10 @@ class PlacementsCoordinator: ObservableObject {
     var unspecifiedSize: [AnyHashable: CGSize] = [:]
 }
 
+class LayoutSizingCoordinator: ObservableObject {
+    
+}
+
 class Coordinator<L: PlacementLayout>: ObservableObject {
     var safeAreaInsets: UIEdgeInsets? = nil
     var globalFrame: CGRect? = nil
@@ -119,6 +123,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 getSizeThatFits: { size in
                     let hostingController = self.makeHostingController(id: child.id)
                     hostingController.rootView = AnyView(child)
+                    hostingController._disableSafeArea = true
                     
                     hostingController.view.setContentCompressionResistancePriority(
                         .defaultHigh,
@@ -180,5 +185,6 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         
     public var transaction = Transaction()
     public var placementsCoordinator = PlacementsCoordinator()
+    public var layoutSizingCoordinator = LayoutSizingCoordinator()
     public var hostingControllers: [AnyHashable: UIHostingController<AnyView>] = [:]
 }

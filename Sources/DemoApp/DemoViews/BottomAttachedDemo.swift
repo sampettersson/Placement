@@ -61,9 +61,8 @@ struct BottomAttachedDemo: View {
     var body: some View {
         BottomAttachedLayout {
             ScrollView {
-                ZStack {
+                VStack {
                     Text("Hello").background(GeometryReader(content: { proxy in
-                        
                         Color.clear
                     }))
                 }

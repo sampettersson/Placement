@@ -42,7 +42,18 @@ struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
         coordinator.makeHostingController(id: id).view
     }
     
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    func updateUIView(_ uiView: UIView, context: Context) {
+        if let placement = placement, let safeAreaInsets = coordinator.safeAreaInsets {
+            uiView.frame = CGRect(
+                origin: CGPoint(
+                    x: placement.position.x - safeAreaInsets.left,
+                    y: placement.position.y - safeAreaInsets.top
+                ),
+                size: placement.proposal.replacingUnspecifiedDimensions(by: .zero)
+            )
+            uiView.isHidden = true
+        }
+    }
     
     func _overrideSizeThatFits(
         _ size: inout CoreGraphics.CGSize,
@@ -69,12 +80,12 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                     subview.child.id == id
                 }) {
                     let unspecifiedSize = subview.sizeThatFits(.unspecified)
-                    
+                                        
                     if placementsCoordinator.unspecifiedSize[id] != unspecifiedSize {
                         placementsCoordinator.unspecifiedSize[id] = unspecifiedSize
                         
                         withTransaction(coordinator.transaction) {
-                            coordinator.objectWillChange.send()
+                            coordinator.layoutSizingCoordinator.objectWillChange.send()
                         }
                     }
                 }
@@ -91,6 +102,14 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
             children: children
         )
         .overlay(
+            PlaceHostingController<L>(
+                id: id,
+                placement: placement
+            )
+            .opacity(0)
+            .allowsHitTesting(false)
+        )
+        .overlay(
                 content
                 .background(GeometryReader(content: { proxy in
                     updateLayout(proxy: proxy)
@@ -103,14 +122,6 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                     maxHeight: .infinity,
                     alignment: .topLeading
                 )
-        )
-        .overlay(
-            PlaceHostingController<L>(
-                id: id,
-                placement: placement
-            )
-            .opacity(0)
-            .allowsHitTesting(false)
         )
         .modifier(
             PlacementEffect(

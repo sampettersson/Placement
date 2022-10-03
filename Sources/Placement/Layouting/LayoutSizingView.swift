@@ -20,6 +20,7 @@ class PlacementLayoutContainer: UIView {
 }
 
 struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
+    @EnvironmentObject var layoutSizingCoordinator: LayoutSizingCoordinator
     @EnvironmentObject var coordinator: Coordinator<L>
     var layout: L
     var children: _VariadicView.Children
