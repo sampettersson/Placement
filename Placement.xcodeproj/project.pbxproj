@@ -52,6 +52,7 @@
 		EB70B49A28D47DD5007049FF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = EB70B49928D47DD5007049FF /* README.md */; };
 		EB8BDAA328E5D822009B672B /* BottomAttachedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAA228E5D822009B672B /* BottomAttachedLayout.swift */; };
 		EB8BDAA528E5D833009B672B /* BottomAttachedDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAA428E5D833009B672B /* BottomAttachedDemo.swift */; };
+		EB8BDAAF28EAB97A009B672B /* FrameChangePlacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAAE28EAB97A009B672B /* FrameChangePlacer.swift */; };
 		EBC389FB28CF665E000E7318 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBC389FA28CF665E000E7318 /* Assets.xcassets */; };
 		EBC389FE28CF665E000E7318 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBC389FD28CF665E000E7318 /* Preview Assets.xcassets */; };
 		EBC38A2928CF6680000E7318 /* PlacementDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A1428CF667F000E7318 /* PlacementDemoApp.swift */; };
@@ -128,6 +129,7 @@
 		EB70B49928D47DD5007049FF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		EB8BDAA228E5D822009B672B /* BottomAttachedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAttachedLayout.swift; sourceTree = "<group>"; };
 		EB8BDAA428E5D833009B672B /* BottomAttachedDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAttachedDemo.swift; sourceTree = "<group>"; };
+		EB8BDAAE28EAB97A009B672B /* FrameChangePlacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameChangePlacer.swift; sourceTree = "<group>"; };
 		EBC389F328CF665C000E7318 /* PlacementDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlacementDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC389FA28CF665E000E7318 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBC389FD28CF665E000E7318 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				EBC38A0528CF667C000E7318 /* LayoutPlacement.swift */,
 				EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */,
 				EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */,
+				EB8BDAAE28EAB97A009B672B /* FrameChangePlacer.swift */,
 			);
 			path = Layouting;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				EB70B48128D46778007049FF /* PlacementProposedViewSize.swift in Sources */,
 				EB323AEF28D8EEBF004F8EED /* PlacementThatFitsCoordinator.swift in Sources */,
 				EB70B49328D4678D007049FF /* PlacementLayoutNative.swift in Sources */,
+				EB8BDAAF28EAB97A009B672B /* FrameChangePlacer.swift in Sources */,
 				EB70B48328D46778007049FF /* PlacementViewDimensions.swift in Sources */,
 				EB323AA828D65963004F8EED /* PlacementThatFitsLayout.swift in Sources */,
 				EB70B48628D4677E007049FF /* PlacementLayoutValueKey.swift in Sources */,

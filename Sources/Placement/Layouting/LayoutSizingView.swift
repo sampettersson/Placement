@@ -33,8 +33,6 @@ class LayoutSizingUIView<L: PlacementLayout>: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("placing")
-        coordinator.placeSubviews(children: children)
     }
 }
 
@@ -63,10 +61,6 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
                 subviews: subviews,
                 cache: &cache
             )
-            
-            print("sizing layout", layout, size)
-            
-            uiView.setNeedsLayout()
         }
     }
 }

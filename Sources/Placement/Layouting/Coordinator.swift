@@ -6,12 +6,14 @@ class PlacementsCoordinator: ObservableObject {
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
+    var shouldPlace = false
     var globalFrame: CGRect? = nil
     var layoutProxy: GeometryProxy? = nil {
         didSet {
             globalFrame = layoutProxy?.frame(in: .global)
         }
     }
+    
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
     
@@ -33,7 +35,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         
         layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(globalFrame.size)
-                                    
+                                                
             layout?.placeSubviews(
                 in: globalFrame,
                 proposal: proposal,
@@ -41,14 +43,8 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 cache: &cache
             )
                                     
-            if #available(iOS 16, *) {
-                DispatchQueue.main.async {
-                    withTransaction(self.transaction) {
-                        self.placementsCoordinator.objectWillChange.send()
-                    }
-                }
-            } else {
-                placementsCoordinator.objectWillChange.send()
+            withTransaction(self.transaction) {
+                self.placementsCoordinator.objectWillChange.send()
             }
         }
     }

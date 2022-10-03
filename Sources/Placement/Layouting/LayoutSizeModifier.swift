@@ -21,24 +21,12 @@ extension HorizontalAlignment {
     static let placementLeading = HorizontalAlignment(PlacementLeading.self)
 }
 
-private struct ChildrenIntrinsicSizesEnvironmentKey: EnvironmentKey {
-    static let defaultValue: [AnyHashable: CGSize] = [:]
-}
-
-extension EnvironmentValues {
-  var childrenIntrinsicSizes: [AnyHashable: CGSize] {
-    get { self[ChildrenIntrinsicSizesEnvironmentKey.self] }
-    set { self[ChildrenIntrinsicSizesEnvironmentKey.self] = newValue }
-  }
-}
-
 struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
     @EnvironmentObject var coordinator: Coordinator<L>
     var children: _VariadicView.Children
     var layout: L
     
     func updateLayout(proxy: GeometryProxy) -> some View {
-        print("updating layoutProxy")
         coordinator.layoutProxy = proxy
         return Color.clear
     }
@@ -48,9 +36,12 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
             layout: layout,
             children: children
         )
-        .background(GeometryReader(content: { proxy in
-            updateLayout(proxy: proxy)
-        }))
+        .overlay(
+            FrameChangePlacer<L>(
+                children: children
+            )
+            .animation(nil)
+        )
         .transaction({ transaction in
             coordinator.transaction = transaction
         })

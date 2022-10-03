@@ -30,7 +30,7 @@ struct VStackLayout: PlacementLayout {
         cache: inout ()) {
             var nextY = bounds.origin.y
             
-            print("placing v stack")
+            print("placing v stack", bounds)
                     
             for subview in subviews {
                 let subviewSize = subview.sizeThatFits(PlacementProposedViewSize(width: proposal.width, height: .zero))
@@ -66,7 +66,11 @@ struct BottomAttachedDemo: View {
                 Text("Hello")
             }
             VStackLayout {
-                ExpandingView().background(Color.red)
+                VStackLayout {
+                    ExpandingView()
+                        .background(Color.red)
+                        .frame(maxWidth: .infinity)
+                }
             }
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }

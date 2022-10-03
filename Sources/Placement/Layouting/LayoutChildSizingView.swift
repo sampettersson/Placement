@@ -23,7 +23,7 @@ struct LayoutChildSizingView<L: PlacementLayout>: UIViewRepresentable {
         uiView: TransactionView
     ) {
         let placementProposal = coordinator.placementsCoordinator.placements[id]?.proposal
-        size = placementProposal?.replacingUnspecifiedDimensions(by: .zero) ?? .zero
+        size = placementProposal?.replacingUnspecifiedDimensions(by: .zero) ?? .zero        
     }
 }
 
