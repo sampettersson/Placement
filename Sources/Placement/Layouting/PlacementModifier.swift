@@ -43,16 +43,7 @@ struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {
-        if let placement = placement, let safeAreaInsets = coordinator.safeAreaInsets {
-            uiView.frame = CGRect(
-                origin: CGPoint(
-                    x: placement.position.x - safeAreaInsets.left,
-                    y: placement.position.y - safeAreaInsets.top
-                ),
-                size: placement.proposal.replacingUnspecifiedDimensions(by: .zero)
-            )
-            uiView.isHidden = true
-        }
+        uiView.isHidden = true
     }
     
     func _overrideSizeThatFits(
@@ -95,14 +86,6 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
             children: children
         )
         .overlay(
-            PlaceHostingController<L>(
-                id: id,
-                placement: placement
-            )
-            .opacity(0)
-            .allowsHitTesting(false)
-        )
-        .overlay(
                 content
                 .background(
                     GeometryReader(content: { proxy in
@@ -120,6 +103,19 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                     maxHeight: .infinity,
                     alignment: .topLeading
                 )
+        )
+        .overlay(
+            PlaceHostingController<L>(
+                id: id,
+                placement: placement
+            )
+            .opacity(0)
+            .allowsHitTesting(false)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
         )
         .modifier(
             PlacementEffect(

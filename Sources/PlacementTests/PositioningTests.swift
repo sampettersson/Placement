@@ -30,8 +30,9 @@ final class PositioningTests: XCTestCase {
                         nativeImplementation: true
                     ) {
                         Text("Content").fixedSize().background(GeometryReader(content: { proxy in
-                            let _ = onChildProxy(.native, proxy)
-                            Color.clear
+                            Color.clear.onAppear {
+                                let _ = onChildProxy(.native, proxy)
+                            }
                         }))
                     }.background(GeometryReader(content: { proxy in
                         let _ = onContainerProxy(.native, proxy)
@@ -44,13 +45,17 @@ final class PositioningTests: XCTestCase {
                         Text("Content").fixedSize().background(GeometryReader(content: { proxy in
                             Color.clear.onAppear {
                                 let _ = onChildProxy(.placement, proxy)
-                                hasPlaced?(self)
                             }
                         }))
                     }.background(GeometryReader(content: { proxy in
                         let _ = onContainerProxy(.placement, proxy)
                         Color.clear
                     }))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            hasPlaced?(self)
+                        }
+                    }
                 }
             }
         }
@@ -70,8 +75,8 @@ final class PositioningTests: XCTestCase {
                 containerProxies[.placement]!.frame(in: .local)
             )
             XCTAssertEqual(
-                childProxies[.native]!.frame(in: .global),
-                childProxies[.placement]!.frame(in: .global)
+                childProxies[.native]!.frame(in: .local),
+                childProxies[.placement]!.frame(in: .local)
             )
         }
         
