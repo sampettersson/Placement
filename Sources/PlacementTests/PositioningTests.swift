@@ -42,8 +42,8 @@ final class PositioningTests: XCTestCase {
                         nativeImplementation: false
                     ) {
                         Text("Content").fixedSize().background(GeometryReader(content: { proxy in
-                            Color.clear.onChange(of: proxy.frame(in: .global)) { newValue in
-                                onChildProxy(.placement, proxy)
+                            Color.clear.onAppear {
+                                let _ = onChildProxy(.placement, proxy)
                                 hasPlaced?(self)
                             }
                         }))

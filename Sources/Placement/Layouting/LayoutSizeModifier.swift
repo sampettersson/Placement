@@ -26,11 +26,6 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
     var children: _VariadicView.Children
     var layout: L
     
-    func updateLayout(proxy: GeometryProxy) -> some View {
-        coordinator.layoutProxy = proxy
-        return Color.clear
-    }
-    
     func body(content: Content) -> some View {
         LayoutSizingView(
             layout: layout,
@@ -47,7 +42,12 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         })
         .allowsHitTesting(false)
         .overlay(
-            ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
+            ZStack(
+                alignment: Alignment(
+                    horizontal: .placementLeading,
+                    vertical: .placementTop
+                )
+            ) {
                 content
                     .frame(
                         maxWidth: .infinity,

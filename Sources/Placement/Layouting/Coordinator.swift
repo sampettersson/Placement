@@ -6,14 +6,7 @@ class PlacementsCoordinator: ObservableObject {
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
-    var shouldPlace = false
     var globalFrame: CGRect? = nil
-    var layoutProxy: GeometryProxy? = nil {
-        didSet {
-            globalFrame = layoutProxy?.frame(in: .global)
-        }
-    }
-    
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
     
@@ -35,6 +28,9 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         
         layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(globalFrame.size)
+            
+            let previousPlacements = self.placementsCoordinator.placements
+            self.placementsCoordinator.placements = [:]
                                                 
             layout?.placeSubviews(
                 in: globalFrame,
@@ -42,9 +38,36 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 subviews: subviews,
                 cache: &cache
             )
-                                    
-            withTransaction(self.transaction) {
-                self.placementsCoordinator.objectWillChange.send()
+            
+            children.forEach { child in
+                if
+                    !self.placementsCoordinator.placements.contains(where: { id, _ in
+                        child.id == id
+                    }),
+                    let subview = subviews.compactMap({ subview in
+                        subview as? LayoutSubviewPolyfill
+                    }).first(where: { subview in
+                        subview.child.id == child.id
+                    })
+                {
+                    let size = subview.sizeThatFits(proposal)
+                    
+                    self.placementsCoordinator.placements[child.id] = LayoutPlacement(
+                        subview: subview,
+                        position: CGPoint(
+                            x: globalFrame.midX,
+                            y: globalFrame.midY
+                        ),
+                        anchor: .center,
+                        proposal: PlacementProposedViewSize(size)
+                    )
+                }
+            }
+            
+            if self.placementsCoordinator.placements != previousPlacements {
+                withTransaction(self.transaction) {
+                    self.placementsCoordinator.objectWillChange.send()
+                }
             }
         }
     }

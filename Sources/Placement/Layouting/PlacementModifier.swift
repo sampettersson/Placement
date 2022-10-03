@@ -36,12 +36,21 @@ struct PlacementEffect: GeometryEffect {
 struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var id: AnyHashable
+    var placement: LayoutPlacement?
     
     func makeUIView(context: Context) -> UIView {
         coordinator.makeHostingController(id: id).view
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {}
+    
+    func _overrideSizeThatFits(
+        _ size: inout CoreGraphics.CGSize,
+        in proposedSize: SwiftUI._ProposedSize,
+        uiView: UIView
+    ) {
+        size = placement?.proposal.replacingUnspecifiedDimensions(by: .zero) ?? .zero
+    }
 }
 
 struct PlacementModifier<L: PlacementLayout>: ViewModifier {
@@ -62,33 +71,40 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     func body(content: Content) -> some View {
         let placement = placementsCoordinator.placements[id]
         
-        LayoutChildSizingView(
-            layout: layout,
-            id: id,
-            children: children
-        )
-        .overlay(
-                content
-                .background(GeometryReader(content: { proxy in
-                    updateLayout(proxy: proxy)
-                }))
-                .transaction { transaction in
-                    coordinator.transaction = transaction
-                }
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .topLeading
-                )
-        )
-        .overlay(PlaceHostingController<L>(id: id).opacity(0).allowsHitTesting(false))
-        .modifier(
-            PlacementEffect(
-                positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),
-                positionY: (placement?.position.y ?? 0) - (coordinator.globalFrame?.origin.y ?? 0),
-                anchorX: placement?.anchor.x ?? 0,
-                anchorY: placement?.anchor.y ?? 0
+        if placement != nil {
+            LayoutChildSizingView(
+                layout: layout,
+                id: id,
+                children: children
             )
-        )
+            .overlay(
+                    content
+                    .background(GeometryReader(content: { proxy in
+                        updateLayout(proxy: proxy)
+                    }))
+                    .transaction { transaction in
+                        coordinator.transaction = transaction
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
+            )
+            .overlay(
+                PlaceHostingController<L>(
+                    id: id,
+                    placement: placement
+                ).opacity(0).allowsHitTesting(false)
+            )
+            .modifier(
+                PlacementEffect(
+                    positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),
+                    positionY: (placement?.position.y ?? 0) - (coordinator.globalFrame?.origin.y ?? 0),
+                    anchorX: placement?.anchor.x ?? 0,
+                    anchorY: placement?.anchor.y ?? 0
+                )
+            )
+        }
     }
 }

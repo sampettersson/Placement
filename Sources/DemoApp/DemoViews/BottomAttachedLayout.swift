@@ -39,18 +39,16 @@ struct BottomAttachedLayout: PlacementLayout {
                     CGSize(width: proposal.width ?? .zero, height: UIView.layoutFittingCompressedSize.height)
                 )
             )
-            
-            print("bottom attached size", bottomAttachedViewSize)
-            
+                        
             DispatchQueue.main.async {
-                //subviews.first?[BottomAttachedLayoutHeightKey.self]?.wrappedValue = bottomAttachedViewSize.height
+                subviews.first?[BottomAttachedLayoutHeightKey.self]?.wrappedValue = bottomAttachedViewSize.height
             }
                                     
-            bottomAttachedContent.place(
-                at: CGPoint(x: 0, y: bounds.maxY - bottomAttachedViewSize.height),
-                anchor: .topLeading,
-                proposal: PlacementProposedViewSize(bottomAttachedViewSize)
-            )
+            //bottomAttachedContent.place(
+            //    at: CGPoint(x: 0, y: bounds.maxY - bottomAttachedViewSize.height),
+            //    anchor: .topLeading,
+            //    proposal: PlacementProposedViewSize(bottomAttachedViewSize)
+            //)
         }
     }
 }

@@ -29,9 +29,7 @@ struct VStackLayout: PlacementLayout {
         subviews: Subviews,
         cache: inout ()) {
             var nextY = bounds.origin.y
-            
-            print("placing v stack", bounds)
-                    
+                                
             for subview in subviews {
                 let subviewSize = subview.sizeThatFits(PlacementProposedViewSize(width: proposal.width, height: .zero))
                 
@@ -63,7 +61,11 @@ struct BottomAttachedDemo: View {
     var body: some View {
         BottomAttachedLayout {
             ScrollView {
-                Text("Hello")
+                Text("Hello").background(GeometryReader(content: { proxy in
+                    let _ = print(proxy.frame(in: .global))
+                    
+                    Color.clear
+                }))
             }
             VStackLayout {
                 VStackLayout {
