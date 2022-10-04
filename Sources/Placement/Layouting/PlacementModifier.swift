@@ -69,6 +69,7 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 id: id,
                 children: children
             )
+            .fixedSize()
             .overlay(
                     content
                     .background(
@@ -108,10 +109,14 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 if let size = sizes[id] {
                     let width = placement.proposal.width ?? .zero
                     let height = placement.proposal.height ?? .zero
-                    let transformedSize = CGSize(width: size.width - width, height: size.height - height)
+                    let transformedSize = CGSize(
+                        width: size.width - width,
+                        height: size.height - height
+                    )
                     sizes[id] = transformedSize
                 }
             }
+            .transition(.opacity)
         }
     }
 }
