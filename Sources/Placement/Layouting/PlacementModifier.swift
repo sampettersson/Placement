@@ -63,54 +63,54 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     var children: _VariadicView.Children
     
     func body(content: Content) -> some View {
-        let placement = placementsCoordinator.placements[id]
-        
-        LayoutChildSizingView(
-            layout: layout,
-            id: id,
-            children: children
-        )
-        .overlay(
-                content
-                .background(
-                    PlacementIntrinsicSizeReader(id: id)
+        if let placement = placementsCoordinator.placements[id] {
+            LayoutChildSizingView(
+                layout: layout,
+                id: id,
+                children: children
+            )
+            .overlay(
+                    content
+                    .background(
+                        PlacementIntrinsicSizeReader(id: id)
+                    )
+                    .transaction { transaction in
+                        coordinator.transaction = transaction
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity,
+                        alignment: .topLeading
+                    )
+            )
+            .overlay(
+                PlaceHostingController<L>(
+                    id: id,
+                    placement: placement
                 )
-                .transaction { transaction in
-                    coordinator.transaction = transaction
-                }
+                .opacity(0)
+                .allowsHitTesting(false)
                 .frame(
                     maxWidth: .infinity,
                     maxHeight: .infinity,
                     alignment: .topLeading
                 )
-        )
-        .overlay(
-            PlaceHostingController<L>(
-                id: id,
-                placement: placement
             )
-            .opacity(0)
-            .allowsHitTesting(false)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .topLeading
+            .modifier(
+                PlacementEffect(
+                    positionX: placement.position.x - (coordinator.globalFrame?.origin.x ?? 0),
+                    positionY: placement.position.y - (coordinator.globalFrame?.origin.y ?? 0),
+                    anchorX: placement.anchor.x,
+                    anchorY: placement.anchor.y
+                )
             )
-        )
-        .modifier(
-            PlacementEffect(
-                positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),
-                positionY: (placement?.position.y ?? 0) - (coordinator.globalFrame?.origin.y ?? 0),
-                anchorX: placement?.anchor.x ?? 0,
-                anchorY: placement?.anchor.y ?? 0
-            )
-        )
-        .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { sizes in
-            if let size = sizes[id] {
-                let width = placement?.proposal.width ?? .zero
-                let height = placement?.proposal.height ?? .zero
-                let transformedSize = CGSize(width: size.width - width, height: size.height - height)
-                sizes[id] = transformedSize
+            .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { sizes in
+                if let size = sizes[id] {
+                    let width = placement.proposal.width ?? .zero
+                    let height = placement.proposal.height ?? .zero
+                    let transformedSize = CGSize(width: size.width - width, height: size.height - height)
+                    sizes[id] = transformedSize
+                }
             }
         }
     }

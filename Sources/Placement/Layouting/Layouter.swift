@@ -9,7 +9,13 @@ struct VariadicLayouterContent<L: PlacementLayout>: _VariadicView_MultiViewRoot 
         coordinator.children = children
         
         return ForEach(children) { child in
-            child.modifier(PlacementModifier(id: child.id, layout: layout, children: children))
+            child.modifier(
+                PlacementModifier(id: child.id, layout: layout, children: children)
+            ).onDisappear {
+                coordinator.placementsCoordinator.placements.removeValue(
+                    forKey: child.id
+                )
+            }
         }.modifier(LayoutSizeModifier(children: children, layout: layout))
     }
 }

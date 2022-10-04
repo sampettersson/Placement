@@ -69,7 +69,9 @@ struct BottomAttachedDemo: View {
                     }))
                     
                     Button("Insert view") {
-                        insertView.toggle()
+                        withAnimation(.spring()) {
+                            insertView.toggle()
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
