@@ -53,6 +53,7 @@
 		EB8BDAA328E5D822009B672B /* BottomAttachedLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAA228E5D822009B672B /* BottomAttachedLayout.swift */; };
 		EB8BDAA528E5D833009B672B /* BottomAttachedDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAA428E5D833009B672B /* BottomAttachedDemo.swift */; };
 		EB8BDAAF28EAB97A009B672B /* FrameChangePlacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAAE28EAB97A009B672B /* FrameChangePlacer.swift */; };
+		EB8BDAB128EC0665009B672B /* PlacementIntrinsicSizeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8BDAB028EC0665009B672B /* PlacementIntrinsicSizeReader.swift */; };
 		EBC389FB28CF665E000E7318 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBC389FA28CF665E000E7318 /* Assets.xcassets */; };
 		EBC389FE28CF665E000E7318 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBC389FD28CF665E000E7318 /* Preview Assets.xcassets */; };
 		EBC38A2928CF6680000E7318 /* PlacementDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A1428CF667F000E7318 /* PlacementDemoApp.swift */; };
@@ -130,6 +131,7 @@
 		EB8BDAA228E5D822009B672B /* BottomAttachedLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAttachedLayout.swift; sourceTree = "<group>"; };
 		EB8BDAA428E5D833009B672B /* BottomAttachedDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomAttachedDemo.swift; sourceTree = "<group>"; };
 		EB8BDAAE28EAB97A009B672B /* FrameChangePlacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameChangePlacer.swift; sourceTree = "<group>"; };
+		EB8BDAB028EC0665009B672B /* PlacementIntrinsicSizeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementIntrinsicSizeReader.swift; sourceTree = "<group>"; };
 		EBC389F328CF665C000E7318 /* PlacementDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlacementDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBC389FA28CF665E000E7318 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBC389FD28CF665E000E7318 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */,
 				EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */,
 				EB8BDAAE28EAB97A009B672B /* FrameChangePlacer.swift */,
+				EB8BDAB028EC0665009B672B /* PlacementIntrinsicSizeReader.swift */,
 			);
 			path = Layouting;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 				EB70B48628D4677E007049FF /* PlacementLayoutValueKey.swift in Sources */,
 				EB70B48F28D46784007049FF /* LayoutSizingView.swift in Sources */,
 				EB323AF428D8F66A004F8EED /* PlacementLayout+DefaultImplementations.swift in Sources */,
+				EB8BDAB128EC0665009B672B /* PlacementIntrinsicSizeReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -55,21 +55,6 @@ struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
     }
 }
 
-struct PlacementIntrinsicSizesPreferenceKey: PreferenceKey {
-    typealias Value = [AnyHashable: CGSize]
-
-    static var defaultValue: Value = [:]
-
-    static func reduce(
-        value: inout Value,
-        nextValue: () -> Value
-    ) {
-        value = value.merging(nextValue()) { _, rhs in
-            rhs
-        }
-    }
-}
-
 struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     @EnvironmentObject var coordinator: Coordinator<L>
     @EnvironmentObject var placementsCoordinator: PlacementsCoordinator
@@ -88,12 +73,7 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
         .overlay(
                 content
                 .background(
-                    GeometryReader(content: { proxy in
-                        Color.clear.preference(
-                            key: PlacementIntrinsicSizesPreferenceKey.self,
-                            value: [id: proxy.size]
-                        )
-                    }).animation(nil)
+                    PlacementIntrinsicSizeReader(id: id)
                 )
                 .transaction { transaction in
                     coordinator.transaction = transaction

@@ -20,7 +20,7 @@ struct VStackLayout: PlacementLayout {
             maxWidth = max(maxWidth, subviewSize.width)
         }
                         
-        return CGSize(width: maxWidth, height: totalHeight)
+        return CGSize(width: maxWidth, height: totalHeight - 10)
     }
     
     func placeSubviews(
@@ -70,10 +70,14 @@ struct BottomAttachedDemo: View {
                 .background(Color.red)
             }
             VStackLayout {
+                Color.red.frame(width: 10, height: 10)
                 VStackLayout {
-                    ExpandingView()
-                        .background(Color.red)
-                        .frame(maxWidth: .infinity)
+                    Color.blue.frame(width: 10, height: 10)
+                    VStackLayout {
+                        ExpandingView()
+                            .background(Color.red)
+                            .frame(maxWidth: .infinity)
+                    }
                 }
             }
         }

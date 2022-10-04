@@ -44,7 +44,6 @@ class FrameChangePlacerView<L: PlacementLayout>: UIView {
 }
 
 struct FrameChangePlacer<L: PlacementLayout>: UIViewRepresentable {
-    @EnvironmentObject var layoutSizingCoordinator: LayoutSizingCoordinator
     @EnvironmentObject var coordinator: Coordinator<L>
     var children: _VariadicView.Children
     var intrinsicSizes: [AnyHashable: CGSize]
