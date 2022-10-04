@@ -2,11 +2,13 @@ import Foundation
 import SwiftUI
 
 struct VariadicLayouterContent<L: PlacementLayout>: _VariadicView_MultiViewRoot {
+    var coordinator: Coordinator<L>
     var layout: L
     
-    @ViewBuilder
     func body(children: _VariadicView.Children) -> some View {
-        ForEach(children) { child in
+        coordinator.children = children
+        
+        return ForEach(children) { child in
             child.modifier(PlacementModifier(id: child.id, layout: layout, children: children))
         }.modifier(LayoutSizeModifier(children: children, layout: layout))
     }
@@ -22,6 +24,7 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
         
         return _VariadicView.Tree(
             VariadicLayouterContent(
+                coordinator: coordinator,
                 layout: layout
             )
         ) {

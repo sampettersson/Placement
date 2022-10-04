@@ -11,6 +11,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
     var globalFrame: CGRect? = nil
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
+    var children: _VariadicView.Children? = nil
     
     private var _cache: L.Cache?
     
@@ -23,12 +24,12 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         }
     }
     
-    func placeSubviews(children: _VariadicView.Children) {
-        guard let globalFrame = globalFrame, let safeAreaInsets = safeAreaInsets else {
+    func placeSubviews() {
+        guard let globalFrame = globalFrame, let safeAreaInsets = safeAreaInsets, let children = children else {
             return
         }
         
-        layoutContext(children: children) { subviews, cache in
+        layoutContext() { subviews, cache in
             let proposal = PlacementProposedViewSize(globalFrame.size)
             
             self.placementsCoordinator.placements = [:]
@@ -80,8 +81,8 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         }
     }
             
-    func layoutContext<T>(children: _VariadicView.Children, context: (PlacementLayoutSubviews, inout L.Cache) -> T) -> T {
-        let subviews = makeSubviews(children: children)
+    func layoutContext<T>(context: (PlacementLayoutSubviews, inout L.Cache) -> T) -> T {
+        let subviews = makeSubviews(children: children!)
         return context(subviews, &cache)
     }
     
@@ -180,6 +181,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         }
         
         let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        hostingController._disableSafeArea = true
         self.hostingControllers[id] = hostingController
         
         return hostingController

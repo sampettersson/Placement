@@ -7,7 +7,7 @@ struct ExplicitAlignmentModifier<L: PlacementLayout>: ViewModifier {
     var layout: L
     
     func alignment(in dimensions: ViewDimensions, for guide: VerticalAlignment) -> CGFloat {
-        coordinator.layoutContext(children: children) { subviews, cache -> CGFloat in
+        coordinator.layoutContext() { subviews, cache -> CGFloat in
             if let explicitAlignment = layout.explicitAlignment(
                 of: guide,
                 in: coordinator.globalFrame ?? .zero,
@@ -23,7 +23,7 @@ struct ExplicitAlignmentModifier<L: PlacementLayout>: ViewModifier {
     }
     
     func alignment(in dimensions: ViewDimensions, for guide: HorizontalAlignment) -> CGFloat {
-        coordinator.layoutContext(children: children) { subviews, cache -> CGFloat in
+        coordinator.layoutContext() { subviews, cache -> CGFloat in
             if let explicitAlignment = layout.explicitAlignment(
                 of: guide,
                 in: coordinator.globalFrame ?? .zero,

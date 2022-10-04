@@ -58,6 +58,8 @@ struct ExpandingView: View {
 }
 
 struct BottomAttachedDemo: View {
+    @State var insertView: Bool = false
+    
     var body: some View {
         BottomAttachedLayout {
             ScrollView {
@@ -65,6 +67,10 @@ struct BottomAttachedDemo: View {
                     Text("Hello").background(GeometryReader(content: { proxy in
                         Color.clear
                     }))
+                    
+                    Button("Insert view") {
+                        insertView.toggle()
+                    }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.red)
@@ -77,6 +83,12 @@ struct BottomAttachedDemo: View {
                         ExpandingView()
                             .background(Color.red)
                             .frame(maxWidth: .infinity)
+                        
+                        if insertView {
+                            ExpandingView()
+                                .background(Color.red)
+                                .frame(maxWidth: .infinity)
+                        }
                     }
                 }
             }

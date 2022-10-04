@@ -39,7 +39,7 @@ class FrameChangePlacerView<L: PlacementLayout>: UIView {
             coordinator.globalFrame = globalFrame
         }
                 
-        coordinator.placeSubviews(children: children)
+        coordinator.placeSubviews()
     }
 }
 
