@@ -63,8 +63,10 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
             .allowsHitTesting(false)
         }
         .onPreferenceChange(PlacementIntrinsicSizesPreferenceKey.self) { intrinsicSizes in
-            withTransaction(coordinator.transaction) {
-                self.intrinsicSizes = intrinsicSizes
+            if self.intrinsicSizes != intrinsicSizes {
+                withTransaction(coordinator.transaction) {
+                    self.intrinsicSizes = intrinsicSizes
+                }
             }
         }
     }
