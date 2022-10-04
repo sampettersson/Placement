@@ -36,12 +36,23 @@ struct PlacementEffect: GeometryEffect {
 struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var id: AnyHashable
+    var placement: LayoutPlacement?
     
     func makeUIView(context: Context) -> UIView {
         coordinator.makeHostingController(id: id).view
     }
     
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    func updateUIView(_ uiView: UIView, context: Context) {
+        uiView.isHidden = true
+    }
+    
+    func _overrideSizeThatFits(
+        _ size: inout CoreGraphics.CGSize,
+        in proposedSize: SwiftUI._ProposedSize,
+        uiView: UIView
+    ) {
+        size = placement?.proposal.replacingUnspecifiedDimensions(by: .zero) ?? .zero
+    }
 }
 
 struct PlacementModifier<L: PlacementLayout>: ViewModifier {
@@ -50,14 +61,6 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
     var id: AnyHashable
     var layout: L
     var children: _VariadicView.Children
-    
-    func updateLayout(proxy: GeometryProxy) -> some View {
-        return Color.clear.onChange(of: proxy.size) { _ in
-            withTransaction(coordinator.transaction) {
-                coordinator.objectWillChange.send()
-            }
-        }
-    }
     
     func body(content: Content) -> some View {
         let placement = placementsCoordinator.placements[id]
@@ -69,9 +72,9 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
         )
         .overlay(
                 content
-                .background(GeometryReader(content: { proxy in
-                    updateLayout(proxy: proxy)
-                }))
+                .background(
+                    PlacementIntrinsicSizeReader(id: id)
+                )
                 .transaction { transaction in
                     coordinator.transaction = transaction
                 }
@@ -81,7 +84,19 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                     alignment: .topLeading
                 )
         )
-        .overlay(PlaceHostingController<L>(id: id).opacity(0).allowsHitTesting(false))
+        .overlay(
+            PlaceHostingController<L>(
+                id: id,
+                placement: placement
+            )
+            .opacity(0)
+            .allowsHitTesting(false)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
+        )
         .modifier(
             PlacementEffect(
                 positionX: (placement?.position.x ?? 0) - (coordinator.globalFrame?.origin.x ?? 0),

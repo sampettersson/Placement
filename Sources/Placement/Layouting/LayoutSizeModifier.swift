@@ -21,42 +21,30 @@ extension HorizontalAlignment {
     static let placementLeading = HorizontalAlignment(PlacementLeading.self)
 }
 
-private struct ChildrenIntrinsicSizesEnvironmentKey: EnvironmentKey {
-    static let defaultValue: [AnyHashable: CGSize] = [:]
-}
-
-extension EnvironmentValues {
-  var childrenIntrinsicSizes: [AnyHashable: CGSize] {
-    get { self[ChildrenIntrinsicSizesEnvironmentKey.self] }
-    set { self[ChildrenIntrinsicSizesEnvironmentKey.self] = newValue }
-  }
-}
-
 struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
+    @Namespace private var namespace
     @EnvironmentObject var coordinator: Coordinator<L>
+    @State var intrinsicSizes: [AnyHashable: CGSize] = [:]
     var children: _VariadicView.Children
     var layout: L
-    
-    func updateLayout(proxy: GeometryProxy) -> some View {
-        coordinator.layoutProxy = proxy
-        coordinator.placeSubviews(children: children)
-        return Color.clear
-    }
     
     func body(content: Content) -> some View {
         LayoutSizingView(
             layout: layout,
-            children: children
+            children: children,
+            intrinsicSizes: intrinsicSizes
         )
-        .background(GeometryReader(content: { proxy in
-            updateLayout(proxy: proxy)
-        }))
         .transaction({ transaction in
             coordinator.transaction = transaction
         })
         .allowsHitTesting(false)
         .overlay(
-            ZStack(alignment: Alignment(horizontal: .placementLeading, vertical: .placementTop)) {
+            ZStack(
+                alignment: Alignment(
+                    horizontal: .placementLeading,
+                    vertical: .placementTop
+                )
+            ) {
                 content
                     .frame(
                         maxWidth: .infinity,
@@ -66,5 +54,20 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
             }
         )
         .modifier(ExplicitAlignmentModifier(children: children, layout: layout))
+        .overlayPreferenceValue(PlacementIntrinsicSizesPreferenceKey.self) { intrinsicSizes in
+            FrameChangePlacer<L>(
+                children: children,
+                intrinsicSizes: intrinsicSizes
+            )
+            .animation(nil)
+            .allowsHitTesting(false)
+        }
+        .onPreferenceChange(PlacementIntrinsicSizesPreferenceKey.self) { intrinsicSizes in
+            if self.intrinsicSizes != intrinsicSizes {
+                withTransaction(coordinator.transaction) {
+                    self.intrinsicSizes = intrinsicSizes
+                }
+            }
+        }
     }
 }

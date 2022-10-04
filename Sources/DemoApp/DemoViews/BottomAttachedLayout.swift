@@ -32,16 +32,17 @@ struct BottomAttachedLayout: PlacementLayout {
         if let mainContent = subviews.first {
             mainContent.place(at: bounds.origin, anchor: .topLeading, proposal: proposal)
         }
-        
+                        
         if let bottomAttachedContent = subviews.last {
             let bottomAttachedViewSize = bottomAttachedContent.sizeThatFits(
                 PlacementProposedViewSize(
-                    CGSize(width: proposal.width ?? .zero, height: UIView.layoutFittingCompressedSize.height)
+                    width: proposal.width,
+                    height: nil
                 )
             )
-            
+                                    
             DispatchQueue.main.async {
-                //subviews.first?[BottomAttachedLayoutHeightKey.self]?.wrappedValue = bottomAttachedViewSize.height
+                subviews.first?[BottomAttachedLayoutHeightKey.self]?.wrappedValue = bottomAttachedViewSize.height
             }
                                     
             bottomAttachedContent.place(

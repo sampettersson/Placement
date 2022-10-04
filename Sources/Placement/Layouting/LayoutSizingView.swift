@@ -1,15 +1,9 @@
 import Foundation
 import SwiftUI
 
-class TransactionView: UIView {
-    var transaction = Transaction()
-    
+class PlacementLayoutContainer: UIView {
     override var intrinsicContentSize: CGSize {
         .zero
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()        
     }
 }
 
@@ -17,18 +11,19 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var layout: L
     var children: _VariadicView.Children
+    var intrinsicSizes: [AnyHashable: CGSize]
         
-    func makeUIView(context: Context) -> TransactionView {
-        let view = TransactionView(frame: .zero)
+    func makeUIView(context: Context) -> PlacementLayoutContainer {
+        let view = PlacementLayoutContainer()
         return view
     }
     
-    func updateUIView(_ uiView: TransactionView, context: Context) {}
+    func updateUIView(_ uiView: PlacementLayoutContainer, context: Context) {}
         
     func _overrideSizeThatFits(
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
-        uiView: TransactionView
+        uiView: PlacementLayoutContainer
     ) {
         coordinator.layoutContext(children: children) { subviews, cache in
             let proposal = proposedSize.placementProposedViewSize

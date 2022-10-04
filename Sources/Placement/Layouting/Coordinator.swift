@@ -3,15 +3,12 @@ import SwiftUI
 
 class PlacementsCoordinator: ObservableObject {
     var placements: [AnyHashable: LayoutPlacement] = [:]
+    var unspecifiedSize: [AnyHashable: CGSize] = [:]
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
+    var safeAreaInsets: UIEdgeInsets? = nil
     var globalFrame: CGRect? = nil
-    var layoutProxy: GeometryProxy? = nil {
-        didSet {
-            globalFrame = layoutProxy?.frame(in: .global)
-        }
-    }
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
     
@@ -27,30 +24,58 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
     }
     
     func placeSubviews(children: _VariadicView.Children) {
-        guard let globalFrame = globalFrame else {
+        guard let globalFrame = globalFrame, let safeAreaInsets = safeAreaInsets else {
             return
         }
         
         layoutContext(children: children) { subviews, cache in
             let proposal = PlacementProposedViewSize(globalFrame.size)
-                                    
+            
+            self.placementsCoordinator.placements = [:]
+                                                
             layout?.placeSubviews(
-                in: globalFrame,
+                in: CGRect(
+                    origin: CGPoint(
+                        x: globalFrame.origin.x + safeAreaInsets.left,
+                        y: globalFrame.origin.y + safeAreaInsets.top
+                    ),
+                    size: CGSize(
+                        width: globalFrame.width - safeAreaInsets.left - safeAreaInsets.right,
+                        height: globalFrame.height - safeAreaInsets.top - safeAreaInsets.bottom
+                    )
+                ),
                 proposal: proposal,
                 subviews: subviews,
                 cache: &cache
             )
-                                    
-            if #available(iOS 16, *) {
-                DispatchQueue.main.async {
-                    withTransaction(self.transaction) {
-                        self.placementsCoordinator.objectWillChange.send()
-                    }
+            
+            children.forEach { child in
+                if
+                    !self.placementsCoordinator.placements.contains(where: { id, _ in
+                        child.id == id
+                    }),
+                    let subview = subviews.compactMap({ subview in
+                        subview as? LayoutSubviewPolyfill
+                    }).first(where: { subview in
+                        subview.child.id == child.id
+                    })
+                {
+                    let size = subview.sizeThatFits(proposal)
+                    
+                    self.placementsCoordinator.placements[child.id] = LayoutPlacement(
+                        subview: subview,
+                        position: CGPoint(
+                            x: globalFrame.midX,
+                            y: globalFrame.midY
+                        ),
+                        anchor: .center,
+                        proposal: PlacementProposedViewSize(size)
+                    )
                 }
-            } else {
-                withTransaction(transaction) {
-                    placementsCoordinator.objectWillChange.send()
-                }
+            }
+            
+            withTransaction(self.transaction) {
+                self.placementsCoordinator.objectWillChange.send()
             }
         }
     }
@@ -81,13 +106,6 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             LayoutSubviewPolyfill(
                 id: child.id,
                 onPlacement: { placement in
-                    DispatchQueue.main.async {
-                        self.hostingControllers[child.id]?.view.frame = CGRect(
-                            origin: placement.position,
-                            size: placement.proposal.replacingUnspecifiedDimensions(by: .zero)
-                        )
-                    }
-                    
                     self.placementsCoordinator.placements[child.id] = LayoutPlacement(
                         subview: placement.subview,
                         position: CGPoint(
@@ -101,10 +119,29 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 getSizeThatFits: { size in
                     let hostingController = self.makeHostingController(id: child.id)
                     hostingController.rootView = AnyView(child)
-                    hostingController._disableSafeArea = true
+                    
+                    hostingController.view.setContentHuggingPriority(
+                        .defaultHigh,
+                        for: .horizontal
+                    )
+                    hostingController.view.setContentHuggingPriority(
+                        .defaultHigh,
+                        for: .vertical
+                    )
+                    hostingController.view.setContentCompressionResistancePriority(
+                        .defaultHigh,
+                        for: .horizontal
+                    )
+                    hostingController.view.setContentCompressionResistancePriority(
+                        .defaultHigh,
+                        for: .vertical
+                    )
                                         
                     let sizeThatFits = hostingController.sizeThatFits(
-                        in: size.replacingUnspecifiedDimensions(by: .zero)
+                        in: CGSize(
+                            width: size.width ?? UIView.layoutFittingCompressedSize.width,
+                            height: size.height ?? UIView.layoutFittingCompressedSize.height
+                        )
                     )
                     
                     return sizeThatFits
