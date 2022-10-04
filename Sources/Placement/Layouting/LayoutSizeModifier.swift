@@ -22,7 +22,6 @@ extension HorizontalAlignment {
 }
 
 struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
-    @Namespace private var namespace
     @EnvironmentObject var coordinator: Coordinator<L>
     @State var intrinsicSizes: [AnyHashable: CGSize] = [:]
     var children: _VariadicView.Children
