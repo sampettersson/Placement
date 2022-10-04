@@ -120,23 +120,6 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 getSizeThatFits: { size in
                     let hostingController = self.makeHostingController(id: child.id)
                     hostingController.rootView = AnyView(child)
-                    
-                    hostingController.view.setContentHuggingPriority(
-                        .defaultHigh,
-                        for: .horizontal
-                    )
-                    hostingController.view.setContentHuggingPriority(
-                        .defaultHigh,
-                        for: .vertical
-                    )
-                    hostingController.view.setContentCompressionResistancePriority(
-                        .defaultHigh,
-                        for: .horizontal
-                    )
-                    hostingController.view.setContentCompressionResistancePriority(
-                        .defaultHigh,
-                        for: .vertical
-                    )
                                         
                     let sizeThatFits = hostingController.sizeThatFits(
                         in: CGSize(

@@ -24,7 +24,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
         _ size: inout CoreGraphics.CGSize,
         in proposedSize: SwiftUI._ProposedSize,
         uiView: PlacementLayoutContainer
-    ) {        
+    ) {
         coordinator.layoutContext { subviews, cache in
             let proposal = proposedSize.placementProposedViewSize
             

@@ -32,7 +32,6 @@
 		EB70B47B28D46753007049FF /* Placement.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB70B47428D46753007049FF /* Placement.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EB70B48028D46773007049FF /* PlacementViewSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A1628CF667F000E7318 /* PlacementViewSpacing.swift */; };
 		EB70B48128D46778007049FF /* PlacementProposedViewSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A0D28CF667E000E7318 /* PlacementProposedViewSize.swift */; };
-		EB70B48228D46778007049FF /* SizePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70B46128D465D9007049FF /* SizePreferences.swift */; };
 		EB70B48328D46778007049FF /* PlacementViewDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A0428CF667C000E7318 /* PlacementViewDimensions.swift */; };
 		EB70B48428D46778007049FF /* ProposedSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A1928CF6680000E7318 /* ProposedSize.swift */; };
 		EB70B48528D4677E007049FF /* PlacementLayoutProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC38A0728CF667D000E7318 /* PlacementLayoutProperties.swift */; };
@@ -123,7 +122,6 @@
 		EB70B45B28D3B55C007049FF /* LayoutChildSizingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutChildSizingView.swift; sourceTree = "<group>"; };
 		EB70B45D28D46554007049FF /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		EB70B45F28D465A9007049FF /* PlacementModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementModifier.swift; sourceTree = "<group>"; };
-		EB70B46128D465D9007049FF /* SizePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizePreferences.swift; sourceTree = "<group>"; };
 		EB70B46328D465EF007049FF /* LayoutSizeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSizeModifier.swift; sourceTree = "<group>"; };
 		EB70B47428D46753007049FF /* Placement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Placement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70B49428D46DBB007049FF /* ExplicitAlignmentModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplicitAlignmentModifier.swift; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 			children = (
 				EBC38A0D28CF667E000E7318 /* PlacementProposedViewSize.swift */,
 				EBC38A1928CF6680000E7318 /* ProposedSize.swift */,
-				EB70B46128D465D9007049FF /* SizePreferences.swift */,
 				EBC38A0428CF667C000E7318 /* PlacementViewDimensions.swift */,
 			);
 			path = Sizing;
@@ -543,7 +540,6 @@
 				EB49F88128D503C700693F9E /* AnyPlacementLayout.swift in Sources */,
 				EB70B48928D46784007049FF /* Coordinator.swift in Sources */,
 				EB70B49128D46789007049FF /* PlacementLayoutSubview.swift in Sources */,
-				EB70B48228D46778007049FF /* SizePreferences.swift in Sources */,
 				EB323AF128D8EEC5004F8EED /* PlacementThatFitsChildModifier.swift in Sources */,
 				EB70B48428D46778007049FF /* ProposedSize.swift in Sources */,
 				EB323AAF28D73D76004F8EED /* AnyAnimatableData.swift in Sources */,

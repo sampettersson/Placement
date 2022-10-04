@@ -105,5 +105,13 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 anchorY: placement?.anchor.y ?? 0
             )
         )
+        .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { sizes in
+            if let size = sizes[id] {
+                let width = placement?.proposal.width ?? .zero
+                let height = placement?.proposal.height ?? .zero
+                let transformedSize = CGSize(width: size.width - width, height: size.height - height)
+                sizes[id] = transformedSize
+            }
+        }
     }
 }
