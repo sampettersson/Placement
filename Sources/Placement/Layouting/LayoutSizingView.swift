@@ -1,18 +1,6 @@
 import Foundation
 import SwiftUI
 
-class TransactionView: UIView {
-    var transaction = Transaction()
-    
-    override var intrinsicContentSize: CGSize {
-        .zero
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-}
-
 class PlacementLayoutContainer: UIView {
     override var intrinsicContentSize: CGSize {
         .zero
