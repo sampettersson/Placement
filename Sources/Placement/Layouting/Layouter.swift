@@ -29,8 +29,8 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
         }
         .environmentObject(coordinator)
         .environmentObject(coordinator.placementsCoordinator)
-        .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { anchors in
-            anchors = [:]
+        .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { intrinsicSizes in
+            intrinsicSizes = [:]
         }
     }
 }
