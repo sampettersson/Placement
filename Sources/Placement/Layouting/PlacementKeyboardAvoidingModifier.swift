@@ -11,20 +11,15 @@ import SwiftUI
 func keyboardAnimation(from notification: Notification) -> Animation? {
     guard
       let info = notification.userInfo,
-      let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
-      let curveValue = info[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int,
-      let uiKitCurve = UIView.AnimationCurve(rawValue: curveValue)
+      let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
     else {
         return nil
     }
     
-    let timing = UICubicTimingParameters(animationCurve: uiKitCurve)
-    return Animation.timingCurve(
-        Double(timing.controlPoint1.x),
-        Double(timing.controlPoint1.y),
-        Double(timing.controlPoint2.x),
-        Double(timing.controlPoint2.y),
-        duration: duration
+    return Animation.spring(
+        response: 0.35,
+        dampingFraction: 0.825,
+        blendDuration: duration
     )
 }
 
