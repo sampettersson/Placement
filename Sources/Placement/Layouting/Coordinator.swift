@@ -33,6 +33,8 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
             let proposal = PlacementProposedViewSize(globalFrame.size)
                                     
             self.placementsCoordinator.placements = [:]
+            
+            let keyboardFrameIntersection = globalFrame.intersection(keyboardFrame)
                                                             
             layout?.placeSubviews(
                 in: CGRect(
@@ -42,7 +44,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                     ),
                     size: CGSize(
                         width: globalFrame.width,
-                        height: globalFrame.height - keyboardFrame.height
+                        height: globalFrame.height - keyboardFrameIntersection.height
                     )
                 ),
                 proposal: proposal,
