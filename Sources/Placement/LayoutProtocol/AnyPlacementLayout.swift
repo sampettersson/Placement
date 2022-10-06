@@ -171,7 +171,7 @@ public struct AnyPlacementLayout: PlacementLayout {
             return layout.disablesAnimationsWhenPlacing
         }
         self._getAnimatableData = { layout in
-            var layout = layout as! L
+            let layout = layout as! L
             return AnyAnimatableData(layout.animatableData)
         }
         self._setAnimatableData = { layout, newValue in
