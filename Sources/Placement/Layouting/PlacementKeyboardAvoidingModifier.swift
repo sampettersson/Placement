@@ -61,6 +61,12 @@ struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
                 name: UIResponder.keyboardWillChangeFrameNotification,
                 object: nil
             )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(handleKeyboardFrame),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil
+            )
         }
         
         @objc func handleKeyboardHide(notification: Notification) {
@@ -77,12 +83,11 @@ struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
                 notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
             ) ?? .zero
             
-            if shouldAdjust {
-                if coordinator.globalFrame?.contains(keyboardFrame.origin) ?? false {
-                    withAnimation(keyboardAnimation(from: notification)) {
-                        coordinator.keyboardFrame = keyboardFrame
-                        self.keyboardFrame = keyboardFrame
-                    }
+            if shouldAdjust && coordinator.keyboardFrame != keyboardFrame {
+                coordinator.keyboardFrame = keyboardFrame
+                
+                withAnimation(keyboardAnimation(from: notification)) {
+                    self.keyboardFrame = keyboardFrame
                 }
             }
         }
