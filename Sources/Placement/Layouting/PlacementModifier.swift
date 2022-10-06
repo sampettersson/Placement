@@ -25,33 +25,11 @@ struct PlacementEffect: GeometryEffect {
         let translationY = positionY - anchorPointY
         let anchorPointX = size.width * anchorX
         let translationX = positionX - anchorPointX
-                                                                
+                                                                        
         return ProjectionTransform(CGAffineTransform(
             translationX: translationX,
             y: translationY
         ))
-    }
-}
-
-struct PlaceHostingController<L: PlacementLayout>: UIViewRepresentable {
-    @EnvironmentObject var coordinator: Coordinator<L>
-    var id: AnyHashable
-    var placement: LayoutPlacement?
-    
-    func makeUIView(context: Context) -> UIView {
-        coordinator.makeHostingController(id: id).view
-    }
-    
-    func updateUIView(_ uiView: UIView, context: Context) {
-        uiView.isHidden = true
-    }
-    
-    func _overrideSizeThatFits(
-        _ size: inout CoreGraphics.CGSize,
-        in proposedSize: SwiftUI._ProposedSize,
-        uiView: UIView
-    ) {
-        size = placement?.proposal.replacingUnspecifiedDimensions(by: .zero) ?? .zero
     }
 }
 
@@ -69,7 +47,6 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 id: id,
                 children: children
             )
-            .fixedSize()
             .overlay(
                     content
                     .background(
@@ -83,19 +60,6 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                         maxHeight: .infinity,
                         alignment: .topLeading
                     )
-            )
-            .overlay(
-                PlaceHostingController<L>(
-                    id: id,
-                    placement: placement
-                )
-                .opacity(0)
-                .allowsHitTesting(false)
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .topLeading
-                )
             )
             .modifier(
                 PlacementEffect(
@@ -117,6 +81,7 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 }
             }
             .transition(.opacity)
+            .fixedSize()
         }
     }
 }

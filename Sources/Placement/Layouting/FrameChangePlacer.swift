@@ -22,20 +22,13 @@ class FrameChangePlacerView<L: PlacementLayout>: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func safeAreaInsetsDidChange() {
-        super.safeAreaInsetsDidChange()
-        self.setNeedsLayout()
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        let safeAreaInsets = self.safeAreaInsets
                 
         if let globalFrame = self.superview?.convert(
             self.frame,
-            to: self.window?.rootViewController?.view
+            to: self.window
         ) {
-            coordinator.safeAreaInsets = safeAreaInsets
             coordinator.globalFrame = globalFrame
         }
                 
@@ -52,7 +45,8 @@ struct FrameChangePlacer<L: PlacementLayout>: UIViewRepresentable {
         FrameChangePlacerView(coordinator: coordinator, children: children)
     }
     
-    func updateUIView(_ uiView: FrameChangePlacerView<L>, context: Context) {}
+    func updateUIView(_ uiView: FrameChangePlacerView<L>, context: Context) {
+    }
     
     func _overrideSizeThatFits(
         _ size: inout CoreGraphics.CGSize,

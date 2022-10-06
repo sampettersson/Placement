@@ -59,6 +59,7 @@ struct ExpandingView: View {
 
 struct BottomAttachedDemo: View {
     @State var insertView: Bool = false
+    @State var textValue: String = ""
     
     var body: some View {
         BottomAttachedLayout {
@@ -78,6 +79,7 @@ struct BottomAttachedDemo: View {
                 .background(Color.red)
             }
             VStackLayout {
+                TextField("hello", text: $textValue)
                 Color.red.frame(width: 10, height: 10)
                 VStackLayout {
                     Color.blue.frame(width: 10, height: 10)
@@ -90,6 +92,10 @@ struct BottomAttachedDemo: View {
                             ExpandingView()
                                 .background(Color.red)
                                 .frame(maxWidth: .infinity)
+                            
+                            ForEach(0..<10) { offset in
+                                Color.blue.frame(width: 10, height: 10)
+                            }
                         }
                     }
                 }

@@ -32,7 +32,7 @@ struct BottomAttachedLayout: PlacementLayout {
         if let mainContent = subviews.first {
             mainContent.place(at: bounds.origin, anchor: .topLeading, proposal: proposal)
         }
-                        
+                                
         if let bottomAttachedContent = subviews.last {
             let bottomAttachedViewSize = bottomAttachedContent.sizeThatFits(
                 PlacementProposedViewSize(

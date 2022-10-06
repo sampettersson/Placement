@@ -7,7 +7,6 @@ class PlacementsCoordinator: ObservableObject {
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
-    var safeAreaInsets: UIEdgeInsets? = nil
     var globalFrame: CGRect? = nil
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
@@ -25,24 +24,24 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
     }
     
     func placeSubviews() {
-        guard let globalFrame = globalFrame, let safeAreaInsets = safeAreaInsets, let children = children else {
+        guard let globalFrame = globalFrame, let children = children else {
             return
         }
         
         layoutContext() { subviews, cache in
             let proposal = PlacementProposedViewSize(globalFrame.size)
-            
+                                    
             self.placementsCoordinator.placements = [:]
-                                                
+                                                            
             layout?.placeSubviews(
                 in: CGRect(
                     origin: CGPoint(
-                        x: globalFrame.origin.x + safeAreaInsets.left,
-                        y: globalFrame.origin.y + safeAreaInsets.top
+                        x: globalFrame.origin.x,
+                        y: globalFrame.origin.y
                     ),
                     size: CGSize(
-                        width: globalFrame.width - safeAreaInsets.left - safeAreaInsets.right,
-                        height: globalFrame.height - safeAreaInsets.top - safeAreaInsets.bottom
+                        width: globalFrame.width,
+                        height: globalFrame.height
                     )
                 ),
                 proposal: proposal,
@@ -127,7 +126,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                             height: size.height ?? UIView.layoutFittingCompressedSize.height
                         )
                     )
-                    
+                                        
                     return sizeThatFits
                 },
                 spacing: .zero,
