@@ -31,7 +31,7 @@ class FrameChangePlacerView<L: PlacementLayout>: UIView {
         ) {
             coordinator.globalFrame = globalFrame
         }
-                
+                        
         coordinator.placeSubviews()
     }
 }
@@ -40,6 +40,7 @@ struct FrameChangePlacer<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var children: _VariadicView.Children
     var intrinsicSizes: [AnyHashable: CGSize]
+    @Binding var keyboardFrame: CGRect
     
     func makeUIView(context: Context) -> FrameChangePlacerView<L> {
         FrameChangePlacerView(coordinator: coordinator, children: children)

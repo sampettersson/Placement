@@ -11,7 +11,8 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
     @EnvironmentObject var coordinator: Coordinator<L>
     var layout: L
     var children: _VariadicView.Children
-    var intrinsicSizes: [AnyHashable: CGSize]
+    @Binding var intrinsicSizes: [AnyHashable: CGSize]
+    @Binding var keyboardFrame: CGRect
         
     func makeUIView(context: Context) -> PlacementLayoutContainer {
         let view = PlacementLayoutContainer()
@@ -32,7 +33,7 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
                 proposal: proposal,
                 subviews: subviews,
                 cache: &cache
-            )
+            )            
         }
     }
 }

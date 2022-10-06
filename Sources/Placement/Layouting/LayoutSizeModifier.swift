@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Combine
 
 extension VerticalAlignment {
     struct PlacementTop: AlignmentID {
@@ -23,6 +24,7 @@ extension HorizontalAlignment {
 
 struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
     @EnvironmentObject var coordinator: Coordinator<L>
+    @State var keyboardFrame: CGRect = .zero
     @State var intrinsicSizes: [AnyHashable: CGSize] = [:]
     var children: _VariadicView.Children
     var layout: L
@@ -31,7 +33,8 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         LayoutSizingView(
             layout: layout,
             children: children,
-            intrinsicSizes: intrinsicSizes
+            intrinsicSizes: $intrinsicSizes,
+            keyboardFrame: $keyboardFrame
         )
         .transaction({ transaction in
             coordinator.transaction = transaction
@@ -56,7 +59,8 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
         .overlayPreferenceValue(PlacementIntrinsicSizesPreferenceKey.self) { intrinsicSizes in
             FrameChangePlacer<L>(
                 children: children,
-                intrinsicSizes: intrinsicSizes
+                intrinsicSizes: intrinsicSizes,
+                keyboardFrame: $keyboardFrame
             )
             .animation(nil)
             .allowsHitTesting(false)
@@ -68,5 +72,6 @@ struct LayoutSizeModifier<L: PlacementLayout>: ViewModifier {
                 }
             }
         }
+        .modifier(PlacementKeyboardAvoidingModifier<L>(keyboardFrame: $keyboardFrame))
     }
 }

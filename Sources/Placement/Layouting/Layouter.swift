@@ -34,12 +34,13 @@ struct Layouter<Content: View, L: PlacementLayout>: View {
                 layout: layout
             )
         ) {
-            content()
+            content().environment(\.placementShouldAdjustToKeyboard, false)
         }
         .environmentObject(coordinator)
         .environmentObject(coordinator.placementsCoordinator)
         .transformPreference(PlacementIntrinsicSizesPreferenceKey.self) { intrinsicSizes in
             intrinsicSizes = [:]
         }
+        .ignoresSafeArea(.keyboard)
     }
 }

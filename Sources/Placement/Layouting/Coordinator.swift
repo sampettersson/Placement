@@ -7,6 +7,7 @@ class PlacementsCoordinator: ObservableObject {
 }
 
 class Coordinator<L: PlacementLayout>: ObservableObject {
+    var keyboardFrame: CGRect = .zero
     var globalFrame: CGRect? = nil
     var layout: L? = nil
     public var subviews: PlacementLayoutSubviews? = nil
@@ -41,7 +42,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                     ),
                     size: CGSize(
                         width: globalFrame.width,
-                        height: globalFrame.height
+                        height: globalFrame.height - keyboardFrame.height
                     )
                 ),
                 proposal: proposal,
@@ -91,7 +92,7 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
         let subviews = makeSubviews(children: children!)
         return context(subviews, &cache)
     }
-    
+        
     func makeSubviews(children: _VariadicView.Children) -> PlacementLayoutSubviews {
         if let subviews = subviews {
             let childrenIds = children.map { child in
@@ -126,14 +127,14 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 getSizeThatFits: { size in
                     let hostingController = self.makeHostingController(id: child.id)
                     hostingController.rootView = AnyView(child)
-                                        
+                                                            
                     let sizeThatFits = hostingController.sizeThatFits(
                         in: CGSize(
                             width: size.width ?? UIView.layoutFittingCompressedSize.width,
                             height: size.height ?? UIView.layoutFittingCompressedSize.height
                         )
                     )
-                                        
+                                                            
                     return sizeThatFits
                 },
                 spacing: .zero,
