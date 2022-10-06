@@ -54,6 +54,9 @@ struct FrameChangePlacer<L: PlacementLayout>: UIViewRepresentable {
         in proposedSize: SwiftUI._ProposedSize,
         uiView: FrameChangePlacerView<L>
     ) {
+        // force SwiftUI to recalculate sizeThatFits
+        let _ = keyboardFrame
+        
         size = proposedSize.placementProposedViewSize.replacingUnspecifiedDimensions(
             by: .zero
         )

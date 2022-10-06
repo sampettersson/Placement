@@ -26,6 +26,10 @@ struct LayoutSizingView<L: PlacementLayout>: UIViewRepresentable {
         in proposedSize: SwiftUI._ProposedSize,
         uiView: PlacementLayoutContainer
     ) {
+        // force SwiftUI to recalculate sizeThatFits
+        let _ = intrinsicSizes
+        let _ = keyboardFrame
+        
         coordinator.layoutContext { subviews, cache in
             let proposal = proposedSize.placementProposedViewSize
             
