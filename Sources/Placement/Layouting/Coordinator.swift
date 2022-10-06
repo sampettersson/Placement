@@ -74,6 +74,13 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 }
             }
             
+            placementsCoordinator.placements.forEach { id, placement in
+                hostingControllers[id]?.view.frame = CGRect(
+                    origin: .zero,
+                    size: placement.proposal.replacingUnspecifiedDimensions(by: .zero)
+                )
+            }
+            
             withTransaction(self.transaction) {
                 self.placementsCoordinator.objectWillChange.send()
             }
