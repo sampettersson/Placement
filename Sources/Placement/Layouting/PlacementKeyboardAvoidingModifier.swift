@@ -28,37 +28,56 @@ func keyboardAnimation(from notification: Notification) -> Animation? {
     )
 }
 
-struct PlacementKeyboardAvoidingModifier<L: PlacementLayout>: ViewModifier {
+struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
     @Environment(\.placementShouldAdjustToKeyboard) var placementShouldAdjustToKeyboard
     @EnvironmentObject var coordinator: Coordinator<L>
     @Binding var keyboardFrame: CGRect
     
-    func body(content: Content) -> some View {
-        content
-        .onAppear()
-        .onReceive(
-            NotificationCenter.Publisher(
-                center: NotificationCenter.default,
-                name: UIResponder.keyboardWillChangeFrameNotification
+    class KeyboardCoordinator {
+        var shouldAdjust: Bool
+        var coordinator: Coordinator<L>
+        @Binding var keyboardFrame: CGRect
+        
+        init(
+            shouldAdjust: Bool,
+            coordinator: Coordinator<L>,
+            keyboardFrame: Binding<CGRect>
+        ) {
+            self.shouldAdjust = shouldAdjust
+            self.coordinator = coordinator
+            self._keyboardFrame = keyboardFrame
+            
+            let notificationCenter = NotificationCenter.default
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(handleKeyboardHide),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil
             )
-            .merge(
-                with:
-                    NotificationCenter.Publisher(
-                        center: NotificationCenter.default,
-                        name: UIResponder.keyboardWillShowNotification
-                    )
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(handleKeyboardFrame),
+                name: UIResponder.keyboardWillChangeFrameNotification,
+                object: nil
             )
-            .removeDuplicates(by: { lhs, rhs in
-                lhs.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect !=
-                rhs.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-            })
-        )
-        { notification in
+        }
+        
+        @objc func handleKeyboardHide(notification: Notification) {
+            if shouldAdjust {
+                withAnimation(keyboardAnimation(from: notification)) {
+                    coordinator.keyboardFrame = .zero
+                    self.keyboardFrame = .zero
+                }
+            }
+        }
+        
+        @objc func handleKeyboardFrame(notification: Notification) {
             let keyboardFrame = (
                 notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
             ) ?? .zero
             
-            if placementShouldAdjustToKeyboard {
+            if shouldAdjust {
                 if coordinator.globalFrame?.contains(keyboardFrame.origin) ?? false {
                     withAnimation(keyboardAnimation(from: notification)) {
                         coordinator.keyboardFrame = keyboardFrame
@@ -67,17 +86,33 @@ struct PlacementKeyboardAvoidingModifier<L: PlacementLayout>: ViewModifier {
                 }
             }
         }
-        .onReceive(
-            NotificationCenter.Publisher(
-                center: NotificationCenter.default,
-                name: UIResponder.keyboardWillHideNotification
-            )
+    }
+    
+    func makeCoordinator() -> KeyboardCoordinator {
+        Coordinator(
+            shouldAdjust: placementShouldAdjustToKeyboard,
+            coordinator: coordinator,
+            keyboardFrame: $keyboardFrame
         )
-        { notification in
-            withAnimation(keyboardAnimation(from: notification)) {
-                coordinator.keyboardFrame = .zero
-                self.keyboardFrame = .zero
-            }
-        }
+    }
+    
+    func makeUIView(context: Context) -> some UIView {
+        UIView()
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        context.coordinator.shouldAdjust = placementShouldAdjustToKeyboard
+        context.coordinator.coordinator = coordinator
+    }
+}
+
+struct PlacementKeyboardAvoidingModifier<L: PlacementLayout>: ViewModifier {
+    @Environment(\.placementShouldAdjustToKeyboard) var placementShouldAdjustToKeyboard
+    @EnvironmentObject var coordinator: Coordinator<L>
+    @Binding var keyboardFrame: CGRect
+    
+    func body(content: Content) -> some View {
+        content
+            .background(KeyboardAvoidingView<L>(keyboardFrame: $keyboardFrame))
     }
 }
