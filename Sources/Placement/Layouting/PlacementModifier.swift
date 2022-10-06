@@ -81,7 +81,6 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 }
             }
             .transition(.opacity)
-            .fixedSize()
         }
     }
 }
