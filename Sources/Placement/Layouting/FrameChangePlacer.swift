@@ -22,18 +22,32 @@ class FrameChangePlacerView<L: PlacementLayout>: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var containedInViewController: UIViewController? = nil
+    
+    override func didMoveToSuperview() {
+        containedInViewController = self.superview?.parentViewController
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
                 
-        if let rootViewController = self.window?.rootViewController,
+        if let viewController = containedInViewController
+             ?? self.superview?.parentViewController,
            let globalFrame = self.superview?.convert(
-            self.frame,
-            to: rootViewController.view
-        ) {
+                self.frame,
+                to: viewController.view
+           )
+        {
             coordinator.globalFrame = globalFrame
         }
                         
         coordinator.placeSubviews()
+    }
+}
+
+extension UIResponder {
+    public var parentViewController: UIViewController? {
+        return next as? UIViewController ?? next?.parentViewController
     }
 }
 
