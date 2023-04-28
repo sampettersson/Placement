@@ -22,7 +22,7 @@ public struct PlacementProposedViewSize: Equatable, Sendable {
     }
     
     /// Creates a new proposal that replaces unspecified dimensions in this proposal with the corresponding dimension of the specified size.
-    public func replacingUnspecifiedDimensions(by size: CGSize) -> CGSize {
+    public func replacingUnspecifiedDimensions(by size: CGSize = CGSize(width: 10, height: 10)) -> CGSize {
         CGSize(width: width ?? size.width, height: height ?? size.height)
     }
     
