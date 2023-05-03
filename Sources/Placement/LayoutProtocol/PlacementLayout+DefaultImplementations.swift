@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 
 extension PlacementLayout {
-    public func updateCache(_ cache: inout Cache, subviews: Subviews) {}
+    public func updateCache(_ cache: inout Cache, subviews: Subviews) {
+		cache = makeCache(subviews: subviews)
+	}
     
     public func spacing(subviews: Subviews, cache: inout Cache) -> PlacementViewSpacing {
         PlacementViewSpacing()
