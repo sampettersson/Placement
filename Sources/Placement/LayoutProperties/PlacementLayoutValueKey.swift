@@ -29,6 +29,29 @@ struct LayoutValueKeyMapper<K: PlacementLayoutValueKey> {
     }
 }
 
+struct LayoutKeyValueModifier<K>: ViewModifier where K : PlacementLayoutValueKey {
+    var key: K.Type
+    var value: K.Value
+    
+    // Compiler error necitated using AnyView https://github.com/apple/swift/issues/61866
+    func body(content: Content) -> some View {
+       if #available(iOS 16.0, macCatalyst 16, *) {
+           return AnyView(content.layoutValue(key: LayoutValueKeyMapper<K>.Key.self, value: value))
+       } else {
+           return AnyView(content)
+       }
+    }
+}
+
+struct PlacementLayoutKeyValueModifier<K>: ViewModifier where K : PlacementLayoutValueKey {
+    var key: K.Type
+    var value: K.Value
+    
+    func body(content: Content) -> some View {
+        content._trait(key, value)
+    }
+}
+
 extension View {
     /// Associates a value with a custom layout property for PlacementLayout
     ///
@@ -38,11 +61,9 @@ extension View {
         key: K.Type,
         value: K.Value
     ) -> some View where K : PlacementLayoutValueKey {
-        if #available(iOS 16.0, macCatalyst 16, *) {
-            return self.layoutValue(key: LayoutValueKeyMapper<K>.Key.self, value: value)
-        } else {
-            return self._trait(key, value)
-        }
+        self
+            .modifier(PlacementLayoutKeyValueModifier(key: key, value: value))
+            .modifier(LayoutKeyValueModifier(key: key, value: value))
     }
     
     /// Associates a layoutPriority for PlacementLayout
