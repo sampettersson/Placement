@@ -107,6 +107,8 @@ class Coordinator<L: PlacementLayout>: ObservableObject {
                 subview.id
             }
             
+            layout?.updateCache(&cache, subviews: subviews)
+            
             if childrenIds == subviewsIds {
                 return subviews
             }
