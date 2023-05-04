@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB180A102A02899A00B04E4B /* LayoutValueKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB180A0F2A02899A00B04E4B /* LayoutValueKey.swift */; };
 		EB323AA228D5B42F004F8EED /* CenterLayoutDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA128D5B42F004F8EED /* CenterLayoutDemo.swift */; };
 		EB323AA828D65963004F8EED /* PlacementThatFitsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */; };
 		EB323AA928D65966004F8EED /* PlacementThatFits.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB323AA428D658E9004F8EED /* PlacementThatFits.swift */; };
@@ -99,6 +100,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EB180A0F2A02899A00B04E4B /* LayoutValueKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutValueKey.swift; sourceTree = "<group>"; };
 		EB323AA128D5B42F004F8EED /* CenterLayoutDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterLayoutDemo.swift; sourceTree = "<group>"; };
 		EB323AA428D658E9004F8EED /* PlacementThatFits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFits.swift; sourceTree = "<group>"; };
 		EB323AA628D65949004F8EED /* PlacementThatFitsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementThatFitsLayout.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				EB323AE028D8755B004F8EED /* PlacementLayoutNativeTests.swift */,
 				EB323AE228D87897004F8EED /* LayoutSizingTests.swift */,
 				EB323AE428D8C534004F8EED /* PositioningTests.swift */,
+				EB180A0F2A02899A00B04E4B /* LayoutValueKey.swift */,
 			);
 			path = PlacementTests;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				EB323AE128D8755B004F8EED /* PlacementLayoutNativeTests.swift in Sources */,
 				EB323ACF28D86743004F8EED /* PlacementLayoutTests.swift in Sources */,
 				EB323AE528D8C534004F8EED /* PositioningTests.swift in Sources */,
+				EB180A102A02899A00B04E4B /* LayoutValueKey.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
