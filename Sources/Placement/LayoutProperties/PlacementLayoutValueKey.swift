@@ -33,12 +33,11 @@ struct LayoutKeyValueModifier<K>: ViewModifier where K : PlacementLayoutValueKey
     var key: K.Type
     var value: K.Value
     
-    // Compiler error necitated using AnyView https://github.com/apple/swift/issues/61866
     func body(content: Content) -> some View {
        if #available(iOS 16.0, macCatalyst 16, *) {
-           return AnyView(content.layoutValue(key: LayoutValueKeyMapper<K>.Key.self, value: value))
+           content.layoutValue(key: LayoutValueKeyMapper<K>.Key.self, value: value)
        } else {
-           return AnyView(content)
+           content
        }
     }
 }
