@@ -52,17 +52,17 @@ struct PlacementThatFitsLayout: PlacementLayout {
             let size = subview.sizeThatFits(proposal)
                         
             if axes.contains(.horizontal) && axes.contains(.vertical) {
-                if size.width <= (proposal.width ?? 0) && size.height <= (proposal.height ?? 0) {
+                if size.width <= (proposal.width ?? .infinity) && size.height <= (proposal.height ?? .infinity) {
                     coordinator.indexToPlace = index
                     return size
                 }
             } else if axes.contains(.horizontal) {
-                if size.width <= (proposal.width ?? 0) {
+                if size.width <= (proposal.width ?? .infinity) {
                     coordinator.indexToPlace = index
                     return size
                 }
             } else if axes.contains(.vertical) {
-                if size.height <= (proposal.height ?? 0) {
+                if size.height <= (proposal.height ?? .infinity) {
                     coordinator.indexToPlace = index
                     return size
                 }
