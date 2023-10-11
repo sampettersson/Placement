@@ -15,10 +15,19 @@ struct PlacementThatFitsDemo: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                PlacementThatFits(in: [.horizontal], prefersViewThatFits: false) {
-                    Text("Some longer text that wont fit initially")
-                    Text("Some text")
+                PlacementThatFits(prefersViewThatFits: false) {
+                    Button("Some longer text that wont fit initially") {
+                      print("tap index 0")
+                    }.onAppear(perform: {
+                      print("did appear index 0")
+                    })
+                    Button("A button") {
+                      print("tap index 1")
+                    }.onAppear(perform: {
+                      print("did appear index 1")
+                    })
                 }
+                .border(.red)
                 .frame(maxWidth: changeContainerWidth ? .infinity : 150)
                 
                 Button("Change container width") {

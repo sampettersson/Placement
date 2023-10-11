@@ -47,6 +47,7 @@ struct PlacementModifier<L: PlacementLayout>: ViewModifier {
                 id: id,
                 children: children
             )
+            .allowsHitTesting(false)
             .overlay(
                     content
                     .background(

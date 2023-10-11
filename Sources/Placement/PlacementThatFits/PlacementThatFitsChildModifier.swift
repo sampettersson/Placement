@@ -17,7 +17,7 @@ struct PlacementThatFitsChildModifier: ViewModifier {
         if index == coordinator.indexToPlace {
             content
         } else {
-            content.hidden()
+            content.hidden().allowsHitTesting(false)
         }
     }
 }
