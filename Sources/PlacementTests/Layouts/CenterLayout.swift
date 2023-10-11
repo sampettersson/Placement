@@ -29,6 +29,8 @@ public struct CenterLayout: PlacementLayout {
         cache: inout ()
     ) {
         for index in subviews.indices {
+          print(index)
+
             let subview = subviews[index]
             let dimension = subview.dimensions(in: proposal)
             
