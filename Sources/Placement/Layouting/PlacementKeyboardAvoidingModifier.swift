@@ -113,6 +113,9 @@ struct PlacementKeyboardAvoidingModifier<L: PlacementLayout>: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .background(KeyboardAvoidingView<L>(keyboardFrame: $keyboardFrame))
+            .background(
+              KeyboardAvoidingView<L>(keyboardFrame: $keyboardFrame)
+                .allowsHitTesting(false)
+            )
     }
 }
