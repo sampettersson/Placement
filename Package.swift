@@ -1,11 +1,14 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 import Foundation
 import PackageDescription
 
 let package = Package(
     name: "Placement",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v14),
+        .macCatalyst(.v14),
+        .tvOS(.v14),
+        .visionOS(.v1)
     ],
     products: [
         .library(
