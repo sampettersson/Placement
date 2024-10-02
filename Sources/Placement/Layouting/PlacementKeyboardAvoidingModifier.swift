@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 func keyboardAnimation(from notification: Notification) -> Animation? {
+#if os(iOS)
     guard
       let info = notification.userInfo,
       let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
@@ -21,6 +22,9 @@ func keyboardAnimation(from notification: Notification) -> Animation? {
         dampingFraction: 0.825,
         blendDuration: duration
     )
+#else
+    return nil
+#endif
 }
 
 struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
@@ -44,6 +48,7 @@ struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
             
             let notificationCenter = NotificationCenter.default
             
+#if os(iOS)
             notificationCenter.addObserver(
                 self,
                 selector: #selector(handleKeyboardHide),
@@ -62,7 +67,10 @@ struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
                 name: UIResponder.keyboardWillShowNotification,
                 object: nil
             )
+#endif
         }
+        
+#if os(iOS)
         
         @objc func handleKeyboardHide(notification: Notification) {
             if shouldAdjust {
@@ -86,6 +94,7 @@ struct KeyboardAvoidingView<L: PlacementLayout>: UIViewRepresentable {
                 }
             }
         }
+#endif
     }
     
     func makeCoordinator() -> KeyboardCoordinator {
