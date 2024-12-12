@@ -27,7 +27,7 @@ public struct PlacementLayoutSubviews: BidirectionalCollection, Collection, Comp
     }
     
     public static func == (lhs: PlacementLayoutSubviews, rhs: PlacementLayoutSubviews) -> Bool {
-        if #available(iOS 16.0, macCatalyst 16, *) {
+        if #available(iOS 16.0, macCatalyst 16, tvOS 16.0, *) {
             let castedLhs = lhs.subviews as? [LayoutSubview]
             let castedRhs = rhs.subviews as? [LayoutSubview]
             return castedLhs == castedRhs

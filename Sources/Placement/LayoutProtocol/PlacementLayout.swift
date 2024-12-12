@@ -100,7 +100,7 @@ extension PlacementLayout {
     @ViewBuilder public func callAsFunction<V: View>(
         @ViewBuilder _ content: @escaping () -> V
     ) -> some View {
-        if #available(iOS 16, macCatalyst 16, *) {
+        if #available(iOS 16, macCatalyst 16, tvOS 16.0, *) {
             if prefersLayoutProtocol {
                 PlacementLayoutNative(layoutBP: self).callAsFunction {
                     content()
