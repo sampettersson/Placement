@@ -21,5 +21,4 @@ jobs:
         with:
           project: Placement.xcodeproj
           scheme: Placement
-          destination: platform=iOS Simulator,OS=16.0,name=iPhone 13 Pro
           action: test
