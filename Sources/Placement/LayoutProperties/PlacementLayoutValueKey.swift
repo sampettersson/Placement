@@ -18,7 +18,7 @@ struct LayoutPriorityValueKey: PlacementLayoutValueKey {
     }
 }
 
-@available(iOS 16, OSX 13, *)
+@available(iOS 16, OSX 13, tvOS 16.0, *)
 struct LayoutValueKeyMapper<K: PlacementLayoutValueKey> {
     struct Key: LayoutValueKey {
         static var defaultValue: K.Value {
@@ -34,7 +34,7 @@ struct LayoutKeyValueModifier<K>: ViewModifier where K : PlacementLayoutValueKey
     var value: K.Value
     
     func body(content: Content) -> some View {
-       if #available(iOS 16.0, macCatalyst 16, *) {
+       if #available(iOS 16.0, macCatalyst 16, tvOS 16.0, *) {
            content.layoutValue(key: LayoutValueKeyMapper<K>.Key.self, value: value)
        } else {
            content

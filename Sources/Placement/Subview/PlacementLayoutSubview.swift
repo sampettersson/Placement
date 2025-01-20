@@ -50,7 +50,7 @@ struct LayoutSubviewPolyfill: PlacementLayoutSubview {
     var child: _VariadicView_Children.Element
 }
 
-@available(iOS 16.0, macCatalyst 16, *)
+@available(iOS 16.0, macCatalyst 16, tvOS 16.0, *)
 extension LayoutSubview: PlacementLayoutSubview {
     public func dimensions(in proposal: PlacementProposedViewSize) -> PlacementViewDimensions {
         let dimension = dimensions(in: proposal.proposedViewSize)

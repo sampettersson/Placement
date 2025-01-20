@@ -11,7 +11,7 @@ public struct PlacementLayoutProperties {
         self.stackOrientation = nil
     }
     
-    @available(iOS 16.0, macCatalyst 16, *)
+    @available(iOS 16.0, macCatalyst 16, tvOS 16.0, *)
     var native: PlacementLayoutProperties {
         var properties = PlacementLayoutProperties()
         properties.stackOrientation = stackOrientation
