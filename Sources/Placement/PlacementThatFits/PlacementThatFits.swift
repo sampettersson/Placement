@@ -37,7 +37,7 @@ public struct PlacementThatFits<Content: View>: View {
     }
     
     public var body: some View {
-        if #available(iOS 16.0, macCatalyst 16, *), prefersViewThatFits {
+        if #available(iOS 16.0, macCatalyst 16, tvOS 16.0, *), prefersViewThatFits {
             ViewThatFits(in: axes) {
                 content()
             }
