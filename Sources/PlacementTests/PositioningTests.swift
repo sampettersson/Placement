@@ -19,7 +19,7 @@ enum PlacementLayouterType {
 final class PositioningTests: XCTestCase {
     func testThatPositioningIsCorrect() {
         
-        struct Content: View, Inspectable {
+        struct Content: View {
             var hasPlaced: ((Self) -> Void)?
             var onContainerProxy: (_ type: PlacementLayouterType, _ proxy: GeometryProxy) -> Void
             var onChildProxy: (_ type: PlacementLayouterType, _ proxy: GeometryProxy) -> Void
@@ -82,7 +82,7 @@ final class PositioningTests: XCTestCase {
         
         ViewHosting.host(view: sut)
         
-        wait(for: [didAppearExp], timeout: 0.1)
+        wait(for: [didAppearExp], timeout: 0.5)
     }
 }
 

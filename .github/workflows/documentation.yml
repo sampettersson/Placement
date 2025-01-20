@@ -18,11 +18,8 @@ jobs:
         with:
           xcode-version: latest-stable
       - name: Build
-        env:
-          platform: ${{ 'iOS Simulator' }}
         run: |
-          device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
-          xcodebuild docbuild -scheme Placement -derivedDataPath $GITHUB_WORKSPACE/build -destination "platform=$platform,name=$device"
+          xcodebuild docbuild -scheme Placement -derivedDataPath $GITHUB_WORKSPACE/build -destination "platform=iOS Simulator,OS=18.0,name=iPhone 16 Pro"
       - name: Clone swift-docc
         run: git clone -b release/5.10 https://github.com/apple/swift-docc.git
       - name: Build swift-docc

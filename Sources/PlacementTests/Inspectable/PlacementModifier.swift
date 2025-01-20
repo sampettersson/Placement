@@ -9,4 +9,4 @@ import Foundation
 import ViewInspector
 @testable import Placement
 
-extension PlacementModifier: Inspectable {}
+extension PlacementModifier: @retroactive Inspectable {}

@@ -131,7 +131,7 @@ final class PlacementLayoutNativeTests: XCTestCase {
             }
         }
         
-        struct UpdateContentView<Content: View>: View, Inspectable {
+        struct UpdateContentView<Content: View>: View {
             @State var flag: Bool = false
             var content: (_ flag: Bool) -> Content
             internal var didAppear: ((Self) -> Void)?
@@ -160,7 +160,7 @@ final class PlacementLayoutNativeTests: XCTestCase {
         }
         
         let didAppearExp = sut.on(\.didAppear) { view in
-            try view.vStack().first?.button().tap()
+            try view.implicitAnyView().vStack().first?.button().tap()
         }
         
         ViewHosting.host(view: sut)

@@ -9,4 +9,4 @@ import Foundation
 import ViewInspector
 @testable import Placement
 
-extension LayoutSizeModifier: Inspectable {}
+extension LayoutSizeModifier: @retroactive Inspectable {}
